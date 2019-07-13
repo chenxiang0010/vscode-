@@ -1,0 +1,534 @@
+{
+    "v-html骨架": {
+        "prefix": ["!vue"],
+        "body": [
+            "<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n\t<meta charset=\"UTF-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n\t<title>Document</title>\n\t<script src=\"${1:./lib/vue-2.4.0.js}\"></script>\n</head>\n\n<body>\n\t<div id=\"app\">\n\n\t</div>\n\n\t<script>\n\n\t\tvar vm = new Vue({\n\t\t\tel: '#app',\n\t\t\tdata: {},\n\t\t\tmethods: {}\n\t\t});\n\t</script>\n</body>\n\n</html>"
+        ],
+        "description": [
+        "v-html骨架"
+        ]
+    },
+    "template": {
+        "prefix": "template",
+        "body": [
+            "<template>",
+            "\t<${1:div}$2>",
+            "\t\t$0",
+            "\t</${1:div}>",
+            "</template>"
+        ],
+        "description": "template element"
+    },
+    "v-text": {
+        "prefix": "vText",
+        "body": [
+            "v-text=\"${1:msg}\""
+        ],
+        "description": "Expects: string. Updates the element’s textContent."
+    },
+    "v-html": {
+        "prefix": "vHtml",
+        "body": [
+            "v-html=\"${1:html}\""
+        ],
+        "description": "html-Expects: string. Updates the element’s innerHTML."
+    },
+    "v-show": {
+        "prefix": "vShow",
+        "body": [
+            "v-show=\"${1:condition}\""
+        ],
+        "description": "Expects: any"
+    },
+    "v-if": {
+        "prefix": "vIf",
+        "body": [
+            "v-if=\"${1:condition}\""
+        ],
+        "description": "Expects: any"
+    },
+    "v-else": {
+        "prefix": "vElse",
+        "body": [
+            "v-else"
+        ],
+        "description": "Does not expect expression. previous sibling element must have v-if or v-else-if."
+    },
+    "v-else-if": {
+        "prefix": "vElseIf",
+        "body": [
+            "v-else-if=\"${1:condition}\""
+        ],
+        "description": "Expects: any. previous sibling element must have v-if or v-else-if."
+    },
+    "v-for-without-key": {
+        "prefix": "vForWithoutKey",
+        "body": [
+            "v-for=\"${1:item} in ${2:items}\""
+        ],
+        "description": "Expects: Array | Object | number | string"
+    },
+    "v-for": {
+        "prefix": "vFor",
+        "body": [
+            "v-for=\"(${1:item}, ${2:index}) in ${3:items}\" :key=\"${4:index}\""
+        ],
+        "description": "Expects: Array | Object | number | string"
+    },
+    "v-on": {
+        "prefix": "vOn",
+        "body": [
+            "v-on:${1:event}=\"${2:handle}\""
+        ],
+        "description": "Expects: Function | Inline Statement"
+    },
+    "v-bind数据单向绑定": {
+        "prefix": "vBind",
+        "body": [
+            "v-bind$1=\"${2}\""
+        ],
+        "description": "数据单向绑定"
+    },
+    "v-model": {
+        "prefix": "vModel",
+        "body": [
+            "v-model=\"${1:双向绑定的数据(只能用在表单元素)}\""
+        ],
+        "description": "数据双向绑定: 根据表单输入元素的值或组件的输出而变化"
+    },
+    "v-pre": {
+        "prefix": "vPre",
+        "body": [
+            "v-pre"
+        ],
+        "description": "原样输出(不编译渲染)"
+    },
+    "v-cloak解决 插值表达式闪烁的问题": {
+        "prefix": "vCloak",
+        "body": [
+            "v-cloak"
+        ],
+        "description": ["解决 插值表达式闪烁的问题","放在插值表达式的同级标签中"]
+    },
+    "v-once": {
+        "prefix": "vOnce",
+        "body": [
+            "v-once"
+        ],
+        "description": "只编译一次"
+    },
+    "key": {
+        "prefix": "key",
+        "body": [
+            ":key=\"${1:key}\""
+        ],
+        "description": "Expects: string. Children of the same common parent must have unique keys. Duplicate keys will cause render errors."
+    },
+    "ref": {
+        "prefix": "ref",
+        "body": [
+            "ref=\"${1:reference}\"$0"
+        ],
+        "description": "Expects: string. ref is used to register a reference to an element or a child component. The reference will be registered under the parent component’s $refs object. If used on a plain DOM element, the reference will be that element; if used on a child component, the reference will be component instance."
+    },
+    "slotA": {
+        "prefix": "slotA",
+        "body": [
+            "slot=\"$1\"$0"
+        ],
+        "description": "slot=''. Expects: string. Used on content inserted into child components to indicate which named slot the content belongs to."
+    },
+    "slotE": {
+        "prefix": "slotE",
+        "body": [
+            "<slot$1>$2</slot>$0"
+        ],
+        "description": "<slot></slot>. Expects: string. Used on content inserted into child components to indicate which named slot the content belongs to."
+    },
+    "slotScope": {
+        "prefix": "slotScope",
+        "body": [
+            "slot-scope=\"$1\"$0"
+        ],
+        "description": "Used to denote an element or component as a scoped slot. The attribute’s value should be a valid JavaScript expression that can appear in the argument position of a function signature. This means in supported environments you can also use ES2015 destructuring in the expression. Serves as a replacement for scope in 2.5.0+."
+    },
+    "scope": {
+        "prefix": "scope",
+        "body": [
+            "scope=\"${1:this api replaced by slot-scope in 2.5.0+}\"$0"
+        ],
+        "description": "Used to denote a <template> element as a scoped slot, which is replaced by `slot-scope` in 2.5.0+."
+    },
+    "component": {
+        "prefix": "component",
+        "body": [
+            "<component :is=\"${1:componentId}\"></component>$0"
+        ],
+        "description": "component element"
+    },
+    "keep-alive": {
+        "prefix": "keepAlive",
+        "body": [
+            "<keep-alive$1>",
+            "$2",
+            "</keep-alive>$0"
+        ],
+        "description": "keep-alive element"
+    },
+    "动画标签(vue官方)": {
+        "prefix": "transition",
+        "body": [
+            "<transition name=\"$1\">",
+            "\t$2",
+            "</transition>$0",
+            "<style>",
+            "/* ${1:v}-enter 【进入之前，元素的起始状态】 */",
+            "/* ${1:v}-leave-to 【动画离开之后，离开的终止状态】 */",
+            ".${1:v}-enter,",
+            ".${1:v}-leave-to {",
+            "\topacity: 0;",
+            "\ttransform: translateX(150px);",
+            "}",
+            "/* ${1:v}-enter-active 【入场动画的时间段】 */",
+            "/* ${1:v}-leave-active 【离场动画的时间段】 */",
+            ".${1:v}-enter-active,",
+            ".${1:v}-leave-active{",
+            "\ttransition: all 0.8s ease;",
+            "}",
+            "</style>"
+        ],
+        "description": "动画标签(vue官方)"
+    },
+    "动画标签(使用第三方animate.css)": {
+        "prefix": "transition",
+        "body": [
+            "<!-- 演示及下载 https://daneden.github.io/animate.css/ -->",
+            "<!-- $ npm install animate.css -S -->",
+            "<transition enter-active-class=\"animated ${1:bounceIn}\" leave-active-class=\"animated ${2:bounceOut}\" :duration=\"{ enter: ${3:200}, leave: ${4:400} }\">",
+            "\t$2",
+            "</transition>$0"
+        ],
+        "description": "动画标签(使用第三方animate.css)"
+    },
+    "动画(钩子函数半场动画)": {
+        "prefix": ["transition"],
+        "body": [
+            "<transition @before-enter=\"beforeEnter\" @enter=\"enter\" @after-enter=\"afterEnter\">",
+            "\t<div class=\"${1:ball}\" v-show=\"${2:flag}\"></div>",
+            "</transition>",
+            "",
+            "methods: {",
+            "\tbeforeEnter(el){  //设置元素开始动画之前的起始样式",
+            "",
+            "\t},",
+            "\tenter(el,done){  //设置小球完成动画之后的，结束状态,样式",
+            "\t\tel.offsetWidth; //必写,强制动画刷新",
+            "",
+            "\t\t// 设置结束样式 ",
+            "\t\tel.style.transform = \"translate(150px, 450px)\"",
+            "\t\tel.style.transition = 'all 1s ease'",
+            "",
+            "\t\tdone() //done()是引用afterEnter",
+            "\t},",
+            "\tafterEnter(el){ //动画完成之后",
+            "\t\tthis.flag = !this.flag",
+            "\t}",
+            "}"
+        ],
+        "description": [
+        "动画(钩子函数半场动画)"
+        ]
+    },
+    "通过v-for渲染出来需要做过渡动画": {
+        "prefix": "transitionGroup",
+        "body": [
+            "<transition-group tag=\"${1|渲染为指定标签(默认span),ul,div|}\" ${2|页面刚渲染时是否要动画,appear|}>",
+            "\t$3",
+            "</transition-group>"
+        ],
+        "description": "通过v-for渲染出来需要做过渡动画"
+    },
+    "enter-class": {
+        "prefix": "enterClass",
+        "body": [
+            "enter-class=\"$1\"$0"
+        ],
+        "description": "enter-class=''. Expects: string."
+    },
+    "leave-class": {
+        "prefix": "leaveClass",
+        "body": [
+            "leave-class=\"$1\"$0"
+        ],
+        "description": "leave-class=''. Expects: string."
+    },
+    "appear-class": {
+        "prefix": "appearClass",
+        "body": [
+            "appear-class=\"$1\"$0"
+        ],
+        "description": "appear-class=''. Expects: string."
+    },
+    "enter-to-class": {
+        "prefix": "enterToClass",
+        "body": [
+            "enter-to-class=\"$1\"$0"
+        ],
+        "description": "enter-to-class=''. Expects: string."
+    },
+    "leave-to-class": {
+        "prefix": "leaveToClass",
+        "body": [
+            "leave-to-class=\"$1\"$0"
+        ],
+        "description": "leave-to-class=''. Expects: string."
+    },
+    "appear-to-class": {
+        "prefix": "appearToClass",
+        "body": [
+            "appear-to-class=\"$1\"$0"
+        ],
+        "description": "appear-to-class=''. Expects: string."
+    },
+    "enter-active-class": {
+        "prefix": "enterActiveClass",
+        "body": [
+            "enter-active-class=\"$1\"$0"
+        ],
+        "description": "enter-active-class=''. Expects: string."
+    },
+    "leave-active-class": {
+        "prefix": "leaveActiveClass",
+        "body": [
+            "leave-active-class=\"$1\"$0"
+        ],
+        "description": "leave-active-class=''. Expects: string."
+    },
+    "appear-active-class": {
+        "prefix": "appearActiveClass",
+        "body": [
+            "appear-active-class=\"$1\"$0"
+        ],
+        "description": "appear-active-class=''. Expects: string."
+    },
+    "before-enter": {
+        "prefix": "beforeEnterEvent",
+        "body": [
+            "@before-enter=\"$1\"$0"
+        ],
+        "description": "@before-enter=''"
+    },
+    "before-leave": {
+        "prefix": "beforeLeaveEvent",
+        "body": [
+            "@before-leave=\"$1\"$0"
+        ],
+        "description": "@before-leave=''"
+    },
+    "before-appear": {
+        "prefix": "beforeAppearEvent",
+        "body": [
+            "@before-appear=\"$1\"$0"
+        ],
+        "description": "@before-appear=''"
+    },
+    "enter": {
+        "prefix": "enterEvent",
+        "body": [
+            "@enter=\"$1\"$0"
+        ],
+        "description": "@enter=''"
+    },
+    "leave": {
+        "prefix": "leaveEvent",
+        "body": [
+            "@leave=\"$1\"$0"
+        ],
+        "description": "@leave=''"
+    },
+    "appear": {
+        "prefix": "appearEvent",
+        "body": [
+            "@appear=\"$1\"$0"
+        ],
+        "description": "@appear=''"
+    },
+    "after-enter": {
+        "prefix": "afterEnterEvent",
+        "body": [
+            "@after-enter=\"$1\"$0"
+        ],
+        "description": "@after-enter=''"
+    },
+    "after-leave": {
+        "prefix": "afterLeaveEvent",
+        "body": [
+            "@after-leave=\"$1\"$0"
+        ],
+        "description": "@after-leave=''"
+    },
+    "after-appear": {
+        "prefix": "afterAppearEvent",
+        "body": [
+            "@after-appear=\"$1\"$0"
+        ],
+        "description": "@after-appear=''"
+    },
+    "enter-cancelled": {
+        "prefix": "enterCancelledEvent",
+        "body": [
+            "@enter-cancelled=\"$1\"$0"
+        ],
+        "description": "@enter-cancelled=''"
+    },
+    "leave-cancelled": {
+        "prefix": "leaveCancelledEvent",
+        "body": [
+            "@leave-cancelled=\"$1\"$0"
+        ],
+        "description": "@leave-cancelled='' (v-show only)"
+    },
+    "appear-cancelled": {
+        "prefix": "appearCancelledEvent",
+        "body": [
+            "@appear-cancelled=\"$1\"$0"
+        ],
+        "description": "@appear-cancelled=''"
+    },
+    "routerLink": {
+        "prefix": "routerLink",
+        "body": [
+            "<router-link $1>$2</router-link>$0"
+        ],
+        "description": "router-link element"
+    },
+    "routerLinkTo": {
+        "prefix": "routerLinkTo",
+        "body": [
+            "<router-link to=\"$1\">$2</router-link>$0"
+        ],
+        "description": "<router-link to=''></router-link>. router-link element"
+    },
+    "to": {
+        "prefix": "to",
+        "body": [
+            "to=\"$1\"$0"
+        ],
+        "description": "to=''"
+    },
+    "tag": {
+        "prefix": "tag",
+        "body": [
+            "tag=\"$1\"$0"
+        ],
+        "description": "tag=''"
+    },
+    "routerView": {
+        "prefix": "routerView",
+        "body": [
+            "<router-view>$1</router-view>$0"
+        ],
+        "description": "router-view element"
+    },
+    "nuxt": {
+        "prefix": "nuxt",
+        "body": [
+            "<nuxt/>"
+        ],
+        "description": "This component is used only in layouts to display the page components."
+    },
+    "nuxtChild": {
+        "prefix": "nuxtChild",
+        "body": [
+            "<nuxt-child $1/>$0"
+        ],
+        "description": "This component is used for displaying the children components in a nested route."
+    },
+    "nuxtLink": {
+        "prefix": "nuxtLink",
+        "body": [
+            "<nuxt-link ${1|to,:to|}=\"$2\">$0</nuxt-link>"
+        ],
+        "description": "This component is used to provide navigations between page components."
+    },
+    "vue-阻止冒泡": {
+        "prefix": ["stop"],
+        "body": [
+        "stop"
+        ],
+        "description": [
+        "vue-阻止冒泡",
+        "例: @click.stop"
+        ]
+    },
+    "vue-阻止默认事件": {
+        "prefix": ["prevent"],
+        "body": [
+        "prevent"
+        ],
+        "description": [
+        "vue-阻止默认事件",
+        "例: @click.prevent"
+        ]
+    },
+    "vue-实现捕获触发事件的机制 ": {
+        "prefix": ["capture"],
+        "body": [
+        "capture"
+        ],
+        "description": [
+        "vue-实现捕获触发事件的机制 ",
+        "例: @click.capture"
+        ]
+    },
+    "vue-只触发一次事件处理函数 ": {
+        "prefix": ["once"],
+        "body": [
+        "once"
+        ],
+        "description": [
+        "vue-只触发一次事件处理函数 ",
+        "例: @click.once"
+        ]
+    },
+    "vue-只阻止自己身上冒泡行为 ": {
+        "prefix": ["self"],
+        "body": [
+        "self"
+        ],
+        "description": [
+        "vue-只阻止自己身上冒泡行为 ",
+        "例: @click.self"
+        ]
+    },
+    "vue鼠标事件修饰符": {
+        "prefix": ["v-sj"],
+        "body": [
+        "${1|enter,tab,delete,esc,space,up,down,left,right|}"
+        ],
+        "description": [
+        "vue鼠标事件修饰符",
+        "例: @click.once 表示只执行一次",
+        "自定义keyCode修饰符Vue.config.keyCodes"
+        ]
+    },
+    "vue键盘事件修饰符": {
+        "prefix": ["v-sj"],
+        "body": [
+        "${1|stop,prevent,capture,self,once|}"
+        ],
+        "description": [
+        "vue键盘事件修饰符",
+        "例: @keyup.enter 键盘输入回车"
+        ]
+    },
+    "click": {
+        "prefix": ["click"],
+        "body": [
+        "click"
+        ],
+        "description": [
+        "click点击"
+        ]
+    }
+}

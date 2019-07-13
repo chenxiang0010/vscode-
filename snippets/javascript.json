@@ -1,0 +1,4336 @@
+{
+  "箭头函数": {
+    "prefix": ["fun"],
+    "body": ["() => {$0}"],
+    "description": ["箭头函数"]
+  },
+
+  "光标定位文本框最后": {
+    "prefix": ["hs"],
+    "body": [
+      "/* ",
+      " * 光标定位到最后",
+      "*/",
+      "function curPostLast() {",
+      "\tvar e = event.srcElement;",
+      "\tvar r = e.createTextRange();",
+      "\tr.moveStart(\"character\", e.value.length);",
+      "\tr.collapse(true);",
+      "\tr.select();",
+      "}"
+    ],
+    "description": ["光标定位文本框最后"]
+  },
+
+  "创建CSS规则": {
+    "prefix": ["hs", "Sheet"],
+    "body": [
+      "/*",
+      " * 创建新的CSS规则 ,常用语ajax",
+      " *  调用: Sheet(\".test{ background: pink }\");",
+      "*/",
+      "// Build a better Sheet object ",
+      "Sheet = (function() {",
+      "\t// Build style",
+      "\tvar style = document.createElement('style');",
+      "\tstyle.setAttribute('media', 'screen');",
+      "\tstyle.appendChild(document.createTextNode(''));",
+      "\tdocument.head.appendChild(style);",
+      "\t// Build and return a single function",
+      "\treturn function(rule){ style.sheet.insertRule( rule, style.sheet.cssRules.length ); } ;",
+      "})();"
+    ],
+    "description": ["创建CSS规则"]
+  },
+
+  "判断是否为原生JS": {
+    "prefix": ["hs", "isNative"],
+    "body": [
+      "/*",
+      "* 判断一个JavaScript函数是否是系统原生函数 ",
+      "* isNative(alert); // true",
+      "* isNative(myCustomFunction); // false ",
+      "*/",
+      ";(function() {",
+      "\t// Used to resolve the internal `[[Class]]` of values",
+      "\tvar toString = Object.prototype.toString;",
+      "\t// Used to resolve the decompiled source of functions",
+      "\tvar fnToString = Function.prototype.toString;",
+      "\t// Used to detect host constructors (Safari > 4; really typed array specific)",
+      "\tvar reHostCtor = /^\\[object .+?Constructor\\]$/;",
+      "\t// Compile a regexp using a common native method as a template.",
+      "\t// We chose `Object#toString` because there's a good chance it is not being mucked with.",
+      "\tvar reNative = RegExp('^' +",
+      "\t\t// Coerce `Object#toString` to a string",
+      "\t\tString(toString)",
+      "\t\t// Escape any special regexp characters",
+      "\t\t.replace(/[.*+?^${}()|[\\]\\/\\\\]/g, '\\\\$&')",
+      "\t\t// Replace mentions of `toString` with `.*?` to keep the template generic.",
+      "\t\t// Replace thing like `for ...` to support environments like Rhino which add extra info",
+      "\t\t// such as method arity.",
+      "\t\t.replace(/toString|(function).*?(?=\\\\\\()| for .+?(?=\\\\\\])/g, '$1.*?') + '$'",
+      "\t);",
+      "\tfunction isNative(value) {",
+      "\t\tvar type = typeof value;",
+      "\t\treturn type == 'function'",
+      "\t\t\t// Use `Function#toString` to bypass the value's own `toString` method",
+      "\t\t\t// and avoid being faked out.",
+      "\t\t\t? reNative.test(fnToString.call(value))",
+      "\t\t\t// Fallback to a host object check because some environments will represent",
+      "\t\t\t// things like typed arrays as DOM methods which may not conform to the",
+      "\t\t\t// normal native pattern.",
+      "\t\t\t: (value && type == 'object' && reHostCtor.test(toString.call(value))) || false;",
+      "\t}",
+      "\t// export however you want",
+      "\tmodule.exports = isNative;",
+      "}());"
+    ],
+    "description": ["判断是否为原生JS"]
+  },
+
+  "获取连接的绝对路径": {
+    "prefix": ["hs", "getAbsoluteUrl"],
+    "body": [
+      "/**",
+      " * 获取一个链接的绝对地址",
+      " * 调用: getAbsoluteUrl('url');",
+      " * 利用a标签 href 来生成完整的绝对URL",
+      " */",
+      "var getAbsoluteUrl = (function() {",
+      "\tvar a;",
+      "\treturn function(url) {",
+      "\t\tif(!a) a = document.createElement('a');",
+      "\t\ta.href = url;",
+      "\t\treturn a.href;",
+      "\t};",
+      "})();"
+    ],
+    "description": ["获取连接的绝对路径"]
+  },
+
+  "只执行一次函数": {
+    "prefix": ["hs", "once"],
+    "body": [
+      "/**",
+      " *禁止重复调用、只允许执行一次函数",
+      " * 调用：  once(function() {console.log('Fired!');});",
+      " * @param {*} fn回调函数",
+      " * @param {*} context",
+      " * @returns",
+      " */",
+      "function once(fn, context) { ",
+      "\tvar result;",
+      "\treturn function() { ",
+      "\t\tif(fn) {",
+      "\t\t\tresult = fn.apply(context || this, arguments);",
+      "\t\t\tfn = null;",
+      "\t\t}",
+      "\t\treturn result;",
+      "\t};",
+      "}"
+    ],
+    "description": ["只执行一次函数"]
+  },
+
+  "降频函数": {
+    "prefix": ["hs", "debounce"],
+    "body": [
+      "/**",
+      " *降频函数",
+      " *这个 debounce 函数在给定的时间间隔内只允许你提供的回调函数执行一次，以此降低它的执行频率。",
+      " *调用:\tdebounce(function() {}, 250); ",
+      " * @param {*} func回调函数",
+      " * @param {*} wait等待时间,推荐250",
+      " * @param {*} immediate",
+      " * @returns",
+      " */",
+      "function debounce(func, wait, immediate) {",
+      "\tvar timeout;",
+      "\treturn function() {",
+      "\t\tvar context = this, args = arguments;",
+      "\t\tvar later = function() {",
+      "\t\t\ttimeout = null;",
+      "\t\t\tif (!immediate) func.apply(context, args);",
+      "\t\t};",
+      "\t\tvar callNow = immediate && !timeout;",
+      "\t\tclearTimeout(timeout);",
+      "\t\ttimeout = setTimeout(later, wait);",
+      "\t\tif (callNow) func.apply(context, args);",
+      "\t};",
+      "};"
+    ],
+    "description": ["降频函数"]
+  },
+
+  "mui--初始化插件": {
+    "prefix": ["minit", "mui", "mui-csh", "mui-window"],
+    "body": ["mui.init()    //mui插件初始化"],
+    "description": ["初始化插件"]
+  },
+
+  "mui-DOM准备就绪时,执行函数": {
+    "prefix": ["minit", "mui", "mui-csh", "mui-window"],
+    "body": ["mui.ready()    //mui插件初始化"],
+    "description": ["初始化插件"]
+  },
+
+  "mui-创建子页面": {
+    "prefix": ["minit", "misubpage", "mui", "mui-page", "mui-window"],
+    "body": [
+      "\t//创建子页面",
+      "\tmui.init({",
+      "\t\tsubpages: [{",
+      "\t\t\turl:'${1:list.html}', //子页面HTML地址，支持本地地址和网络地址",
+      "\t\t\tid: '${2:list.html}', //子页面标志(子页面名字例：list:html)",
+      "\t\t\tstyles: {",
+      "\t\t\t\ttop: '${3:45px}', //子页面顶部位置",
+      "\t\t\t\tbottom: '${4:45px}', //子页面底部位置",
+      "\t\t\t\twidth: '${5:100%}', //子页面宽度，默认为100%",
+      "\t\t\t\theight: '${5:100%}', //子页面高度，默认为100%",
+      "\t\t\t\t......",
+      "\t\t\t},",
+      "\t\t\textras: {} //自定义扩展参数，可以用来处理页面间传值",
+      "\t\t}]",
+      "\t});"
+    ],
+    "description": ["创建子页面"]
+  },
+
+  "mui-打开新页面(简易版)": {
+    "prefix": ["minit", "mopenwindow", "mui", "mui-window", "mui-page"],
+    "body": [
+      "document.getElementById('${id}').addEventListener('tap', function() {",
+      "\t//打开页面",
+      "\tmui.openWindow({",
+      "\t\turl: '${url}', ",
+      "\t\tid:'${info}'",
+      "\t});",
+      "});"
+    ],
+    "description": ["打开新页面"]
+  },
+
+  "mui-打开新页面(详细配置)": {
+    "prefix": ["minit", "mopenwindow", "mui", "mui-window", "mui-page"],
+    "body": [
+      "\tmui.openWindow({",
+      "\t\turl: ${new - page - url},",
+      "\t\tid: ${new - page - id},",
+      "\t\tstyles: {",
+      "\t\t\ttop: ${newpage - top - position}, //新页面顶部位置",
+      "\t\t\tbottom: ${newage - bottom - position}, //新页面底部位置",
+      "\t\t\twidth: ${newpage - width}, //新页面宽度，默认为100%",
+      "\t\t\theight: ${newpage - height}, //新页面高度，默认为100%",
+      "\t\t\t......",
+      "\t\t},",
+      "\t\textras: {",
+      "\t\t\t..... //自定义扩展参数，可以用来处理页面间传值",
+      "\t\t},",
+      "\t\tcreateNew: false, //是否重复创建同样id的webview，默认为false:不重复创建，直接显示",
+      "\t\tshow: {",
+      "\t\t\tautoShow: true, //页面loaded事件发生后自动显示，默认为true",
+      "\t\t\taniShow: ${animationType}, //页面显示动画，默认为”slide-in-right“；",
+      "\t\t\tduration: ${animationTime} //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；",
+      "\t\t},",
+      "\t\twaiting: {",
+      "\t\t\tautoShow: true, //自动显示等待框，默认为true",
+      "\t\t\ttitle: '正在加载...', //等待对话框上显示的提示内容",
+      "\t\t\toptions: {",
+      "\t\t\t\twidth: ${waiting - dialog - widht}, //等待框背景区域宽度，默认根据内容自动计算合适宽度",
+      "\t\t\t\theight: ${waiting - dialog - height}, //等待框背景区域高度，默认根据内容自动计算合适高度",
+      "\t\t\t\t......",
+      "\t\t\t}",
+      "\t\t}",
+      "\t})"
+    ],
+    "description": ["打开新页面(详细配置)"]
+  },
+
+  "mui-打开带原生导航栏的新页面": {
+    "prefix": ["minit", "mopenwindow", "mui", "mui-window", "mui-page"],
+    "body": [
+      "\tdocument.getElementById('${id}').addEventListener('tap', function () {",
+      "\t\t//打开带原生导航栏的新页面",
+      "\t\tmui.openWindow({",
+      "\t\t\turl: '${url}',",
+      "\t\t\tid: '${info}',",
+      "\t\t\tstyles: { // 窗口参数 参考5+规范中的WebviewStyle,也就是说WebviewStyle下的参数都可以在此设置",
+      "\t\t\t\ttitleNView: { // 窗口的标题栏控件",
+      "\t\t\t\t\ttitleText: \"标题栏\", // 标题栏文字,当不设置此属性时，默认加载当前页面的标题，并自动更新页面的标题",
+      "\t\t\t\t\ttitleColor: \"#000000\", // 字体颜色,颜色值格式为\"#RRGGBB\",默认值为\"#000000\"",
+      "\t\t\t\t\ttitleSize: \"17px\", // 字体大小,默认17px",
+      "\t\t\t\t\tbackgroundColor: \"#F7F7F7\", // 控件背景颜色,颜色值格式为\"#RRGGBB\",默认值为\"#F7F7F7\"",
+      "\t\t\t\t\tprogress: { // 标题栏控件的进度条样式",
+      "\t\t\t\t\t\tcolor: \"#00FF00\", // 进度条颜色,默认值为\"#00FF00\"  ",
+      "\t\t\t\t\t\theight: \"2px\" // 进度条高度,默认值为\"2px\"         ",
+      "\t\t\t\t\t},",
+      "\t\t\t\t\tsplitLine: { // 标题栏控件的底部分割线，类似borderBottom",
+      "\t\t\t\t\t\tcolor: \"#CCCCCC\", // 分割线颜色,默认值为\"#CCCCCC\"  ",
+      "\t\t\t\t\t\theight: \"1px\" // 分割线高度,默认值为\"2px\"",
+      "\t\t\t\t\t}",
+      "\t\t\t\t}",
+      "\t\t\t}",
+      "\t\t});",
+      "\t});"
+    ],
+    "description": ["打开带原生导航栏的新页面"]
+  },
+
+  "mui-预加载(多个)": {
+    "prefix": ["minitpreload", "mui", "mui-yjz"],
+    "body": [
+      "\tmui.init({",
+      "\t\tpreloadPages: [{",
+      "\t\t\turl: '${prelaod - page - url}',",
+      "\t\t\tid: '${preload - page - id}',",
+      "\t\t\tstyles: {}, //窗口参数",
+      "\t\t\textras: {}, //自定义扩展参数",
+      "\t\t\tsubpages: [{}, {}] //预加载页面的子页面",
+      "\t\t}],",
+      "\t\tpreloadLimit: 5 //预加载窗口数量限制(一旦超出,先进先出)默认不限制",
+      "\t});"
+    ],
+    "description": ["预加载(多个)"]
+  },
+
+  "mui-预加载(单个)": {
+    "prefix": ["minitpreload", "mui", "mui-yjz"],
+    "body": [
+      "\tvar page = mui.preload({",
+      "\t\turl: new - page - url,",
+      "\t\tid: new - page - id, //默认使用当前页面的url作为id",
+      "\t\tstyles: {}, //窗口参数",
+      "\t\textras: {} //自定义扩展参数",
+      "\t});"
+    ],
+    "description": ["预加载(单个)"]
+  },
+
+  "mui-判断预加载是否成功": {
+    "prefix": ["minitpreload", "mui", "mui-yjz"],
+    "body": [
+      "\t//A页面中预加载B页面，则在A页面完全加载（可通过setTimeout模拟）后，打印当前应用所有webview，看是否包含B页面的url",
+      "\tmui.plusReady(function () {",
+      "\t\tsetTimeout(function () {",
+      "\t\t\tvar array = plus.webview.all();",
+      "\t\t\tif (array) {",
+      "\t\t\t\tfor (var i = 0, len = array.length; i < len; i++) {",
+      "\t\t\t\t\tconsole.log(array[i].getURL());",
+      "\t\t\t\t}",
+      "\t\t\t}",
+      "\t\t}, 5000)",
+      "\t})"
+    ],
+    "description": ["判断预加载是否成功"]
+  },
+
+  "mui-事件绑定": {
+    "prefix": ["mmon", "mui", "mui-on"],
+    "body": [
+      "mui('${1:父盒子}').on('tap','${2:子盒子}',function(){",
+      "\tconsole.log(1);",
+      "})"
+    ],
+    "description": ["mui--事件绑定"]
+  },
+
+  "mui-事件取消": {
+    "prefix": ["mmoff", "mui", "mui-off"],
+    "body": ["off()"],
+    "description": ["mui-事件取消"]
+  },
+
+  "mui-事件自动触发": {
+    "prefix": ["mtrigger", "mui", "mui-zd"],
+    "body": ["mui.trigger(${1:触发事件的DOM元素},'tap');"],
+    "description": ["mui-事件自动触发"]
+  },
+
+  "mui-手势事件配置": {
+    "prefix": ["minit", "mui", "mui-sj"],
+    "body": [
+      "mui.init({",
+      "\tgestureConfig: {",
+      "\t\ttap: true, //单击屏幕\t默认为true",
+      "\t\tdoubletap: true, //双击屏幕\t默认为false",
+      "\t\tlongtap: true, //长按屏幕\t默认为false",
+      "\t\tswipe: true, //滑动\t默认为true",
+      "\t\tdrag: true, //拖动\t默认为true",
+      "\t\thold: false, //按住屏幕\t默认为false，不监听",
+      "\t\trelease: false //离开屏幕\t默认为false，不监听",
+      "\t}",
+      "});"
+    ],
+    "description": ["mui-手势事件配置"]
+  },
+
+  "mui-手势事件": {
+    "prefix": ["mui", "mui-sj"],
+    "body": [
+      "${1|tap,doubletap,longtap,hold,release,swipeleft,swiperight,swipeup,swipedown,dragstart,drag,dragend|}"
+    ],
+    "description": ["mui-手势事件"]
+  },
+
+  "mui-下拉刷新(单webview)": {
+    "prefix": ["mui", "mui-sx"],
+    "body": [
+      "mui.init({",
+      "\tpullRefresh: {",
+      "\t\tcontainer: \"#refreshContainer\", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等",
+      "\t\tdown: {",
+      "\t\t\tstyle: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式",
+      "\t\t\tcolor: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色",
+      "\t\t\theight: '50px', //可选,默认50px.下拉刷新控件的高度,",
+      "\t\t\trange: '100px', //可选 默认100px,控件可下拉拖拽的范围",
+      "\t\t\toffset: '0px', //可选 默认0px,下拉刷新控件的起始位置",
+      "\t\t\tauto: true, //可选,默认false.首次加载自动上拉刷新一次",
+      "\t\t\tcallback: pulldownRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；",
+      "\t\t}",
+      "\t}",
+      "});",
+      "//下面代码放到pulldownRefresh回调函数中",
+      "//注意，加载完新数据后，必须执行如下代码，注意：若为ajax请求，则需将如下代码放置在处理完ajax响应数据之后",
+      "//没有更多内容了，endPulldown 传入true， 不再执行下拉刷新",
+      "mui('#refreshContainer').pullRefresh().endPulldown();"
+    ],
+    "description": ["mui-下拉刷新(单webview)"]
+  },
+
+  "mui-下拉刷新(双webview)": {
+    "prefix": ["mui", "mui-sx"],
+    "body": [
+      "两个页面都需要按照这个DOM结构写",
+      "<!--下拉刷新容器-->",
+      "<div id=\"refreshContainer\" class=\"mui-content mui-scroll-wrapper\">",
+      "\t<div class=\"mui-scroll\">",
+      "\t\t<!--数据列表-->",
+      "\t\t<ul class=\"mui-table-view mui-table-view-chevron\">",
+      "\t\t</ul>",
+      "\t</div>",
+      "</div>",
+      "<script>",
+      "\tmui.init({",
+      "\t\tsubpages: [{",
+      "\t\t\turl: pullrefresh - subpage - url, //下拉刷新内容页面地址",
+      "\t\t\tid: pullrefresh - subpage - id, //内容页面标志",
+      "\t\t\tstyles: {",
+      "\t\t\t\ttop: subpage - top - position, //内容页面顶部位置,需根据实际页面布局计算，若使用标准mui导航，顶部默认为48px；",
+      "\t\t\t\t..... //其它参数定义",
+      "\t\t\t}",
+      "\t\t}]",
+      "\tpullRefresh : {",
+      "\t\tcontainer:\"#refreshContainer\",//下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等",
+      "\t\tdown : {",
+      "\t\t\theight:50,//可选,默认50.触发下拉刷新拖动距离,",
+      "\t\t\tauto: true,//可选,默认false.首次加载自动下拉刷新一次",
+      "\t\t\tcontentdown : \"下拉可以刷新\",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容",
+      "\t\t\tcontentover : \"释放立即刷新\",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容",
+      "\t\t\tcontentrefresh : \"正在刷新...\",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容",
+      "\t\t\tcallback :pullfresh-function //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；",
+      "\t\t}",
+      "\t}",
+      "\t});",
+      "//下面代码放到pulldownRefresh回调函数中",
+      "//注意，加载完新数据后，必须执行如下代码，注意：若为ajax请求，则需将如下代码放置在处理完ajax响应数据之后",
+      "//没有更多内容了，endPulldown 传入true， 不再执行下拉刷新",
+      "mui('#refreshContainer').pullRefresh().endPulldown();",
+      "</script>"
+    ],
+    "description": ["mui-下拉刷新(单webview)"]
+  },
+
+  "mui-上拉加载": {
+    "prefix": ["mui", "mui-jz"],
+    "body": [
+      "//上拉加载初始化",
+      "mui.init({",
+      "\tpullRefresh: {",
+      "\t\tcontainer: refreshContainer, //待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等",
+      "\t\tup: {",
+      "\t\t\theight: 50, //可选.默认50.触发上拉加载拖动距离",
+      "\t\t\tauto: true, //可选,默认false.自动上拉加载一次",
+      "\t\t\tcontentrefresh: \"正在加载...\", //可选，正在加载状态时，上拉加载控件上显示的标题内容",
+      "\t\t\tcontentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；",
+      "\t\t\tcallback: pullRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；",
+      "\t\t}",
+      "\t}",
+      "});",
+      "function pullRefresh() {",
+      "\t//业务逻辑代码，比如通过ajax从服务器获取新数据；",
+      "\t......",
+      "\t//注意：",
+      "\t//1、加载完新数据后，必须执行如下代码，true表示没有更多数据了：",
+      "\t//2、若为ajax请求，则需将如下代码放置在处理完ajax响应数据之后",
+      "\t......",
+      "\t//是否还有更多数据；若还有更多数据，则传入false; 否则传入true，之后滚动条滚动到底时，将不再显示“上拉显示更多”的提示语，而显示“没有更多数据了”的提示语；",
+      "\tthis.endPullupToRefresh(true | false);",
+      "}"
+    ],
+    "description": ["mui-上拉加载"]
+  },
+
+  "重置上拉加载": {
+    "prefix": ["mui", "mui-jz"],
+    "body": [
+      "//pullup-container为在mui.init方法中配置的pullRefresh节点中的container参数；",
+      "//注意：refresh()中需传入true",
+      "mui('#pullup-container').pullRefresh().refresh(true);"
+    ],
+    "description": [
+      "当前类别已无更多数据，但切换到另外一个类别后，应支持继续上拉加载"
+    ]
+  },
+
+  "禁用上拉刷新": {
+    "prefix": ["mui", "mui-jz"],
+    "body": [
+      "//pullup-container为在mui.init方法中配置的pullRefresh节点中的container参数；",
+      "mui('#pullup-container').pullRefresh().disablePullupToRefresh();"
+    ],
+    "description": [
+      "列表数据过少时，不想显示“上拉显示更多”、“没有更多数据”的提示语"
+    ]
+  },
+
+  "启用上拉刷新": {
+    "prefix": ["mui", "mui-jz"],
+    "body": [
+      "//pullup-container为在mui.init方法中配置的pullRefresh节点中的container参数；",
+      "mui('#pullup-container').pullRefresh().enablePullupToRefresh();"
+    ],
+    "description": [
+      "使用disablePullupToRefresh()方法禁用上拉加载后，可通过enablePullupToRefresh()方法再次启用上拉加载"
+    ]
+  },
+
+  "mui-双击快速回到顶部": {
+    "prefix": ["mui", "mui-back"],
+    "body": [
+      "/* ",
+      "双击标题栏，列表快速回滚到顶部",
+      "*/",
+      "var contentWebview = null;",
+      "//监听标题栏的双击事件",
+      "document.querySelector('header').addEventListener('doubletap',function () {",
+      "\tif(contentWebview==null){",
+      "\t\tcontentWebview = plus.webview.currentWebview().children()[0];",
+      "\t}",
+      "\t//内容区滚动到顶部",
+      "\tcontentWebview.evalJS(\"mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)\");",
+      "});"
+    ],
+    "description": ["mui-双击快速回到顶部"]
+  },
+
+  "mui-ajax(完整版)": {
+    "prefix": ["mui", "majax"],
+    "body": [
+      "mui.ajax('url', {",
+      "\tdata: {},  // {key:value}",
+      "\tdataType: 'json', // json/xml/html/script/text",
+      "\ttype: 'post', //HTTP请求类型",
+      "\ttimeout: 5000, //超时时间设置为5秒；",
+      "\theaders: {",
+      "\t\t'Content-Type': 'application/json'",
+      "\t},",
+      "\tsuccess: function (data) {",
+      "\t\t//成功后回调函数",
+      "\t},",
+      "\terror: function (xhr, type, errorThrown) { //异常处理；",
+      "\t\t//xhr：xhr实例对象",
+      "\t\t//type：错误描述，可取值：\"timeout\", \"error\", \"abort\", \"parsererror\"、\"null\"",
+      "\t\t//errorThrown：可捕获的异常对象",
+      "\t\tconsole.log(type);",
+      "\t}",
+      "});"
+    ],
+    "description": ["mui-ajax"]
+  },
+
+  "mui-ajax(简化版)": {
+    "prefix": ["mui", "majax"],
+    "body": [
+      "//直接使用POST|GET请求方式向服务器发送数据、且不处理timeout和异常",
+      "mui.${1|post,get|}('url', {key: 'value'}, function (data) {",
+      "\t//success的回调函数",
+      "}, 'json');"
+    ],
+    "description": ["mui-ajax(post)"]
+  },
+
+  "mui-ajax(超简化getJSON)": {
+    "prefix": ["mui", "majax"],
+    "body": [
+      "//mui.getJSON()方法是在mui.get()方法基础上的更进一步简化，限定返回json格式的数据",
+      "mui.getJSON('url',{key:'value'},function(data){",
+      "\t\t//success的回调函数",
+      "\t}",
+      ");"
+    ],
+    "description": ["mui-ajax(getJSON)"]
+  },
+
+  "mui-警告框": {
+    "prefix": ["mmsg", "mui", "mui-tsk"],
+    "body": [
+      "mui.alert(${1:内容}, ${2:标题}, ${3:按钮显示的内容}, ${4:回调函数})"
+    ],
+    "description": ["警告框"]
+  },
+
+  "mui-确认框": {
+    "prefix": ["mmsg", "mui", "mui-tsk"],
+    "body": [
+      "mui.confirm(${1:内容}, ${2:标题}, ${3:按钮显示的内容}, ${4:回调函数}) //回调获取用户选择: (res) => {console.log(res)}"
+    ],
+    "description": ["确认框"]
+  },
+
+  "mui-对话输入框": {
+    "prefix": ["mmsg", "mui", "mui-tsk"],
+    "body": [
+      "mui.prompt(${1:内容}, ${2:编辑框显示的提示文字}, ${2:标题}, ${3:按钮显示的内容}, ${4:回调函数}  //回调获取用户操作: (res) => {console.log(res))"
+    ],
+    "description": ["对话输入框"]
+  },
+
+  "mui-提示框(自动消失)": {
+    "prefix": ["mmsg", "mui", "mui-tsk"],
+    "body": [
+      "mui.toast(${1:提示内容}, {duration: '${2|long,short|}',type: 'div'})"
+    ],
+    "description": ["提示框(自动消失)"]
+  },
+
+  "mui-跳转打开新页面": {
+    "prefix": ["mwindow"],
+    "body": ["\t\tmui.openWindow({url: '${url}' });"],
+    "description": ["mui-跳转打开新页面"]
+  },
+
+  "常用正则表达式规则": {
+    "prefix": ["help"],
+    "body": [
+      "// \\d匹配数字",
+      "// \\D匹配非数字",
+      "// \\w匹配数字字母下划线",
+      "// \\W匹配非数字字母下划线",
+      "// \\s匹配空白符",
+      "// \\S匹配非空白符",
+      "// .匹配非空白符的单个字符",
+      "// ^以什么开头",
+      "// $以什么结束",
+      "// *前面的字符出现0次以上",
+      "// +前面的字符出现最少1次",
+      "// ?前面的字符出现0或1次",
+      "// {n}前面的字符出现n次",
+      "// {n,}前面的字符至少出现n次",
+      "// {n,m}前面字符至少出现n次,最多m次",
+      "// ()分组"
+    ],
+    "description": ["常用正则表达式规则"]
+  },
+  "提取单个": {
+    "prefix": ["tq", "exec", "get", "js"],
+    "body": ["${1:reg}.exec(${2:str})"],
+    "description": ["提取单个(reg方法)"]
+  },
+
+  "提取多个": {
+    "prefix": ["tq", "match", "get", "js"],
+    "body": ["${1:str}.match(${2:reg})"],
+    "description": ["提取多个(str方法)"]
+  },
+
+  "分组提取": {
+    "prefix": ["tq", "fztq", "get", "js"],
+    "body": [
+      "//正则表达式用()分组",
+      "${1:reg}.test(${2:str})  //1.调用reg",
+      "RegExp.$(第几组)"
+    ],
+    "description": ["分组提取"]
+  },
+
+  "分割提取split(字符串分割)": {
+    "prefix": ["split", "fg", "dx", "get", "js"],
+    "body": ["split(${1:(正则表达式)以原字符串中的什么关键字分割})"],
+    "description": [
+      "用法:",
+      "原字符串.split(正则表达式/以原字符串中的什么关键字分割)"
+    ]
+  },
+
+  "汉字": {
+    "prefix": ["zzbds"],
+    "body": ["// 汉字", "^[\\u4e00-\\u9fa5]{0,}$"],
+    "description": ["汉字"]
+  },
+
+  "英文和数字": {
+    "prefix": ["zzbds"],
+    "body": ["//英文和数字", "^[A-Za-z0-9]+$"],
+    "description": ["英文和数字"]
+  },
+
+  "长度为3-20的所有字符": {
+    "prefix": ["zzbds"],
+    "body": ["//长度为3-20的所有字符", "^.{3,20}$"],
+    "description": ["长度为3-20的所有字符"]
+  },
+
+  "由26个英文字母组成的字符串": {
+    "prefix": ["zzbds"],
+    "body": ["//由26个英文字母组成的字符串", "^[A-Za-z]+$"],
+    "description": ["由26个英文字母组成的字符串"]
+  },
+
+  "由26个大写英文字母组成的字符串": {
+    "prefix": ["zzbds"],
+    "body": ["//由26个大写英文字母组成的字符串", "^[A-Z]+$"],
+    "description": ["由26个大写英文字母组成的字符串"]
+  },
+
+  "由26个小写英文字母组成的字符串": {
+    "prefix": ["zzbds"],
+    "body": ["//由26个小写英文字母组成的字符串", "^[a-z]+$"],
+    "description": ["由26个小写英文字母组成的字符串"]
+  },
+
+  "由数字和26个英文字母组成的字符串": {
+    "prefix": ["zzbds"],
+    "body": ["//由数字和26个英文字母组成的字符串", "^[A-Za-z0-9]+$"],
+    "description": ["由数字和26个英文字母组成的字符串"]
+  },
+
+  "由数字、26个英文字母或者下划线组成的字符串": {
+    "prefix": ["zzbds"],
+    "body": ["//由数字、26个英文字母或者下划线组成的字符串", "^\\w+$"],
+    "description": ["由数字、26个英文字母或者下划线组成的字符串"]
+  },
+
+  "中文、英文、数字包括下划线": {
+    "prefix": ["zzbds"],
+    "body": ["//中文、英文、数字包括下划线", "^[\\u4E00-\\u9FA5A-Za-z0-9_]+$"],
+    "description": ["中文、英文、数字包括下划线"]
+  },
+
+  "中文、英文、数字但不包括下划线等符号": {
+    "prefix": ["zzbds"],
+    "body": [
+      "//中文、英文、数字但不包括下划线等符号",
+      "^[\\u4E00-\\u9FA5A-Za-z0-9]+$"
+    ],
+    "description": ["中文、英文、数字但不包括下划线等符号"]
+  },
+
+  "含有^%&',;=?$\\\"等字符": {
+    "prefix": ["zzbds"],
+    "body": ["//含有^%&',;=?$\\\"等字符", "[^%&',;=?$\\x22]+"],
+    "description": ["含有^%&',;=?$\\\"等字符"]
+  },
+
+  "含有~的字符": {
+    "prefix": ["zzbds"],
+    "body": ["//含有~的字符", "[^~\\x22]+"],
+    "description": ["含有~的字符"]
+  },
+
+  "Email地址": {
+    "prefix": ["zzbds"],
+    "body": [
+      "//匹配Email地址",
+      "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$"
+    ],
+    "description": ["匹配Email地址", "表单验证时很实用"]
+  },
+
+  "域名": {
+    "prefix": ["zzbds"],
+    "body": [
+      "//域名",
+      "[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(/.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/.?"
+    ],
+    "description": ["域名"]
+  },
+
+  "InternetURL": {
+    "prefix": ["zzbds"],
+    "body": ["//InternetURL", "[a-zA-z]+://[^s]*"],
+    "description": [
+      "InternetURL",
+      "网上流传的版本功能很有限，上面这个基本可以满足需求"
+    ]
+  },
+
+  "匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "//字母开头，允许5-16字节，允许字母数字下划线",
+      "^[a-zA-Z][a-zA-Z0-9_]{4,15}$"
+    ],
+    "description": [
+      "匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)",
+      "表单验证时很实用"
+    ]
+  },
+
+  "手机号码": {
+    "prefix": ["zzbds"],
+    "body": [
+      "//手机号码",
+      "^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$, //标准",
+      "^1[356789]\\d{9}$ //1开头,第二位为356789"
+    ],
+    "description": ["手机号码"]
+  },
+
+  "电话号码": {
+    "prefix": ["zzbds"],
+    "body": ["//电话号码", "^(\\(\\d{3,4}-)|\\d{3.4}-)?\\d{7,8}$"],
+    "description": [
+      "电话号码",
+      "XXX-XXXXXXX、XXXX-XXXXXXXX、XXX-XXXXXXX、XXX-XXXXXXXX、XXXXXXX 和 XXXXXXXX"
+    ]
+  },
+
+  "电话号码(支持手机号,3-4位区号,7-8位直播号,1-4位分机)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "//电话号码(支持手机号,3-4位区号,7-8位直播号,1-4位分机)",
+      "((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)"
+    ],
+    "description": ["电话号码(支持手机号,3-4位区号,7-8位直播号,1-4位分机)"]
+  },
+
+  "匹配国内电话号码": {
+    "prefix": ["zzbds"],
+    "body": ["//匹配国内电话号码", "\\d{3}-\\d{8}|\\d{4}-\\d{7}"],
+    "description": [
+      "匹配国内电话号码",
+      "匹配形式如 0511-4405222 或 021-87888822"
+    ]
+  },
+
+  "密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "//密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)",
+      "^[a-zA-Z]\\w{5,17}$"
+    ],
+    "description": [
+      "密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)"
+    ]
+  },
+
+  "强密码(必须包含大小写字母和数字的组合，不能使用特殊字符，长度在 8-10 之间)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "//强密码(必须包含大小写字母和数字的组合，不能使用特殊字符，长度在 8-10 之间)",
+      "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,10}$"
+    ],
+    "description": [
+      "强密码(必须包含大小写字母和数字的组合，不能使用特殊字符，长度在 8-10 之间)"
+    ]
+  },
+
+  "强密码(必须包含大小写字母和数字的组合，可以使用特殊字符，长度在8-10之间)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "//强密码(必须包含大小写字母和数字的组合，可以使用特殊字符，长度在8-10之间)",
+      "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$"
+    ],
+    "description": [
+      "强密码(必须包含大小写字母和数字的组合，可以使用特殊字符，长度在8-10之间)"
+    ]
+  },
+
+  "日期格式": {
+    "prefix": ["zzbds"],
+    "body": [
+      "//日期",
+      "^19\\d{2}|20[01]\\d-(0?[1-9]|1[012])-(1\\d|2\\d|3[01]|0?[1-9]) //1900年开始到2020年",
+      "^\\d{4}-\\d{1,2}-\\d{1,2} //0000-(0)00-(0)00"
+    ],
+    "description": ["日期格式"]
+  },
+
+  "一年的12个月(01～09和1～12)": {
+    "prefix": ["zzbds"],
+    "body": ["//一年的12个月(01～09和1～12)", "^(0?[1-9]|1[0-2])$"],
+    "description": ["一年的12个月(01～09和1～12)"]
+  },
+
+  "一个月的31天(01～09和1～31)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "//一个月的31天(01～09和1～31)",
+      "^((0?[1-9])|((1|2)[0-9])|30|31)$"
+    ],
+    "description": ["一个月的31天(01～09和1～31)"]
+  },
+
+  "匹配腾讯QQ号": {
+    "prefix": ["zzbds"],
+    "body": ["//QQ号", "^[1-9][0-9]{4,10}"],
+    "description": ["匹配腾讯QQ号", "腾讯QQ号从10000开始"]
+  },
+
+  "匹配中国邮政编码": {
+    "prefix": ["zzbds"],
+    "body": ["//匹配中国邮政编码", "[1-9]\\d{5}(?!\\d)"],
+    "description": ["匹配中国邮政编码", "中国邮政编码为6位数字"]
+  },
+
+  "匹配身份证": {
+    "prefix": ["zzbds"],
+    "body": ["//匹配身份证", "^\\d{15}$|^\\d{18}$|^\\d{17}[0-9xX]$"],
+    "description": ["匹配身份证", "中国的身份证为15位或18位"]
+  },
+
+  "匹配ip地址": {
+    "prefix": ["zzbds"],
+    "body": [
+      "//匹配ip地址",
+      "((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d))"
+    ],
+    "description": ["匹配ip地址"]
+  },
+
+  "xml文件": {
+    "prefix": ["zzbds"],
+    "body": ["//xml文件", "^([a-zA-Z]+-?)+[a-zA-Z0-9]+\\.[x|X][m|M][l|L]$"],
+    "description": ["xml文件"]
+  },
+
+  "空白行": {
+    "prefix": ["zzbds"],
+    "body": ["//空白行", "\\n\\s*\\r"],
+    "description": ["空白行", "可以用来删除空白行"]
+  },
+
+  "正整数": {
+    "prefix": ["zzbds", "zznum"],
+    "body": ["//正整数", "^[1-9]\\d*$"],
+    "description": ["匹配特定数字(正整数)"]
+  },
+
+  "负整数": {
+    "prefix": ["zzbds", "zznum"],
+    "body": ["//负整数", "^-[1-9]\\d*$"],
+    "description": ["匹配特定数字(负整数)"]
+  },
+
+  "整数": {
+    "prefix": ["zzbds", "zznum"],
+    "body": ["//整数", "^-?[1-9]\\d*$"],
+    "description": ["匹配特定数字(整数)"]
+  },
+
+  "非负整数[正整数 + 0]": {
+    "prefix": ["zzbds", "zznum"],
+    "body": ["//非负整数[正整数 + 0]", "[1-9]\\d*|0$"],
+    "description": ["匹配特定数字(非负整数[正整数 + 0])"]
+  },
+
+  "非正整数[负整数 + 0]": {
+    "prefix": ["zzbds", "zznum"],
+    "body": ["//非正整数[负整数 + 0]", "^-[1-9]\\d*|0$"],
+    "description": ["匹配特定数字(非正整数[负整数 + 0])"]
+  },
+
+  "正浮点数": {
+    "prefix": ["zzbds", "zznum"],
+    "body": ["//正浮点数", "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*$"],
+    "description": ["匹配特定数字(正浮点数)"]
+  },
+
+  "负浮点数": {
+    "prefix": ["zzbds", "zznum"],
+    "body": ["//负浮点数", "^-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*)$"],
+    "description": ["匹配特定数字(负浮点数)"]
+  },
+
+  "浮点数": {
+    "prefix": ["zzbds", "zznum"],
+    "body": ["//浮点数", "^-?([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0)$"],
+    "description": ["匹配特定数字(浮点数)"]
+  },
+
+  "非负浮点数[正浮点数 + 0]": {
+    "prefix": ["zzbds", "zznum"],
+    "body": [
+      "//非负浮点数[正浮点数 + 0]",
+      "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0$"
+    ],
+    "description": ["匹配特定数字(非负浮点数[正浮点数 + 0]))"]
+  },
+
+  "非正浮点数[负浮点数 + 0]": {
+    "prefix": ["zzbds", "zznum"],
+    "body": [
+      "//非正浮点数[负浮点数 + 0]",
+      "^(-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*))|0?.0+|0$"
+    ],
+    "description": ["匹配特定数字(非正浮点数[负浮点数 + 0])"]
+  },
+
+  "由26个英文字母组成": {
+    "prefix": ["zzbds", "zzstr"],
+    "body": ["//由26个英文字母组成", "^[A-Za-z]+$"],
+    "description": ["匹配特定字符串(由26个英文字母组成)"]
+  },
+
+  "26个英文字母的大写组成": {
+    "prefix": ["zzbds", "zzstr"],
+    "body": ["//26个英文字母的大写组成", "^[A-Z]+$"],
+    "description": ["匹配特定字符串(26个英文字母的大写组成)"]
+  },
+
+  "26个英文字母的小写组成": {
+    "prefix": ["zzbds", "zzstr"],
+    "body": ["//26个英文字母的小写组成", "^[a-z]+$"],
+    "description": ["匹配特定字符串(26个英文字母的小写组成)"]
+  },
+
+  "数字和26个英文字母组成": {
+    "prefix": ["zzbds", "zzstr"],
+    "body": ["//数字和26个英文字母组成", "^[A-Za-z0-9]+$"],
+    "description": ["匹配特定字符串(数字和26个英文字母组成)"]
+  },
+
+  "由数字、26个英文字母或者下划线组成": {
+    "prefix": ["zzbds", "zzstr"],
+    "body": ["//由数字、26个英文字母或者下划线组成", "^w+$"],
+    "description": ["匹配特定字符串(由数字、26个英文字母或者下划线组成)"]
+  },
+  "sessionStorage本地存储": {
+    "prefix": ["dc", "storage", "js"],
+    "body": [
+      "//sessionStorage本地存储(5M)",
+      "//sessionStorage.setItem(key,value);存储",
+      "//sessionStorage.getItem(key);得到",
+      "//sessionStorage.removeItem(key);删除数据",
+      "//sessionStorage.clear()删除全部数据",
+      "window.sessionStorage.${1|setItem,getItem,removeItem,clear|}('${2:key(setItem时需要输入key,value)}');"
+    ],
+    "description": [
+      "sessionStorage本地存储(5M)",
+      "sessionStorage.setItem(key,value);存储",
+      "sessionStorage.getItem(key);得到",
+      "sessionStorage.removeItem(key);删除数据",
+      "sessionStorage.clear()删除全部数据"
+    ]
+  },
+
+  "localStorage本地存储": {
+    "prefix": ["dc", "storage", "js"],
+    "body": [
+      "//localStorage本地存储(20M)",
+      "//localStorage.setItem(key,value);存储",
+      "//localStorage.getItem(key);得到",
+      "//localStorage.removeItem(key);删除数据",
+      "//localStorage.clear()删除全部数据",
+      "window.localStorage.${1|setItem,getItem,removeItem,clear|}('${2:key(setItem时需要输入key,value)}');"
+    ],
+    "description": [
+      "localStorage本地存储(20M)",
+      "localStorage.setItem(key,value);存储",
+      "localStorage.getItem(key);得到",
+      "localStorage.removeItem(key);删除数据",
+      "localStorage.clear()删除全部数据"
+    ]
+  },
+
+  "classList元素类名操作": {
+    "prefix": ["jqclassList"],
+    "body": [
+      "$(${1:选择器}).classList.$(${2|add,remove,toggle|})('${3:类名}')"
+    ],
+    "description": ["classList元素类名操作", "toggle切换类(有变无,无变有)"]
+  },
+
+  "touch手指触摸事件": {
+    "prefix": ["touch", "dc"],
+    "body": ["${1|touchstart,touchmove,touchend|}"],
+    "description": [
+      "touchstart触摸开始",
+      "touchmove手指移动",
+      "touchend手指离开"
+    ]
+  },
+
+  "touch手指触摸事件对象属性": {
+    "prefix": ["touch", "dc"],
+    "body": [
+      "//touches 正在触摸屏幕的所有手指的列表 ",
+      "//targetTouches 正在触摸当前DOM元素的手指列表",
+      "//changedTouches 手指状态发生了改变的列表",
+      "//targetTouches[0] 得到正在触摸dom元素的第一个手指的相关信息",
+      "${1|touches,targetTouches,changedTouches|}"
+    ],
+    "description": [
+      "touches 正在触摸屏幕的所有手指的列表 ",
+      "targetTouches 正在触摸当前DOM元素的手指列表",
+      "changedTouches 手指状态发生了改变的列表",
+      "targetTouches[0] 得到正在触摸dom元素的第一个手指的相关信息"
+    ]
+  },
+
+  "物理像素比": {
+    "prefix": ["dpr", "devicePixelRatio", "dc", "js"],
+    "body": ["devicePixelRatio"],
+    "description": ["物理像素比"]
+  },
+
+  "浏览器的信息navigator对象": {
+    "prefix": ["navigator", "dx", "js"],
+    "body": ["navigator()"],
+    "description": [
+      "navigator对象",
+      "包含有关浏览器的信息",
+      "根据浏览器不同实现跳转快捷键tz"
+    ]
+  },
+
+  "offset相关的属性": {
+    "prefix": ["offset", "dc", "get"],
+    "body": [
+      "//offsetParent：获取带有定位的最近父元素",
+      "offset${1|Width,Height,Left,Top,Parent|}"
+    ],
+    "description": [
+      "offset相关的属性",
+      "offsetParent：获取带有定位的最近父元素"
+    ]
+  },
+
+  "滚动": {
+    "prefix": ["scorll", "dc", "js"],
+    "body": [
+      "//页面滚动兼容写法",
+      "var docScrollTop = document.documentElement.scrollTop || document.body.scrollTop",
+      "${1:window}.scorll(${2:X轴(不要加单位)},${3:Y轴(不要加单位)})"
+    ],
+    "description": [
+      "scorll滚动事件",
+      "注意scorll(x,y)[这里的坐标不要加单位]",
+      "页面滚动事件源(监听对象)document",
+      "页面被卷去的头部兼容性解决方案getScroll"
+    ]
+  },
+
+  "client元素可视区相关的属性": {
+    "prefix": ["client", "dc", "js"],
+    "body": ["client${1|Width,Height,Left,Top|}"],
+    "description": [
+      "client相关的属性",
+      "元素可视区相关信息",
+      "width,height包括padding,不包含边框,返回值不带单位"
+    ]
+  },
+
+  "scroll元素实际内容的相关的属性": {
+    "prefix": ["scroll", "dc", "js"],
+    "body": ["scroll${1|Width,Height,Left,Top|}"],
+    "description": [
+      "scroll相关的属性",
+      "元素实际内容的相关信息",
+      "常配合scroll滚动事件",
+      "Top,Left内容滚动被卷去的大小",
+      "width,height包括padding,不包含边框,返回值不带单位"
+    ]
+  },
+
+  "substring截取字符串": {
+    "prefix": ["jqsubstring", "get"],
+    "body": ["substring(${1:从下标多少开始})"],
+    "description": [
+      "substring截取字符串",
+      "例\"abcd\"从第二个开始截取substring(1);返回bcd"
+    ]
+  },
+
+  "location本地对象方法": {
+    "prefix": ["location", "dc", "dx", "js"],
+    "body": [
+      "//assgin记录浏览历史，所以可以实现后退功能",
+      "//replace不记录浏览历史替换当前页，不能后退",
+      "//reload()刷新页面,里面如果参数为true，强制刷新ctrl+f5",
+      "location.${1|assign,replace,reload|}(${2:url地址})"
+    ],
+    "description": [
+      "location的方法",
+      "assgin记录浏览历史，所以可以实现后退功能",
+      "replace不记录浏览历史替换当前页，不能后退",
+      "reload()刷新页面,里面如果参数为true，强制刷新ctrl+f5"
+    ]
+  },
+
+  "location对象属性": {
+    "prefix": ["location", "dc", "dx", "js"],
+    "body": [
+      "//href:设置或者获取地址栏信息路径",
+      "//search：获取地址栏参数 例：(?name=zj&age=18)",
+      "//host:返回主机（域名）",
+      "//port:返回端口号",
+      "//pathname:返回路径",
+      "//hash：返回片段 #后面的内容，常见链接 锚点",
+      "location.${1|href,search,host,port,pathname,hash|}"
+    ],
+    "description": [
+      "location对象属性",
+      "href:设置或者获取地址栏信息路径",
+      "search：获取地址栏参数 例：(?name=zj&age=18)",
+      "host:返回主机（域名）",
+      "port:返回端口号",
+      "pathname:返回路径",
+      "hash：返回片段 #后面的内容，常见链接 锚点"
+    ]
+  },
+
+  "停止定时器[Timeout]": {
+    "prefix": ["clear", "stop", "clearTimeout", "dx", "dsq"],
+    "body": ["clearTimeout(${1:需要清除的定时器})"],
+    "description": ["停止定时器clearTimeout"]
+  },
+
+  "停止定时器[Interval]": {
+    "prefix": ["clear", "stop", "clearInterval", "dx", "dsq"],
+    "body": ["clearInterval(${1:需要清除的定时器})"],
+    "description": ["停止定时器clearInterval"]
+  },
+
+  "定时器[执行一次]": {
+    "prefix": ["dsq", "dx", "setTimeout"],
+    "body": ["var timer = setTimeout(${2:调用函数},${1:延时时间(毫秒)})"],
+    "description": [
+      "[时间到执行一次]setTimeout(调用函数,延时时间)",
+      "延时时间略,默认事件为0",
+      "调用函数可以直接写函数或者函数名",
+      "常给定时器赋值一个标识符:var time1 = setTimeout(调用函数,延时时间)"
+    ]
+  },
+
+  "定时器[重复执行]": {
+    "prefix": ["dsq", "dx", "setInterval"],
+    "body": ["var timer = setInterval(${2:调用函数},${1:相隔时间(毫秒)})"],
+    "description": [
+      "[重复执行]setInterval(调用函数,相隔时间)",
+      "调用函数可以直接写函数或者函数名",
+      "常给定时器赋值一个标识符:var time1 = setInterval(调用函数,相隔时间)"
+    ]
+  },
+
+  "当浏览器窗口大小发生变化触发事件": {
+    "prefix": ["resize", "dc", "sj"],
+    "body": ["resize"],
+    "description": ["当浏览器窗口大小发生变化触发事件"]
+  },
+
+  "打印一个对象的所有属性": {
+    "prefix": ["dir", "dx"],
+    "body": ["console.dir()"],
+    "description": ["打印一个对象的所有属性"]
+  },
+
+  "鼠标事件": {
+    "prefix": ["blur", "mouse", "focus", "dc", "sb"],
+    "body": ["${1|focus,blur|}"],
+    "description": ["鼠标事件", "focus得到焦点", "blur失去焦点"]
+  },
+
+  "键盘事件": {
+    "prefix": ["key", "jp", "dc"],
+    "body": ["key${1|up,down,press|}"],
+    "description": [
+      "键盘事件",
+      "keydown键盘按下时触发",
+      "keyup键盘弹起时触发",
+      "[H5新增]keypress键盘按下时触发[不能识别功能键ctrl Shift等]",
+      "执行顺序keydown-keypress-keyup",
+      "keyCode返回ASCII码,keyup和keydown不区分大小写"
+    ]
+  },
+
+  "event键盘事件对象": {
+    "prefix": ["key", "dc", "dx"],
+    "body": ["keyCode"],
+    "description": [
+      "键盘事件对象",
+      "用法event.keyCode",
+      "keyCode返回ASCII码",
+      "keypress事件区分字母大小写",
+      "keyup和keydown不区分大小写"
+    ]
+  },
+
+  "去除字符串中的空格": {
+    "prefix": ["get", "trim"],
+    "body": ["$.trim(${str})"],
+    "description": ["去除字符串中的空格"]
+  },
+
+  "第一个子元素": {
+    "prefix": ["firstElementChild", "dom"],
+    "body": ["${1:父元素}.firstElementChild"],
+    "description": ["第一个子元素", "父元素.firstElementChild"]
+  },
+
+  "最后一个子元素": {
+    "prefix": ["lastElementChild", "dom"],
+    "body": ["${1:父元素}.lastElementChild"],
+    "description": ["最后一个子元素", "父元素.firstElementChild"]
+  },
+
+  "page鼠标在页面文档的x和y坐标": {
+    "prefix": ["page", "zb"],
+    "body": ["page${1|X,Y|}"],
+    "description": ["鼠标在页面文档的x和y坐标"]
+  },
+
+  "client鼠标在可视区的x和y坐标": {
+    "prefix": ["client", "zb"],
+    "body": ["client${1|X,Y|}"],
+    "description": ["鼠标在可视区的x和y坐标"]
+  },
+
+  "screen鼠标在电脑屏幕的x和y坐标": {
+    "prefix": ["screen", "zb"],
+    "body": ["screen${1|X,Y|}"],
+    "description": ["鼠标在电脑屏幕的x和y坐标"]
+  },
+
+  "鼠标移动事件": {
+    "prefix": ["mouse", "dc"],
+    "body": ["mousemove"],
+    "description": ["鼠标移动事件"]
+  },
+
+  "鼠标选中事件": {
+    "prefix": ["selectstart", "mouse", "dc"],
+    "body": ["selectstart"],
+    "description": ["鼠标选中事件", "常配合preventDefault()禁用鼠标默认选中"]
+  },
+
+  "鼠标右键事件": {
+    "prefix": ["contextmenu", "dc", "mouse"],
+    "body": ["contextmenu"],
+    "description": [
+      "鼠标右键事件(有BUG,常直接禁用选中)",
+      "常用禁止选中selectstart",
+      "常配合preventDefault()禁用鼠标右键"
+    ]
+  },
+
+  "获取HTML元素": {
+    "prefix": ["html", "dom"],
+    "body": ["document.documentElement"],
+    "description": "获取HTML元素"
+  },
+
+  "创建元素": {
+    "prefix": ["createElement", "dc", "create", "dom"],
+    "body": ["createElement('$1')"],
+    "description": [
+      "创建元素",
+      "父节点.createElement(要添加的节点)",
+      "配合appendChild(向父节点末尾添加节点使用)",
+      "配合insertBefore(向父节点指定子节点前面添加元素使用)"
+    ]
+  },
+
+  "删除节点": {
+    "prefix": ["remove", "del", "dc", "dom"],
+    "body": ["removeChild('${1:需要删除的节点}')"],
+    "description": [
+      "删除节点",
+      "父节点.removeChild(父节点[需要删除的节点])",
+      "配合删除按钮事件常在删除前加上判断",
+      "if(父节点.children.length == 0) {",
+      "\tthis.disable = true;",
+      "}"
+    ]
+  },
+
+  "复制节点": {
+    "prefix": ["clone", "dc", "dom"],
+    "body": ["${1:需要克隆的节点}.cloneNode(${2:true})"],
+    "description": [
+      "复制节点node.cloneNode()浅克隆",
+      "复制节点node.cloneNode(true)深克隆"
+    ]
+  },
+
+  "节点前面添加节点": {
+    "prefix": ["insertBefore", "dc", "dom", "add"],
+    "body": [
+      "${1:父节点}.appendChild(${2:需要添加的节点},${1:父节点}.children[0]);"
+    ],
+    "description": [
+      "向父节点中的指定节点的前面添加节点",
+      "父节点.insertBefore(添加的节点,指定节点)",
+      "默认添加父元素的最前面"
+    ]
+  },
+
+  "末尾添加元素": {
+    "prefix": ["appendChild", "dc", "dom", "add"],
+    "body": ["${1:父元素}.appendChild(${2:需要添加的元素});"],
+    "description": "末尾添加元素"
+  },
+
+  "最后一个子元素节点": {
+    "prefix": ["lastchild", "dc", "dom"],
+    "body": ["${1:父元素}.children[${1:父元素}.children.length - 1]"],
+    "description": "最后一个子元素节点"
+  },
+
+  "style": {
+    "prefix": ["style", "dc"],
+    "body": ["style"],
+    "description": ["style"]
+  },
+
+  "backgroundColor背景": {
+    "prefix": ["backgroundColor", "dc"],
+    "body": ["backgroundColor"],
+    "description": ["背景"]
+  },
+
+  "transparent透明": {
+    "prefix": ["transparent", "dc"],
+    "body": ["transparent"],
+    "description": ["透明"]
+  },
+
+  "children": {
+    "prefix": ["children", "dc"],
+    "body": ["children"],
+    "description": "(父元素).children"
+  },
+
+  "parentNode选择子节点的最近一个父节点": {
+    "prefix": ["parentNode", "dc"],
+    "body": ["parentNode"],
+    "description": "选择子节点的最近一个父节点"
+  },
+
+  "getElementById": {
+    "prefix": ["getElementById", "dc"],
+    "body": ["getElementById"],
+    "description": "DOM选择器ID选择器"
+  },
+
+  "querySelectorAll": {
+    "prefix": ["h5-querySelectorAll", "dc"],
+    "body": ["querySelectorAll"],
+    "description": "[DOM选择器(H5)]"
+  },
+
+  "querySelector": {
+    "prefix": ["h5-querySelector", "dc"],
+    "body": ["querySelector"],
+    "description": "[DOM选择器(H5)]"
+  },
+
+  "DOM(标签选择器)": {
+    "prefix": ["dtn", "dc", "dom"],
+    "body": ["document.getElementsByTagName('$1');"],
+    "description": "[标签选择器]DOM"
+  },
+
+  "DOM(ID选择器)": {
+    "prefix": ["dgi", "dc", "dom"],
+    "body": ["document.getElementById('$1');"],
+    "description": "[ID选择器]DOM"
+  },
+
+  "阻止冒泡": {
+    "prefix": ["stopPropagation", "stop", "js"],
+    "body": [
+      "//阻止冒泡[DOM推荐标准(ie678不兼容)]",
+      "//ie678用cancelBubble = true;",
+      "//兼容处理快捷键jr-zzmp/jr-stopPropagation",
+      "stopPropagation()"
+    ],
+    "description": [
+      "阻止冒泡[DOM推荐标准(ie678不兼容)]",
+      "ie678用cancelBubble = true;",
+      "兼容处理快捷键jr-zzmp/jr-stopPropagation"
+    ]
+  },
+
+  "阻止默认事件": {
+    "prefix": ["preventDefault", "stop", "js"],
+    "body": [
+      "//阻止默认事件",
+      "//preventDefault()[dom标准写法(ie678不兼容)]",
+      "//ie678用returnValue",
+      "//或者利用return false也能阻止默认行为,没有兼容问题(只限传统注册方式)",
+      "preventDefault()"
+    ],
+    "description": [
+      "阻止默认事件",
+      "preventDefault()[dom标准写法(ie678不兼容)]",
+      "ie678用returnValue",
+      "或者利用return false也能阻止默认行为,没有兼容问题(只限传统注册方式)"
+    ]
+  },
+
+  "type返回事件类型": {
+    "prefix": ["type", "dc", "get"],
+    "body": ["type"],
+    "description": ["type", "返回事件类型(click,mouseover等等..)"]
+  },
+
+  "this": {
+    "prefix": ["this", "dc"],
+    "body": ["this"],
+    "description": [
+      "this",
+      "返回绑定事件的对象(元素)",
+      "与target区别:",
+      "target返回触发事件的对象(元素)[ie678有兼容问题]",
+      "相似属性currentTarget[ie678有兼容问题(不推荐使用)]",
+      "定义时不能确定指向，调用时确定",
+      "一般情况下this的最终指向的是那个调用它的对象",
+      "1.全局作用域/普通函数/定时器中的this指向window",
+      "2.方法调用中谁调用this指向谁",
+      "3.构造函数中this指向构造函数的实例"
+    ]
+  },
+
+  "target": {
+    "prefix": ["target", "dc"],
+    "body": ["target"],
+    "description": [
+      "target(ie9一下不兼容)",
+      "需要判断兼容处理,快捷键jr-target",
+      "返回触发事件的对象(元素)",
+      "点击哪个元素就返回哪个元素",
+      "与this区别",
+      "this返回绑定事件的对象(元素)"
+    ]
+  },
+
+  "注册监听事件": {
+    "prefix": ["addEventListener", "dc", "add"],
+    "body": [
+      "addEventListener('${1|click,dblclick,mouseover,mouseout,mousedown,mouseup,keydown,keyup,keypress,focus,blur,submit,reset,select,copy,pageshow,scorll|}', function () {",
+      "\t$2",
+      "});"
+    ],
+    "description": [
+      "监听注册事件(i9以下不兼容!)",
+      "pageshow在页面切换后显示之后，触发的事件",
+      "scorll滚动事件",
+      "解决办法,兼容性函数,快捷键jr-zcsj/jr-addEventListener"
+    ]
+  },
+
+  "dataset获取元素属性(H5)": {
+    "prefix": ["dataset", "dc", "get"],
+    "body": ["dataset.${1:直接写data-后面的属性}"],
+    "description": [
+      "获取元素属性(H5)",
+      "兼容差ie11以上兼容",
+      "如果自定义属性有多个-链接的单词",
+      "获取时用驼峰命名法",
+      "自定义属性",
+      "设置:直接写data-name:'Spiderman'"
+    ]
+  },
+
+  "getAttribute获取元素属性": {
+    "prefix": ["getAttribute", "dc", "get"],
+    "body": ["getAttribute('${1:属性名}')"],
+    "description": ["获取元素属性"]
+  },
+
+  "sort数组排序": {
+    "prefix": ["sort"],
+    "body": ["${1:需要排序的数组}.sort((a, b) => a - b)"],
+    "description": ["sort数组排序"]
+  },
+
+  "替换": {
+    "prefix": ["replace"],
+    "body": [
+      "${1:原目标}.replace(${2:需要替换的替换内容},${3:替换成什么}) //只会替换掉第一个,且原目标不变,需要重新赋值给一个变量}",
+      "//如果你想把所有的都替换掉，要使用正则\t例: \"bob\".replace(/b/g, 'l') === 'lol'"
+    ],
+    "description": ["替换"]
+  },
+
+  "setAttribute设置元素属性": {
+    "prefix": ["setAttribute", "dc", "set"],
+    "body": ["setAttribute('${1:属性名}','${2:属性值}')"],
+    "description": "设置元素属性"
+  },
+
+  "removeAttribute删除元素属性": {
+    "prefix": ["removeAttribute", "del", "dc"],
+    "body": ["removeAttribute('${1:属性名}')"],
+    "description": ["删除元素属性"]
+  },
+
+  "focus得到焦点": {
+    "prefix": ["focus", "dc"],
+    "body": ["focus"],
+    "description": "得到焦点"
+  },
+
+  "blur失去焦点": {
+    "prefix": ["blur", "dc"],
+    "body": ["blur"],
+    "description": "失去焦点"
+  },
+
+  "鼠标事件(会冒泡)": {
+    "prefix": ["mouse", "dc"],
+    "body": ["mouse${1|over,out|}"],
+    "description": "鼠标经过事件"
+  },
+
+  "鼠标事件(不会会冒泡)": {
+    "prefix": ["mouse", "dc"],
+    "body": ["mouse${1|enter,leave|}"],
+    "description": "鼠标经过事件"
+  },
+
+  "禁用按钮": {
+    "prefix": ["jy", "dc", "stop"],
+    "body": ["disabled = true;"],
+    "description": ["节点.disabled = true;", "表单按钮禁用,button禁用"]
+  },
+  "监听注册兼容函数": {
+    "prefix": ["jr-zc", "jr-addEventListener", "jr", "hs"],
+    "body": [
+      "//监听注册兼容函数",
+      "//element为监听对象",
+      "//eventName监听事件,要加引号(不加on)",
+      "//fn为回调函数函数",
+      "function compatibleAddEventListener(element, eventName, fn) {",
+      "\t//判断当前浏览器是否支持addEventListener方法",
+      "\tif (element.addEventListener) {",
+      "\t\telement.addEventListener(eventName, fn); //第三个参数默认false",
+      "\t} else if (element.attachEvent) {",
+      "\t\telement.attachEvent('on' + eventName, fn);",
+      "\t} else {",
+      "\t\telement['on' + eventName] = fn;",
+      "\t}",
+      "};"
+    ],
+    "description": [
+      "监听注册兼容函数",
+      "element为监听对象",
+      "eventName监听事件,要加引号(不加on)",
+      "fn为回调函数函数"
+    ]
+  },
+
+  "监听删除兼容函数": {
+    "prefix": ["jr-del", "del", "jr", "hs"],
+    "body": [
+      "//监听删除兼容函数",
+      "//element为监听对象",
+      "//eventName监听事件,要加引号(不加on)",
+      "//fn为调用的函数",
+      "function compatibleRemoveEventListener(element, eventName, fn) {",
+      "\t//判断当前浏览器是否支持removeEventListener方法",
+      "\tif (element.removeEventListener) {",
+      "\t\telement.removeEventListener(eventName, fn); //第三个参数默认false",
+      "\t} else if (element.detachEvent) {",
+      "\t\telement.detachEvent('on' + eventName, fn);",
+      "\t} else {",
+      "\t\telement['on' + eventName] = null;",
+      "\t}",
+      "};"
+    ],
+    "description": [
+      "监听删除兼容函数",
+      "element为监听对象",
+      "eventName监听事件,要加引号(不加on)",
+      "fn为调用的函数"
+    ]
+  },
+
+  "兼容页面被卷去的头部": {
+    "prefix": ["getSroll", "jr", "hs"],
+    "body": [
+      "//兼容页面被卷去的头部",
+      "//使用的时候 getScroll().left[左侧] 或者 getScroll().top[头部]",
+      "function getScroll() {",
+      "\treturn {",
+      "\t\tleft: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0,",
+      "\t\ttop: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0",
+      "\t};",
+      "}"
+    ],
+    "description": [
+      "兼容页面被卷去的头部",
+      "使用的时候 getScroll().left[左侧] 或者 getScroll().top[头部]"
+    ]
+  },
+
+  "兼容性获取兄弟节点": {
+    "prefix": ["jr-sibling", "xd", "hs", "jr", "get"],
+    "body": [
+      "function get${1|Next,Previous|}ElementSibling(element) {",
+      "\tvar el = element;",
+      "\twhile (el = el.${1|nextSibling,previousSibling|}) {",
+      "\t\tif (el.nodeType === 1) {",
+      "\t\t\treturn el;",
+      "\t\t}",
+      "\t}",
+      "\treturn null;",
+      "}"
+    ],
+    "description": ["兼容性获取兄弟节点"]
+  },
+
+  "兼容处理target": {
+    "prefix": ["jr-target", "jr"],
+    "body": [
+      "//兼容处理target",
+      "//加上判断,ie678只能识别window.event",
+      "//ie678只能识别srcElement",
+      "e = event || window.event;",
+      "var target = e.target || e.srcElement"
+    ],
+    "description": [
+      "兼容处理target",
+      "加上判断,ie678只能识别window.event",
+      "ie678只能识别srcElement"
+    ]
+  },
+
+  "兼容处理事件对象": {
+    "prefix": ["jr-sjdx", "jr"],
+    "body": ["event = event || window.event;"],
+    "description": ["兼容处理事件对象", "加上判断,ie678只能识别window.event"]
+  },
+
+  "兼容处理阻止冒泡": {
+    "prefix": ["jr-stop", "stop", "jr", "hs"],
+    "body": [
+      "//兼容处理阻止冒泡",
+      "if(e && e.stopPropagation) {",
+      "\te.stopPropagation();",
+      "}else{",
+      "\twindow.event.cancelBubble = true;",
+      "}"
+    ],
+    "description": ["兼容处理阻止冒泡"]
+  },
+
+  "选择器[H5]新增(全部)": {
+    "prefix": ["h5-dqa", "dqa"],
+    "body": ["document.querySelectorAll('$1');"],
+    "description": "[H5新增DOM]选择器<全部>"
+  },
+
+  "选择器[H5]新增": {
+    "prefix": ["h5-dq", "dq"],
+    "body": ["document.querySelector('$1');"],
+    "description": "[H5新增DOM]选择器"
+  },
+
+  "typings自动补全配置": {
+    "prefix": "typings",
+    "body": [
+      "typings自动补全配置",
+      "项目根目录打开powershell",
+      "输入",
+      "typings init",
+      "typings install dt~jquery --global --save",
+      "创建文件",
+      "jsconfig.json"
+    ],
+    "description": "typings自动补全配置"
+  },
+  "获取键盘ASCII": {
+    "prefix": ["get", "ASCII", "hs"],
+    "body": [
+      "//获得键盘按下时的ASCII码",
+      "function getKeyASCII (e) {",
+      "\tdocument.addEventListener('key${1|up,press|}',function(e){ //keypress区分大小写",
+      "\t\tconsole.log(e.keyCode);",
+      "\t})",
+      "}",
+      "getKeyASCII();"
+    ],
+    "description": ["获取键盘ASCII(默认不区分大小写)", "keypress区分大小写"]
+  },
+
+  "反选按钮": {
+    "prefix": ["fx", "hs"],
+    "body": [
+      "//反选按钮[在input中添加 onclick=theSelected() 调用函数",
+      "function theSelected() {",
+      "\t//获取全选按钮",
+      "\tvar j_cbAll = document.querySelector('${1:全选按钮}');",
+      "\t//获取反选按钮",
+      "\tvar j_fx = document.querySelector('${2:反选按钮}');",
+      "\t//获取所有的复选框",
+      "\tvar j_tb = document.querySelectorAll('${3:所有的复选框}');",
+      "\tfor (var i = 0; i < j_tb.length; i++) {",
+      "\t\tj_tb[i].checked ? j_tb[i].checked = false : j_tb[i].checked = true;",
+      "\t}",
+      "\t//全选按钮相应操作",
+      "\tvar flag = true;",
+      "\tfor (i = 0; i < j_tb.length; i++) {",
+      "\t\tif (!j_tb[i].checked) {",
+      "\t\t\tflag = false;",
+      "\t\t\tbreak;",
+      "\t\t}",
+      "\t}",
+      "\tj_cbAll.checked = flag;",
+      "}"
+    ],
+    "description": "事件-反选按钮[在input中添加 onclick=theSelected() 调用函数]"
+  },
+
+  "全选按钮": {
+    "prefix": ["qx", "hs"],
+    "body": [
+      "var j_cbAll = document.querySelector('${1:全选按钮}'); // 获取全选按钮",
+      "var j_tbs = document.querySelectorAll('${2:所有的复选框(input)}'); // 获取所有的复选框",
+      "//注册事件",
+      "j_cbAll.addEventListener('click', function () {",
+      "\tfor (var i = 0; i < j_tbs.length; i++) {",
+      "\t\tj_tbs[i].checked = this.checked;",
+      "\t}",
+      "})",
+      "// 每次循环检查复选框是否全部选中",
+      "for (var i = 0; i < j_tbs.length; i++) {",
+      "\tj_tbs[i].addEventListener('click', function () {",
+      "\t\t// flag 控制全选按钮是否选中",
+      "\t\tvar flag = true;",
+      "\t\t// 每次点击下面的复选框都要循环检查者4个小按钮是否全被选中",
+      "\t\tfor (var i = 0; i < j_tbs.length; i++) {",
+      "\t\t\tif (!j_tbs[i].checked) {",
+      "\t\t\t\tflag = false;",
+      "\t\t\t\tbreak;",
+      "\t\t\t}",
+      "\t\t}",
+      "\t\tj_cbAll.checked = flag;",
+      "\t})",
+      "}"
+    ],
+    "description": "事件-全选按钮"
+  },
+  "将模板字符串参数拼接回去": {
+    "prefix": ["hs"],
+    "body": [
+      "/**",
+      " *  模板字符串",
+      " *  调用: passthru`你好${a},很高兴见到你` => 你好（变量a）,很高兴见到你",
+      " * @param {*} literals",
+      " * @param {*} values",
+      " * @returns 将模板字符串拼接回去",
+      " */",
+      "function passthru(literals, ...values) {",
+      "\tlet output = \"\";",
+      "\tlet index;",
+      "\tfor (index = 0; index < values.length; index++) {",
+      "\t\toutput += literals[index] + values[index];",
+      "\t}",
+      "\toutput += literals[index]",
+      "\treturn output;",
+      "}"
+    ],
+    "description": [
+    "模板字符串拼接回去"
+    ]
+  },
+  "获取localStorage数据": {
+    "prefix": ["hs", "localStorage", "get"],
+    "body": [
+      "/**",
+      " * 获取localStorage数据",
+      " * @param {*} key localStorage中的key string",
+      " * @returns localStorage数据 arr",
+      " */",
+      "function getDate(key) {",
+      "\tvar str = localStorage.getItem(key) || \"[]\";",
+      "\tvar arr = JSON.parse(str);",
+      "\treturn arr;",
+      "}"
+    ],
+    "description": ["获取localStorage数据"]
+  },
+  "存储localStorage数据": {
+    "prefix": ["localStorage", "set"],
+    "body": ["localStorage.setItem('${1:key}',JSON.stringify(${2:arr}))"],
+    "description": ["存储localStorage数据"]
+  },
+  "冒泡排序": {
+    "prefix": ["px"],
+    "body": [
+      "//冒泡排序(默认从小到大)",
+      "function bubbleSort(arr) {",
+      "\tfor (var i = 0; i < arr.length; i++) {",
+      "\t\tfor (var j = 0; j < arr.length - 1; j++) {",
+      "\t\t\tif (arr[j] > arr[j + 1]) { //>从小到大,<从大到小",
+      "\t\t\t\tlet temp = arr[j];",
+      "\t\t\t\tarr[j] = arr[j + 1];",
+      "\t\t\t\tarr[j + 1] = temp;",
+      "\t\t\t}",
+      "\t\t}",
+      "\t}",
+      "\treturn arr;",
+      "}"
+    ],
+    "description": "冒泡排序(默认从小到大)"
+  },
+  "冒泡排序2.0": {
+    "prefix": ["px", "hs"],
+    "body": [
+      "//冒泡排序2.0(默认从小到大)",
+      "function bubbleSort(arr) {",
+      "\tvar i = arr.length - 1; //初始时,最后位置保持不变　　",
+      "\twhile (i > 0) {",
+      "\t\tvar pos = 0; //每趟开始时,无记录交换",
+      "\t\tfor (let j = 0; j < i; j++) {",
+      "\t\t\tif (arr[j] > arr[j + 1]) { //>从小到大,<从大到小",
+      "\t\t\t\tlet tmp = arr[j];",
+      "\t\t\t\tpos = j; //记录交换的位置",
+      "\t\t\t\tarr[j] = arr[j + 1];",
+      "\t\t\t\tarr[j + 1] = tmp;",
+      "\t\t\t}",
+      "\t\t}",
+      "\t\ti = pos; //为下一趟排序作准备",
+      "\t}",
+      "\treturn arr;",
+      "}"
+    ],
+    "description": "冒泡排序2.0(默认从小到大)"
+  },
+
+  "快速排序": {
+    "prefix": ["px", "hs"],
+    "body": [
+      "//快速排序(默认从小到大)",
+      "function quickSort(array, left, right) {",
+      "\tif (left < right) {",
+      "\t\tvar x = array[right],",
+      "\t\t\ti = left - 1,",
+      "\t\t\ttemp;",
+      "\t\tfor (var j = left; j <= right; j++) {",
+      "\t\t\tif (array[j] <= x) {",
+      "\t\t\t\ti++;",
+      "\t\t\t\ttemp = array[i];",
+      "\t\t\t\tarray[i] = array[j];",
+      "\t\t\t\tarray[j] = temp;",
+      "\t\t\t}",
+      "\t\t}",
+      "\t\tconsole.log(array);",
+      "\t\tconsole.log(left, i);",
+      "\t\tquickSort(array, left, i - 1);",
+      "\t\tconsole.log(array)",
+      "\t\tconsole.log(i, right)",
+      "\t\tquickSort(array, i + 1, right);",
+      "\t}",
+      "\treturn array;",
+      "}"
+    ],
+    "description": "快速排序(默认从小到大)"
+  },
+  "选择排序": {
+    "prefix": ["px", "hs"],
+    "body": [
+      "//选择排序(默认从小到大),1000个以内数据比冒泡2.0快",
+      "function selectionSort(arr) {",
+      "\tvar len = arr.length;",
+      "\tvar minIndex, temp;",
+      "\tfor (var i = 0; i < len - 1; i++) {",
+      "\t\tminIndex = i;",
+      "\t\tfor (var j = i + 1; j < len; j++) {",
+      "\t\t\tif (arr[j] < arr[minIndex]) { //寻找最小的数",
+      "\t\t\t\tminIndex = j; //将最小数的索引保存",
+      "\t\t\t}",
+      "\t\t}",
+      "\t\ttemp = arr[i];",
+      "\t\tarr[i] = arr[minIndex];",
+      "\t\tarr[minIndex] = temp;",
+      "\t}",
+      "\treturn arr;",
+      "}"
+    ],
+    "description": "选择排序(默认从小到大),1000个以内数据比冒泡2.0快"
+  },
+
+  "区间求和": {
+    "prefix": ["add", "hs"],
+    "body": [
+      "//区间求和",
+      "function getSum(num1, num2) {",
+      "\tvar sum = 0;",
+      "\tfor (var i = num1; i <= num2; i++) {",
+      "\t\tsum += i;",
+      "\t}",
+      "\treturn sum;",
+      "}"
+    ],
+    "description": "function-区间求和"
+  },
+
+  "数组去重(纯for循环版本)": {
+    "prefix": ["qc", "disTinct", "hs"],
+    "body": [
+      "//数组去重",
+      "function disTinct(arr) {",
+      "\tvar ans = [];",
+      "\tfor (var i = arr.length - 1; i >= 0; i--) {",
+      "\t\tvar nb = 0; //没重复为0.有重复不为0",
+      "\t\tfor (var j = i - 1; j >= 0; j--) {",
+      "\t\t\tif (arr[i] == arr[j]) {",
+      "\t\t\t\tnb = 1;",
+      "\t\t\t\tbreak;",
+      "\t\t\t}",
+      "\t\t}",
+      "\t\tif (nb == 0) {",
+      "\t\t    ans.unshift(arr[i])",
+      "\t\t}",
+      "\t}",
+      "\treturn ans;",
+      "}"
+    ],
+    "description": ["数组去重", "纯for循环版本"]
+  },
+
+  "数组去重2.0(indexOf版本)": {
+    "prefix": ["qc", "unique", "hs"],
+    "body": [
+      "//数组去重(indexOf)",
+      "function unique(arr) {",
+      "\tvar res = [];",
+      "\tfor (var i = 0; i < arr.length; i++) {",
+      "\t\tif (res.indexOf(arr[i]) == -1) {",
+      "\t\t\tres.push(arr[i])",
+      "\t\t}",
+      "\t}",
+      "\treturn res;",
+      "}"
+    ],
+    "description": ["数组去重", "indexOf版本"]
+  },
+
+  "构造函数(动态添加对象属性)": {
+    "prefix": ["gzhs", "hs"],
+    "body": [
+      "function $Fn(value1, value2, value3) {",
+      "\tthis.$name1 = value1;",
+      "\tthis.$name2 = value2;",
+      "\tthis.$name3 = value3;",
+      "}"
+    ],
+    "description": "存储var Fn = new $Fn('','','')"
+  },
+
+  "随机整数": {
+    "prefix": ["sjzs", "hs"],
+    "body": [
+      "function getRandom(min, max) {",
+      "\treturn Math.floor(Math.random() * (max - min + 1)) + min;",
+      "}"
+    ],
+    "description": "随机整数(可以取值到最大或者最小)"
+  },
+  "获取当前年月日星期几几点几分几秒并打印": {
+    "prefix": ["time", "sj", "hs", "get"],
+    "body": [
+      "//获取当前年月日星期几几点几分几秒并打印",
+      "function getTimer() {",
+      "\tvar date = new Date();",
+      "\tvar week = ['星期日', '星期一', '星期二', '星期三', '星\t期四', '星期五', '星期六'];",
+      "\tvar year = date.getFullYear();",
+      "\tvar month = date.getMonth() + 1;",
+      "\tvar datee = date.getDate();",
+      "\tvar day = date.getDay();",
+      "\tvar time = year + '年' + month + '月' + datee + '日 \t' + week[day];",
+
+      "\tfunction getTimerr() {",
+      "\t\tvar time = new Date();",
+      "\t\tvar hour = time.getHours();",
+      "\t\thour = hour < 10 ? '0' + hour : hour;",
+      "\t\tvar minute = time.getMinutes();",
+      "\t\tminute = minute < 10 ? '0' + minute : minute;",
+      "\t\tvar second = time.getSeconds();",
+      "\t\tsecond = second < 10 ? '0' + second : second;",
+      "\t\treturn hour + ':' + minute + ':' + second;",
+      "\t}",
+      "\treturn time + ' ' + getTimerr();",
+      "}"
+    ],
+    "description": "获取当前年月日星期几几点几分几秒并打印"
+  },
+
+  "倒计时": {
+    "prefix": ["djs", "hs"],
+    "body": [
+      "//倒计时",
+      "function countDown(time) {",
+      "\tvar nowTime = +new Date(); //当前时间总毫秒数",
+      "\tvar inputTime = +new Date(time); //输入时间总毫秒数",
+      "\tvar times = (inputTime - nowTime) / 1000; //剩余时间总秒数",
+      "\tvar d = parseInt(times / 60 / 60 / 24); //天",
+      "\td = d < 10 ? '0' + d : d;",
+      "\tvar h = parseInt(times / 60 / 60 % 24); //时",
+      "\th = h < 10 ? '0' + h : h;",
+      "\tvar m = parseInt(times / 60 % 60); // 分",
+      "\tm = m < 10 ? '0' + m : m;",
+      "\tvar s = parseInt(times % 60); //秒",
+      "\ts = s < 10 ? '0' + s : s;",
+      "\treturn d + '天' + h + '时' + m + '分' +s + '秒';",
+      "}"
+    ],
+    "description": "倒计时"
+  },
+
+  "倒计时2.0": {
+    "prefix": ["djs", "hs"],
+    "body": [
+      "//倒计时",
+      "//调用格式countDown('2019-5-5 21:08'); ",
+      "//到时间自动停止",
+      "var hour = document.querySelector('${1:小时目标盒子}');",
+      "var minute = document.querySelector('${2:分钟目标盒子}');",
+      "var second = document.querySelector('${3:秒钟目标盒子}');",
+      "function countDown(time) {",
+      "\tvar otime = time;",
+      "\tvar fn = null;",
+      "\tvar nowTime = +new Date(); //当前时间总毫秒数",
+      "\tvar inputTime = +new Date(time); //输入时间总毫秒数",
+      "\tvar times = (inputTime - nowTime) / 1000; //剩余时间总秒数",
+      "\t//判断剩余时间大于0",
+      "\tif (times >= 0) {",
+      "\t\t// var d = parseInt(times / 60 / 60 / 24); //天",
+      "\t\t// d = d < 10 ? '0' + d : d;",
+      "\t\tvar h = parseInt(times / 60 / 60 % 24); //时",
+      "\t\th = h < 10 ? '0' + h : h;",
+      "\t\thour.innerHTML = h;",
+      "\t\tvar m = parseInt(times / 60 % 60); // 分",
+      "\t\tm = m < 10 ? '0' + m : m;",
+      "\t\tminute.innerHTML = m;",
+      "\t\tvar s = parseInt(times % 60); //秒",
+      "\t\ts = s < 10 ? '0' + s : s;",
+      "\t\tsecond.innerHTML = s;",
+      "\t\t//定时器",
+      "\t\tfn = setInterval(function () {",
+      "\t\t\tcountDown(otime)",
+      "\t\t}, 1000);",
+      "\t} else {",
+      "\t\tclearInterval(fn);",
+      "\t\thour.innerHTML = \"00\";",
+      "\t\tminute.innerHTML = \"00\";",
+      "\t\tsecond.innerHTML = \"00\";",
+      "\t}",
+      "}",
+      "countDown('${5:2019-5-5 21:08}');  //截止时间"
+    ],
+    "description": [
+      "倒计时2.0",
+      "调用格式countDown('2019-5-5 21:08'); ",
+      "新增到时间自动停止"
+    ]
+  },
+
+  "BOM加载事件": {
+    "prefix": ["BOM", "hs", "load"],
+    "body": ["window.addEventListener('load', function() {$1})"],
+    "description": [
+      "都不推荐使用,蚝性能",
+      "load 等页面内容全部加载完毕，包含页面dom元素 图片 flash  css 等等 执行事件",
+      "pageshow 页面切换后显示之后，触发的事件",
+      "DOMContentLoaded 是DOM 加载完毕，不包含图片 falsh css 等就可以执行 加载速度比 load更快一些",
+      "DOMContentLoaded 方法加载快捷键BOM-domcload"
+    ]
+  },
+
+  "DOMContentLoaded加载事件": {
+    "prefix": ["BOM", "hs", "load"],
+    "body": ["document.addEventListener('DOMContentLoaded', function() {$1})"],
+    "description": [
+      "都不推荐使用,蚝性能",
+      "load 等页面内容全部加载完毕，包含页面dom元素 图片 flash  css 等等 执行事件",
+      "DOMContentLoaded 是DOM 加载完毕，不包含图片 falsh css 等就可以执行 加载速度比 load更快一些",
+      "load 方法加载快捷键BOM-load"
+    ]
+  },
+
+  "淘宝flexble.js自适应": {
+    "prefix": ["rem", "zsy", "csh", "hs"],
+    "body": [
+      "(function flexible(window, document) {",
+      "\tvar docEl = document.documentElement",
+      "\tvar dpr = window.devicePixelRatio || 1",
+      "",
+      "\t// adjust body font size",
+      "\tfunction setBodyFontSize() {",
+      "\t\tif (document.body) {",
+      "\t\t\tdocument.body.style.fontSize = (12 * dpr) + 'px'",
+      "\t\t} else {",
+      "\t\t\tdocument.addEventListener('DOMContentLoaded', setBodyFontSize)",
+      "\t\t}",
+      "\t}",
+      "\tsetBodyFontSize();",
+      "\t// set 1rem = viewWidth / 10",
+      "\tfunction setRemUnit() {",
+      "\t\tvar rem = docEl.clientWidth / 10",
+      "\t\tdocEl.style.fontSize = rem + 'px'",
+      "\t}",
+      "\tsetRemUnit()",
+      "",
+      "\t// reset rem unit on page resize",
+      "\twindow.addEventListener('resize', setRemUnit)",
+      "\twindow.addEventListener('pageshow', function(e) {",
+      "\t\tif (e.persisted) {",
+      "\t\t\tsetRemUnit()",
+      "\t\t}",
+      "\t})",
+      "",
+      "\t// detect 0.5px supports",
+      "\tif (dpr >= 2) {",
+      "\t\tvar fakeBody = document.createElement('body')",
+      "\t\tvar testElement = document.createElement('div')",
+      "\t\ttestElement.style.border = '.5px solid transparent'",
+      "\t\tfakeBody.appendChild(testElement)",
+      "\t\tdocEl.appendChild(fakeBody)",
+      "\t\tif (testElement.offsetHeight === 1) {",
+      "\t\t\tdocEl.classList.add('hairlines')",
+      "\t\t}",
+      "\t\tdocEl.removeChild(fakeBody)",
+      "\t}",
+      "}(window, document))"
+    ],
+    "description": ["淘宝flexble.js自适应"]
+  },
+
+  "动画函数(横向缓动动画)": {
+    "prefix": ["dh", "animate", "hs"],
+    "body": [
+      "//动画(横向缓动动画)",
+      "//target目标位置",
+      "//interval间隔事件",
+      "//callback回调函数(可不填)",
+      "function animate(obj, target, interval,callback) {",
+      "\t//清除定时器",
+      "\tclearInterval(obj.timer);",
+      "\tobj.timer = setInterval(function() {",
+      "\t\t//步长",
+      "\t\tvar step = (target - obj.offsetLeft) / 10;",
+      "\t\tstep = step > 0 ? Math.ceil(step) : Math.floor(step);",
+      "\t\t//到目标位置停止",
+      "\t\tif (obj.offsetLeft == target) {",
+      "\t\t\tclearInterval(obj.timer);",
+      "\t\t\tcallback && callback();",
+      "\t\t}",
+      "\t\tobj.style.left = obj.offsetLeft + step + \"px\";",
+      "\t}, interval);",
+      "}"
+    ],
+    "description": [
+      "动画函数",
+      "target目标位置",
+      "interval间隔事件",
+      "callback回调函数(可不填)"
+    ]
+  },
+
+  "动画函数(window竖向缓动动画)": {
+    "prefix": ["dh", "animate", "hs"],
+    "body": [
+      "//动画(window竖向缓动动画)",
+      "//target目标位置",
+      "//interval间隔事件",
+      "//callback回调函数(可不填)",
+      "function animate(obj, target, interval,callback) {",
+      "\t//清除定时器",
+      "\tclearInterval(obj.timer);",
+      "\tobj.timer = setInterval(function() {",
+      "\t\t//步长",
+      "\t\tvar step = (target - window.pageYOffset) / 10;",
+      "\t\tstep = step > 0 ? Math.ceil(step) : Math.floor(step);",
+      "\t\t//到目标位置停止",
+      "\t\tif (window.pageYOffset == target) {",
+      "\t\t\tclearInterval(obj.timer);",
+      "\t\t\tcallback && callback();",
+      "\t\t}",
+      "\t\twindow.scroll(0, window.pageYOffset + step);",
+      "\t}, interval);",
+      "}"
+    ],
+    "description": [
+      "动画函数(window竖向缓动动画)",
+      "target目标位置",
+      "interval间隔事件",
+      "callback回调函数(可不填)"
+    ]
+  },
+
+  "拖动元素": {
+    "prefix": ["td", "tuodong", "hs"],
+    "body": [
+      "${1:需要拖动的元素}.addEventListener('mousedown', function (e) {",
+      "\tvar x = e.pageX - this.offsetLeft;",
+      "\tvar y = e.pageY - this.offsetTop;",
+      "\tdocument.addEventListener('mousemove', myFn);",
+
+      "\tfunction myFn(e) {",
+      "\t\t${1:需要拖动的元素}.style.left = e.pageX - x + 'px';",
+      "\t\t${1:需要拖动的元素}.style.top = e.pageY - y + 'px';",
+      "\t}",
+      "\tdocument.addEventListener('mouseup', function () {",
+      "\t\tdocument.removeEventListener('mousemove', myFn);",
+      "\t})",
+      "})"
+    ],
+    "description": ["拖动元素"]
+  },
+
+  "放大镜": {
+    "prefix": ["fdj", "fangdajing", "hs"],
+    "body": [
+      "//外联单独JS用",
+      "window.addEventListener('load', function () {",
+      "\tvar preview_img = document.querySelector('${1:最大的盒子(包裹小图,遮挡层,大图的盒子)}');",
+      "\tvar mask = document.querySelector('${2:小图中的遮挡层(放大镜)}');",
+      "\tvar big = document.querySelector('${3:大图的盒子}');",
+      "\t// 鼠标经过 preview_img 显示和隐藏 mask 遮挡层 和 big 大盒子",
+      "\tpreview_img.addEventListener('mouseover', function () {",
+      "\t\tmask.style.display = 'block';",
+      "\t\tbig.style.display = 'block';",
+      "\t})",
+      "\tpreview_img.addEventListener('mouseout', function () {",
+      "\t\tmask.style.display = 'none';",
+      "\t\tbig.style.display = 'none';",
+      "\t})",
+      "\t//鼠标移动的时候，遮挡层的盒子跟着鼠标来走",
+      "\tpreview_img.addEventListener('mousemove', function (e) {",
+      "\t\t// 计算鼠标在小盒子内的坐标",
+      "\t\tvar x = e.pageX - this.offsetLeft;",
+      "\t\tvar y = e.pageY - this.offsetTop;",
+      "\t\t// mask 移动的距离",
+      "\t\tvar maskX = x - mask.offsetWidth / 2;",
+      "\t\tvar maskY = y - mask.offsetHeight / 2;",
+      "\t\t// 遮挡层的最大移动距离",
+      "\t\tvar maskMaxX = preview_img.offsetWidth - mask.offsetWidth;",
+      "\t\tvar maskMaxY = preview_img.offsetHeight - mask.offsetHeight;",
+      "\t\tif (maskX <= 0) {",
+      "\t\t\tmaskX = 0;",
+      "\t\t} else if (maskX >= maskMaxX) {",
+      "\t\t\tmaskX = maskMaxX;",
+      "\t\t}",
+      "\t\tif (maskY <= 0) {",
+      "\t\t\tmaskY = 0;",
+      "\t\t} else if (maskY >= maskMaxY) {",
+      "\t\t\tmaskY = maskMaxY;",
+      "\t\t}",
+      "\t\tmask.style.left = maskX + 'px';",
+      "\t\tmask.style.top = maskY + 'px';",
+      "\t\t// 大图",
+      "\t\tvar bigIMg = document.querySelector('${4:大图}');",
+      "\t\t// 大图片最大移动距离",
+      "\t\tvar bigMaxX = bigIMg.offsetWidth - big.offsetWidth;",
+      "\t\tvar bigMaxY = bigIMg.offsetHeight - big.offsetHeight;",
+      "\t\t// 大图片的移动距离 X Y",
+      "\t\tvar bigX = maskX * bigMaxX / maskMaxX;",
+      "\t\tvar bigY = maskY * bigMaxY / maskMaxY;",
+      "\t\tbigIMg.style.left = -bigX + 'px';",
+      "\t\tbigIMg.style.top = -bigY + 'px';",
+      "\t})",
+      "})"
+    ],
+    "description": ["放大镜", "外联单独JS用"]
+  },
+
+  "根据浏览器不同实现跳转": {
+    "prefix": ["tz", "hs"],
+    "body": [
+      "//根据浏览器不同实现跳转(JS放到开头)",
+      "if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {",
+      "\twindow.location.href = \"\"; //手机",
+      "} else {",
+      "\twindow.location.href = \"\"; //电脑",
+      "}"
+    ],
+    "description": ["根据浏览器不同实现跳转", "JS放到开头"]
+  },
+
+  "导航栏鼠标跟随点击动画效果": {
+    "prefix": ["hs", "nav"],
+    "body": [
+      "// 获取元素",
+      "var cloud = document.querySelector('${1:需要做动画效果的遮挡层(背景)}');",
+      "var c_nav = document.querySelector('${2:li的父级(ul)}');",
+      "var lis = c_nav.querySelectorAll('${3:所有的小li}');",
+      "// current 动画起始位置",
+      "var current = 0;",
+      "// 给所有的小li绑定事件 ",
+      "for (var i = 0; i < lis.length; i++) {",
+      "\t// (1) 鼠标经过把当前小li 的位置做为目标值",
+      "\tlis[i].addEventListener('mouseenter', function () {",
+      "\t\tanimate(cloud, this.offsetLeft);",
+      "\t});",
+      "\t// (2) 鼠标离开就回到起始的位置 ",
+      "\tlis[i].addEventListener('mouseleave', function () {",
+      "\t\tanimate(cloud, current);",
+      "\t});",
+      "\t// (3) 当我们鼠标点击，就把当前位置做为目标值",
+      "\tlis[i].addEventListener('click', function () {",
+      "\t\tcurrent = this.offsetLeft;",
+      "\t});",
+      "}"
+    ],
+    "description": [
+      "导航栏动画",
+      "鼠标移动切换背景",
+      "移开回到起始位置",
+      "点击把当前位置作为目标位置"
+    ]
+  },
+
+  "移动端拖动元素": {
+    "prefix": ["td", "hs"],
+    "body": [
+      "移动端拖动元素",
+      "var div = document.querySelector('${1:目标盒子}');",
+      "var startX = 0; //获取手指初始坐标",
+      "var startY = 0;",
+      "var x = 0; //获得盒子原来的位置",
+      "var y = 0;",
+      "div.addEventListener('touchstart', function(e) {",
+      "\t//  获取手指初始坐标",
+      "\tstartX = e.targetTouches[0].pageX;",
+      "\tstartY = e.targetTouches[0].pageY;",
+      "\tx = this.offsetLeft;",
+      "\ty = this.offsetTop;",
+      "});",
+      "div.addEventListener('touchmove', function(e) {",
+      "\t//  计算手指的移动距离： 手指移动之后的坐标减去手指初始的坐标",
+      "\tvar moveX = e.targetTouches[0].pageX - startX;",
+      "\tvar moveY = e.targetTouches[0].pageY - startY;",
+      "\t// 移动盒子 盒子原来的位置 + 手指移动的距离",
+      "\tthis.style.left = x + moveX + 'px';",
+      "\tthis.style.top = y + moveY + 'px';",
+      "\te.preventDefault(); // 阻止屏幕滚动的默认行为",
+      "});"
+    ],
+    "description": ["移动端拖动元素"]
+  },
+
+  "[H5必插入]fastclick清除click300ms延时": {
+    "prefix": ["csh", "fastclick", "fastclick-js"],
+    "body": [
+      "!function(){\"use strict\";function FastClick(layer,options){var oldOnClick;if(options=options||{},this.trackingClick=!1,this.trackingClickStart=0,this.targetElement=null,this.touchStartX=0,this.touchStartY=0,this.lastTouchIdentifier=0,this.touchBoundary=options.touchBoundary||10,this.layer=layer,this.tapDelay=options.tapDelay||200,this.tapTimeout=options.tapTimeout||700,!FastClick.notNeeded(layer)){for(var methods=[\"onMouse\",\"onClick\",\"onTouchStart\",\"onTouchMove\",\"onTouchEnd\",\"onTouchCancel\"],context=this,i=0,l=methods.length;i<l;i++)this[methods[i]]=bind(this[methods[i]],this);deviceIsAndroid&&(layer.addEventListener(\"mouseover\",this.onMouse,!0),layer.addEventListener(\"mousedown\",this.onMouse,!0),layer.addEventListener(\"mouseup\",this.onMouse,!0)),layer.addEventListener(\"click\",this.onClick,!0),layer.addEventListener(\"touchstart\",this.onTouchStart,!1),layer.addEventListener(\"touchmove\",this.onTouchMove,!1),layer.addEventListener(\"touchend\",this.onTouchEnd,!1),layer.addEventListener(\"touchcancel\",this.onTouchCancel,!1),Event.prototype.stopImmediatePropagation||(layer.removeEventListener=function(type,callback,capture){var rmv=Node.prototype.removeEventListener;\"click\"===type?rmv.call(layer,type,callback.hijacked||callback,capture):rmv.call(layer,type,callback,capture)},layer.addEventListener=function(type,callback,capture){var adv=Node.prototype.addEventListener;\"click\"===type?adv.call(layer,type,callback.hijacked||(callback.hijacked=function(event){event.propagationStopped||callback(event)}),capture):adv.call(layer,type,callback,capture)}),\"function\"==typeof layer.onclick&&(oldOnClick=layer.onclick,layer.addEventListener(\"click\",function(event){oldOnClick(event)},!1),layer.onclick=null)}function bind(method,context){return function(){return method.apply(context,arguments)}}}var deviceIsWindowsPhone=navigator.userAgent.indexOf(\"Windows Phone\")>=0,deviceIsAndroid=navigator.userAgent.indexOf(\"Android\")>0&&!deviceIsWindowsPhone,deviceIsIOS=/iP(ad|hone|od)/.test(navigator.userAgent)&&!deviceIsWindowsPhone,deviceIsIOS4=deviceIsIOS&&/OS 4_\\d(_\\d)?/.test(navigator.userAgent),deviceIsIOSWithBadTarget=deviceIsIOS&&/OS [6-7]_\\d/.test(navigator.userAgent),deviceIsBlackBerry10=navigator.userAgent.indexOf(\"BB10\")>0;FastClick.prototype.needsClick=function(target){switch(target.nodeName.toLowerCase()){case\"button\":case\"select\":case\"textarea\":if(target.disabled)return!0;break;case\"input\":if(deviceIsIOS&&\"file\"===target.type||target.disabled)return!0;break;case\"label\":case\"iframe\":case\"video\":return!0}return/\\bneedsclick\\b/.test(target.className)},FastClick.prototype.needsFocus=function(target){switch(target.nodeName.toLowerCase()){case\"textarea\":return!0;case\"select\":return!deviceIsAndroid;case\"input\":switch(target.type){case\"button\":case\"checkbox\":case\"file\":case\"image\":case\"radio\":case\"submit\":return!1}return!target.disabled&&!target.readOnly;default:return/\\bneedsfocus\\b/.test(target.className)}},FastClick.prototype.sendClick=function(targetElement,event){var clickEvent,touch;document.activeElement&&document.activeElement!==targetElement&&document.activeElement.blur(),touch=event.changedTouches[0],(clickEvent=document.createEvent(\"MouseEvents\")).initMouseEvent(this.determineEventType(targetElement),!0,!0,window,1,touch.screenX,touch.screenY,touch.clientX,touch.clientY,!1,!1,!1,!1,0,null),clickEvent.forwardedTouchEvent=!0,targetElement.dispatchEvent(clickEvent)},FastClick.prototype.determineEventType=function(targetElement){return deviceIsAndroid&&\"select\"===targetElement.tagName.toLowerCase()?\"mousedown\":\"click\"},FastClick.prototype.focus=function(targetElement){var length;deviceIsIOS&&targetElement.setSelectionRange&&0!==targetElement.type.indexOf(\"date\")&&\"time\"!==targetElement.type&&\"month\"!==targetElement.type&&\"email\"!==targetElement.type?(length=targetElement.value.length,targetElement.setSelectionRange(length,length)):targetElement.focus()},FastClick.prototype.updateScrollParent=function(targetElement){var scrollParent,parentElement;if(!(scrollParent=targetElement.fastClickScrollParent)||!scrollParent.contains(targetElement)){parentElement=targetElement;do{if(parentElement.scrollHeight>parentElement.offsetHeight){scrollParent=parentElement,targetElement.fastClickScrollParent=parentElement;break}parentElement=parentElement.parentElement}while(parentElement)}scrollParent&&(scrollParent.fastClickLastScrollTop=scrollParent.scrollTop)},FastClick.prototype.getTargetElementFromEventTarget=function(eventTarget){return eventTarget.nodeType===Node.TEXT_NODE?eventTarget.parentNode:eventTarget},FastClick.prototype.onTouchStart=function(event){var targetElement,touch,selection;if(event.targetTouches.length>1)return!0;if(targetElement=this.getTargetElementFromEventTarget(event.target),touch=event.targetTouches[0],deviceIsIOS){if((selection=window.getSelection()).rangeCount&&!selection.isCollapsed)return!0;if(!deviceIsIOS4){if(touch.identifier&&touch.identifier===this.lastTouchIdentifier)return event.preventDefault(),!1;this.lastTouchIdentifier=touch.identifier,this.updateScrollParent(targetElement)}}return this.trackingClick=!0,this.trackingClickStart=event.timeStamp,this.targetElement=targetElement,this.touchStartX=touch.pageX,this.touchStartY=touch.pageY,event.timeStamp-this.lastClickTime<this.tapDelay&&event.preventDefault(),!0},FastClick.prototype.touchHasMoved=function(event){var touch=event.changedTouches[0],boundary=this.touchBoundary;return Math.abs(touch.pageX-this.touchStartX)>boundary||Math.abs(touch.pageY-this.touchStartY)>boundary},FastClick.prototype.onTouchMove=function(event){return!this.trackingClick||((this.targetElement!==this.getTargetElementFromEventTarget(event.target)||this.touchHasMoved(event))&&(this.trackingClick=!1,this.targetElement=null),!0)},FastClick.prototype.findControl=function(labelElement){return void 0!==labelElement.control?labelElement.control:labelElement.htmlFor?document.getElementById(labelElement.htmlFor):labelElement.querySelector(\"button, input:not([type=hidden]), keygen, meter, output, progress, select, textarea\")},FastClick.prototype.onTouchEnd=function(event){var forElement,trackingClickStart,targetTagName,scrollParent,touch,targetElement=this.targetElement;if(!this.trackingClick)return!0;if(event.timeStamp-this.lastClickTime<this.tapDelay)return this.cancelNextClick=!0,!0;if(event.timeStamp-this.trackingClickStart>this.tapTimeout)return!0;if(this.cancelNextClick=!1,this.lastClickTime=event.timeStamp,trackingClickStart=this.trackingClickStart,this.trackingClick=!1,this.trackingClickStart=0,deviceIsIOSWithBadTarget&&(touch=event.changedTouches[0],(targetElement=document.elementFromPoint(touch.pageX-window.pageXOffset,touch.pageY-window.pageYOffset)||targetElement).fastClickScrollParent=this.targetElement.fastClickScrollParent),\"label\"===(targetTagName=targetElement.tagName.toLowerCase())){if(forElement=this.findControl(targetElement)){if(this.focus(targetElement),deviceIsAndroid)return!1;targetElement=forElement}}else if(this.needsFocus(targetElement))return event.timeStamp-trackingClickStart>100||deviceIsIOS&&window.top!==window&&\"input\"===targetTagName?(this.targetElement=null,!1):(this.focus(targetElement),this.sendClick(targetElement,event),deviceIsIOS&&\"select\"===targetTagName||(this.targetElement=null,event.preventDefault()),!1);return!(!deviceIsIOS||deviceIsIOS4||!(scrollParent=targetElement.fastClickScrollParent)||scrollParent.fastClickLastScrollTop===scrollParent.scrollTop)||(this.needsClick(targetElement)||(event.preventDefault(),this.sendClick(targetElement,event)),!1)},FastClick.prototype.onTouchCancel=function(){this.trackingClick=!1,this.targetElement=null},FastClick.prototype.onMouse=function(event){return!this.targetElement||(!!event.forwardedTouchEvent||(!event.cancelable||(!(!this.needsClick(this.targetElement)||this.cancelNextClick)||(event.stopImmediatePropagation?event.stopImmediatePropagation():event.propagationStopped=!0,event.stopPropagation(),event.preventDefault(),!1))))},FastClick.prototype.onClick=function(event){var permitted;return this.trackingClick?(this.targetElement=null,this.trackingClick=!1,!0):\"submit\"===event.target.type&&0===event.detail||((permitted=this.onMouse(event))||(this.targetElement=null),permitted)},FastClick.prototype.destroy=function(){var layer=this.layer;deviceIsAndroid&&(layer.removeEventListener(\"mouseover\",this.onMouse,!0),layer.removeEventListener(\"mousedown\",this.onMouse,!0),layer.removeEventListener(\"mouseup\",this.onMouse,!0)),layer.removeEventListener(\"click\",this.onClick,!0),layer.removeEventListener(\"touchstart\",this.onTouchStart,!1),layer.removeEventListener(\"touchmove\",this.onTouchMove,!1),layer.removeEventListener(\"touchend\",this.onTouchEnd,!1),layer.removeEventListener(\"touchcancel\",this.onTouchCancel,!1)},FastClick.notNeeded=function(layer){var metaViewport,chromeVersion,blackberryVersion,firefoxVersion;if(void 0===window.ontouchstart)return!0;if(chromeVersion=+(/Chrome\\/([0-9]+)/.exec(navigator.userAgent)||[,0])[1]){if(!deviceIsAndroid)return!0;if(metaViewport=document.querySelector(\"meta[name=viewport]\")){if(-1!==metaViewport.content.indexOf(\"user-scalable=no\"))return!0;if(chromeVersion>31&&document.documentElement.scrollWidth<=window.outerWidth)return!0}}if(deviceIsBlackBerry10&&(blackberryVersion=navigator.userAgent.match(/Version\\/([0-9]*)\\.([0-9]*)/))[1]>=10&&blackberryVersion[2]>=3&&(metaViewport=document.querySelector(\"meta[name=viewport]\"))){if(-1!==metaViewport.content.indexOf(\"user-scalable=no\"))return!0;if(document.documentElement.scrollWidth<=window.outerWidth)return!0}return\"none\"===layer.style.msTouchAction||\"manipulation\"===layer.style.touchAction||(!!((firefoxVersion=+(/Firefox\\/([0-9]+)/.exec(navigator.userAgent)||[,0])[1])>=27&&(metaViewport=document.querySelector(\"meta[name=viewport]\"))&&(-1!==metaViewport.content.indexOf(\"user-scalable=no\")||document.documentElement.scrollWidth<=window.outerWidth))||(\"none\"===layer.style.touchAction||\"manipulation\"===layer.style.touchAction))},FastClick.attach=function(layer,options){return new FastClick(layer,options)},\"function\"==typeof define&&\"object\"==typeof define.amd&&define.amd?define(function(){return FastClick}):\"undefined\"!=typeof module&&module.exports?(module.exports=FastClick.attach,module.exports.FastClick=FastClick):window.FastClick=FastClick}();"
+    ],
+    "description": [
+      "[H5]fastclick清除click300ms延时",
+      "移动端必须要引入",
+      "需要配合使用快捷键fastclick"
+    ]
+  },
+
+  "fastclick插件使用": {
+    "prefix": ["fastclick", "csh"],
+    "body": [
+      "//先引入fastclick.js(新建js输入快捷键fastclick-js)",
+      "//fastclick插件使用,在自己的js中第一行使用",
+      "//jquery时用",
+      "$(function(){FastClick.attach(document.body);});",
+      "//原生时用",
+      "if ('addEventListener' in document) {",
+      "\tdocument.addEventListener('DOMContentLoaded', function() {",
+      "\t\tFastClick.attach(document.body);",
+      "\t}, false);",
+      "}"
+    ],
+    "description": [
+      "fastclick插件使用,在自己的js中第一行使用",
+      "需要引入fastclick插件,快捷键fastclick"
+    ]
+  },
+
+  "轮播图(移动端)": {
+    "prefix": ["lbt", "hs", "lunbotu"],
+    "body": [
+      "/*  HTML格式",
+      "\t<div class=\"focus\">",
+      "\t<ul>",
+      "\t\t<li><img src=\"upload/focus1.jpg\" alt=\"\"></li>",
+      "\t\t<li><img src=\"upload/focus2.jpg\" alt=\"\"></li>",
+      "\t\t<li><img src=\"upload/focus3.jpg\" alt=\"\"></li>",
+      "\t</ul>",
+      "\t<!-- 小圆点 -->",
+      "\t<ol>",
+      "\t\t<li class=\"current\"></li>  current,为单独的小圆圈的样式(选中的)",
+      "\t\t<li></li>",
+      "\t\t<li></li>",
+      "\t</ol>",
+      "\t</div> */",
+      "// 获取元素 ",
+      "var focus = document.querySelector('.focus');",
+      "var ul = focus.children[0];",
+      "// 获得focus 的宽度",
+      "var w = focus.offsetWidth;",
+      "var ol = focus.children[1];",
+      "//克隆第一张图去最后",
+      "var li_clone_first = ul.children[0].cloneNode(true);",
+      "ul.appendChild(li_clone_first);",
+      "//克隆最后一张图去最前面",
+      "var li_clone_last = ul.children[ul.children.length - 1].cloneNode(true);",
+      "ul.insertBefore(li_clone_last, ul.children[0]);",
+      "// 利用定时器自动轮播图图片",
+      "var index = 0;",
+      "var indexx = ul.children.length - 2;",
+      "var timer = setInterval(function () {",
+      "\tindex++;",
+      "\tvar translatex = -index * w;",
+      "\tul.style.transition = 'all .3s';",
+      "\tul.style.transform = 'translateX(' + translatex + 'px)';",
+      "}, ${1|2000,3000|});",
+      "// 监听过渡完成的事件 transitionend ",
+      "ul.addEventListener('transitionend', function () {",
+      "\t// 无缝滚动",
+      "\tif (index >= indexx) {",
+      "\t\tindex = 0;",
+      "\t\t// 去掉过渡效果 快速的跳到目标位置",
+      "\t\tul.style.transition = 'none';",
+      "\t\t// 去滚动图片",
+      "\t\tvar translatex = -index * w;",
+      "\t\tul.style.transform = 'translateX(' + translatex + 'px)';",
+      "\t} else if (index < 0) {",
+      "\t\tindex = indexx - 1;",
+      "\t\tul.style.transition = 'none';",
+      "\t\t// 去滚动图片",
+      "\t\tvar translatex = -index * w;",
+      "\t\tul.style.transform = 'translateX(' + translatex + 'px)';",
+      "\t}",
+      "\t// 小圆点跟随变化",
+      "\t// 把ol里面li带有current类名的选出来去掉类名 remove",
+      "\tol.querySelector('.current').classList.remove('current');",
+      "\t// 让当前索引号 的小li 加上 current   add",
+      "\tol.children[index].classList.add('current');",
+      "});",
+      "// 手指滑动轮播图 ",
+      "// 获取手指初始坐标",
+      "var startX = 0;",
+      "var moveX = 0; // 移动距离",
+      "var flag = false;",
+      "ul.addEventListener('touchstart', function (e) {",
+      "\tstartX = e.targetTouches[0].pageX;",
+      "\t// 手指触摸的时候就停止定时器",
+      "\tclearInterval(timer);",
+      "});",
+      "// 计算手指的滑动距离， 并且移动盒子",
+      "ul.addEventListener('touchmove', function (e) {",
+      "\t// 计算移动距离",
+      "\tmoveX = e.targetTouches[0].pageX - startX;",
+      "\t// 移动盒子：  盒子原来的位置 + 手指移动的距离 ",
+      "\tvar translatex = -index * w + moveX;",
+      "\t// 手指拖动的时候，取消过渡效果",
+      "\tul.style.transition = 'none';",
+      "\tul.style.transform = 'translateX(' + translatex + 'px)';",
+      "\tflag = true; // 如果用户手指移动过我们再去判断否则不做判断效果",
+      "\te.preventDefault(); // 阻止滚动屏幕的行为",
+      "});",
+      "// 手指离开 根据移动距离去判断是回弹还是播放上一张下一张",
+      "ul.addEventListener('touchend', function (e) {",
+      "\tif (flag) {",
+      "\t\t// 如果移动距离大于50像素我们就播放上一张或者下一张",
+      "\t\tif (Math.abs(moveX) > 50) {",
+      "\t\t\t// 如果是右滑就是 播放上一张 moveX 是正值",
+      "\t\t\tif (moveX > 0) {",
+      "\t\t\t\tindex--;",
+      "\t\t\t} else {",
+      "\t\t\t\t// 如果是左滑就是 播放下一张 moveX 是负值",
+      "\t\t\t\tindex++;",
+      "\t\t\t}",
+      "\t\t\tvar translatex = -index * w;",
+      "\t\t\tul.style.transition = 'all .3s';",
+      "\t\t\tul.style.transform = 'translateX(' + translatex + 'px)';",
+      "\t\t} else {",
+      "\t\t\t// 如果移动距离小于50像素我们就回弹",
+      "\t\t\tvar translatex = -index * w;",
+      "\t\t\tul.style.transition = 'all .1s';",
+      "\t\t\tul.style.transform = 'translateX(' + translatex + 'px)';",
+      "\t\t}",
+      "\t}",
+      "\t// 手指离开的时候就重新开启定时器",
+      "\tclearInterval(timer);",
+      "\ttimer = setInterval(function () {",
+      "\t\tindex++;",
+      "\t\tvar translatex = -index * w;",
+      "\t\tul.style.transition = 'all .3s';",
+      "\t\tul.style.transform = 'translateX(' + translatex + 'px)';",
+      "\t}, ${1|2000,3000|});",
+      "});"
+    ],
+    "description": ["轮播图(移动端)"]
+  },
+
+  "返回顶部函数": {
+    "prefix": ["goback", "fanhui", "hs"],
+    "body": [
+      "// 返回顶部模块制作",
+      "var goBack = document.querySelector('${1:需要制作返回顶部(隐藏显示的盒子)}');",
+      "var nav = document.querySelector('${2:到哪个模块显示返回顶部的按钮}');",
+      "window.addEventListener('scroll', function () {",
+      "\tif (window.pageYOffset >= nav.offsetTop) {",
+      "\t\tgoBack.style.display = 'block';",
+      "\t} else {",
+      "\t\tgoBack.style.display = 'none';",
+      "\t}",
+      "});",
+      "goBack.addEventListener('click', function () {",
+      "\twindow.scroll(0, 0);",
+      "})"
+    ],
+    "description": ["返回顶部函数"]
+  },
+  "jQuery入口函数": {
+    "prefix": ["$"],
+    "body": ["$(function(){", "\t${0:$}", "})"],
+    "description": ["jQuery入口函数"]
+  },
+
+  "jQuery注册事件": {
+    "prefix": ["$"],
+    "body": [
+      "$('${1:选择器}').${2:监听事件}(function(){",
+      "\t${0:执行代码}",
+      "})"
+    ],
+    "description": ["jQuery注册事件"]
+  },
+
+  "jQuery.easing单个效果引入格式": {
+    "prefix": ["jQuery", "easing$"],
+    "body": ["jQuery.extend(jQuery.easing, {$0});"],
+    "description": ["jQuery.easing单个效果引入格式"]
+  },
+
+  "jQuery添加 类样式": {
+    "prefix": ["add$", "addClass"],
+    "body": ["${1:目标元素}.addClass(\"${2:类名}\")"],
+    "description": ["jQuery内添类样式"]
+  },
+
+  "jQuery移除 类样式": {
+    "prefix": ["remove", "removeClass"],
+    "body": ["${1:目标元素}.removeClass(\"${2:类名}\")"],
+    "description": ["jQuery内添类样式"]
+  },
+
+  "jQuery切换 类样式": {
+    "prefix": ["toggle$", "toggleClass"],
+    "body": ["${1:目标元素}.toggleClass(\"${2:类名}\")"],
+    "description": ["jQuery切换类样式"]
+  },
+
+  "jQuery切换 显示隐藏效果": {
+    "prefix": ["toggle$"],
+    "body": ["${1|toggle,fadeToggle,slideToggle|}(${2:[speed,[easing],[fn]]})"],
+    "description": [
+      "jQuery切换类样式",
+      "toggle()切换显示隐藏效果",
+      "slideToggle()切换上下滑动效果",
+      "fadeToggle()切换淡入淡出效果"
+    ]
+  },
+
+  "jQuery内部 添加 元素": {
+    "prefix": ["add$", "appendTo", "prependTo"],
+    "body": ["${1:要添加的元素}.${2|appendTo,prependTo|}($(\"${3:添加到}\"))"],
+    "description": ["jQuery内部 添加 元素"]
+  },
+
+  "jQuery外部 添加 元素": {
+    "prefix": ["add$", "after", "before"],
+    "body": ["${1:添加到}.${2|after,before|}($(\"${3:要添加的元素}\"))"],
+    "description": ["jQuery外部 添加 元素"]
+  },
+
+  "jQuery 移除元素": {
+    "prefix": ["remove"],
+    "body": ["${1:element}.${2|remove,empty|}()"],
+    "description": [
+      "jQuery 移除元素",
+      "remove 删除元素本身",
+      "empty()和html(\"\")作用等价,删除元素里面的内容"
+    ]
+  },
+
+  "jQuery获取(修改) 元素属性": {
+    "prefix": ["get$"],
+    "body": ["${1|prop,attr|}(\"${2:属性}${3:[,属性值]}\")"],
+    "description": [
+      "jQuery获取(修改)元素属性",
+      "prop()固有属性",
+      "attr()自定义属性"
+    ]
+  },
+
+  "jQuery内容文本值": {
+    "prefix": ["html$"],
+    "body": ["${1|html,text,val|}()"],
+    "description": [
+      "jQuery内容文本值",
+      "括号无内容为获取(有内容为设置)",
+      "val用于表单的值"
+    ]
+  },
+
+  "jQuery遍历元素(DOM处理)": {
+    "prefix": ["each$"],
+    "body": ["$(\"${1:div}\").each(function (${2:index}, ${3:domEle}) {${0}})"],
+    "description": [
+      "jQuery遍历元素",
+      "index 是每个元素的索引号",
+      "demEle 是每个DOM元素对象",
+      "转换jquery对象$(domEle)使用"
+    ]
+  },
+
+  "jQuery遍历任何对象(数据处理)": {
+    "prefix": ["each$"],
+    "body": ["$.each(${1:object}, function (${2:index}, ${3:element}) {${0}})"],
+    "description": [
+      "jQuery遍历元素",
+      "index 是每个元素的索引号",
+      "element  遍历内容"
+    ]
+  },
+
+  "jQuery父级选择器": {
+    "prefix": ["parents$"],
+    "body": ["parents(\"${1:特定条件}\")"],
+    "description": [
+      "jQuery父级选择器",
+      "括号无内容返回所有的父级元素",
+      "括号内填条件,返回含有特定条件的父级元素"
+    ]
+  },
+
+  "jQuery获取修改尺寸(内容)": {
+    "prefix": ["size$"],
+    "body": ["${1|width,height|}()"],
+    "description": ["jQuery获取修改尺寸", "只算width/height"]
+  },
+
+  "jQuery获取修改尺寸(C+P)": {
+    "prefix": ["size$"],
+    "body": ["${1|innerWidth,innerHeight|}()"],
+    "description": ["jQuery获取修改尺寸", "包含padding"]
+  },
+
+  "jQuery获取修改尺寸(C+P+B)": {
+    "prefix": ["size$"],
+    "body": ["${1|outerWidth,outerHeight|}()"],
+    "description": ["jQuery获取修改尺寸", "包含padding+border"]
+  },
+
+  "jQuery获取修改尺寸(C+P+B+M)": {
+    "prefix": ["size$"],
+    "body": ["${1|outerWidth,outerHeight|}(true)"],
+    "description": ["jQuery获取修改尺寸", "包含padding+border+margin"]
+  },
+
+  "jQuery获取文档位置": {
+    "prefix": ["offset$"],
+    "body": ["offset({top:10,left:20})"],
+    "description": [
+      "返回被选元素相对于文档的偏移坐标，跟父级没有关系",
+      "修改offset({top:10,left:20})"
+    ]
+  },
+
+  "jQuery设置文档位置": {
+    "prefix": ["offset$"],
+    "body": ["offset()"],
+    "description": ["返回被选元素相对于文档的偏移坐标，跟父级没有关系"]
+  },
+
+  "jQuery获取带有定位的父级位置": {
+    "prefix": ["offset$", "position$"],
+    "body": ["position()"],
+    "description": ["返回被选元素相对于带有定位的父级偏移坐标", "只能获取"]
+  },
+
+  "jQuery获取(设置)元素被卷去的头部和左侧": {
+    "prefix": ["offset$", "scroll$"],
+    "body": ["${1|scrollTop(),scrollLeft()|}"],
+    "description": ["jQuery获取(设置)元素被卷去的头部和左侧"]
+  },
+
+  "jQuery回到页面顶部": {
+    "prefix": ["scroll$", "goback"],
+    "body": ["$(\"body,html\").stop().animate({scrollTop:0},300)"],
+    "description": ["jQuery回到页面顶部"]
+  },
+
+  "jQuery合并(相同覆盖)对象": {
+    "prefix": ["hb$", "copy"],
+    "body": [
+      "// 将 object2 (相同覆盖)合并到 object1中",
+      "$.extend(object1, object2);"
+    ],
+    "description": [
+      "jQuery合并(相同覆盖)对象",
+      "可添加第一个参数true,深度合并,默认false",
+      "深度合并,两个对象中若存在同名对象,该对象属性也合并"
+    ]
+  },
+
+  "prev()": {
+    "prefix": ["prev", "shangyige", "syg", "xd"],
+    "body": ["prev()"],
+    "description": ["$(\".abc\").prev() .abc的上一个兄弟元素"]
+  },
+
+  "next()": {
+    "prefix": ["next", "xiayige", "xyg", "xd"],
+    "body": ["next()"],
+    "description": ["jQuery方法", "$(\".abc\").next() .abc的下一个兄弟元素"]
+  },
+
+  "鼠标样式": {
+    "prefix": ["curson"],
+    "body": ["\"curson\",\"${1|not-allowed,pointer,default|}\""],
+    "description": ["鼠标样式", "not-allowed禁止", "pointer小手", "default默认"]
+  },
+
+  "jQuery注册监听事件": {
+    "prefix": ["jt$"],
+    "body": [
+      "$(${1:选择器}).on({",
+      "\t${2:事件fn}:function(){",
+      "\t\t${0}",
+      "\t}",
+      "})"
+    ],
+    "description": ["jQuery注册监听事件"]
+  },
+
+  "jQuery获取兄弟节点": {
+    "prefix": ["siblings", "xd$"],
+    "body": ["siblings()"],
+    "description": ["jQuery获取兄弟节点"]
+  },
+
+  "jQuery电梯导航": {
+    "prefix": ["dt$", "zj"],
+    "body": [
+      "//页面打开调用判断是否显示电梯导航",
+      "getTool();",
+      "//判断显示隐藏电梯导航  函数",
+      "function getTool(){",
+      "\tif ($(document).scrollTop() >= $(\"${3:楼层区}\").offset().top) {",
+      "\t\t$(\"${1:电梯导航大盒子}\").fadeIn();",
+      "\t} else {",
+      "\t\t$(\"${1:电梯导航大盒子}\").fadeOut();",
+      "\t}",
+      "\t//电梯导航切换样式",
+      "\t$(\"${4:楼层区(楼层区必须添加个相同类名)[例.floor .w]}\").each(function(i,ele){",
+      "\t\tif($(document).scrollTop() >= $(ele).offset().top){",
+      "\t\t\t$(\"${1:电梯导航大盒子}\").find(\"${2:电梯导航中的小盒子}\").removeClass(\"${5:选中楼层的样式}\").eq(i).addClass(\"${5:选中楼层的样式}\")",
+      "\t\t}",
+      "\t})",
+      "}",
+      "$(window).scroll(function () {",
+      "\tgetTool();",
+      "})",
+      "//电梯导航操作",
+      "$(\"${1:电梯导航大盒子}\").on(\"click\",\"${2:电梯导航中的小盒子}\",function(){",
+      "\tvar goto = $(\"${4:楼层区(楼层区必须添加个相同类名)[例.floor .w]}\").eq($(this).index()).offset().top;",
+      "\t$(\"html, body\").animate({",
+      "\t\tscrollTop:goto",
+      "\t})",
+      "})"
+    ],
+    "description": ["jQuery电梯导航"]
+  },
+
+  "jQuery下拉导航栏": {
+    "prefix": ["zj", "slide_nav"],
+    "body": [
+      "<!-- 下拉导航栏 -->",
+      "<ul class=\"slide_nav\">",
+      "\t<li>",
+      "\t\t<!-- 导航栏标题 -->",
+      "\t\t<a href=\"javascript:;\">不隐藏的标题</a>",
+      "\t\t<!-- 隐藏部分 -->",
+      "\t\t<ul style=\"display:none\">",
+      "\t\t\t<!-- 手动添加display=none -->",
+      "\t\t\t<li><a href=\"javascript:;\">隐藏value1</a></li>",
+      "\t\t\t<li><a href=\"javascript:;\">隐藏value2</a></li>",
+      "\t\t\t<li><a href=\"javascript:;\">隐藏value3</a></li>",
+      "\t\t\t<li><a href=\"javascript:;\">隐藏value4</a></li>",
+      "\t\t</ul>",
+      "\t</li>",
+      "</ul>",
+      "<script>",
+      "\t$(\".slide_nav\").on({",
+      "\t\tmouseover: function (e) {",
+      "\t\t\t$(e.target).parents(\"li\").children(\"ul\").stop().slideDown();",
+      "\t\t},",
+      "\t\tmouseout: function (e) {",
+      "\t\t\t$(e.target).parents(\"li\").children(\"ul\").stop().slideUp();",
+      "\t\t}",
+      "\t})",
+      "</script>"
+    ],
+    "description": ["下拉导航栏"]
+  },
+
+  "splice删除数组中的某些数据": {
+    "prefix": ["splice", "del", "remove"],
+    "body": ["splice(${1:从第几个开始删除},${2:删除几个})"],
+    "description": ["splice删除数组中的某些数据"]
+  },
+
+  "删除对象中的属性": {
+    "prefix": ["del", "remove"],
+    "body": ["delete obj.name //删除obj中的name属性"],
+    "description": ["删除对象中的属性"]
+  },
+
+  "prop获取元素固定属性": {
+    "prefix": ["prop"],
+    "body": ["prop()"],
+    "description": ["prop获取元素固定属性"]
+  },
+
+  "attr获取元素自定义属性": {
+    "prefix": ["attr"],
+    "body": ["attr()"],
+    "description": ["获取元素自定义属性"]
+  },
+
+  "jQuery自动触发事件(会触发元素默认事件)": {
+    "prefix": ["auto$", "trigger", "zidongchufa", "zdcf"],
+    "body": ["$(${1:元素}).trigger(\"${2:事件}\")"],
+    "description": ["jQuery自动触发事件"]
+  },
+
+  "jQuery自动触发事件(不会触发元素默认事件)": {
+    "prefix": ["auto$", "trigger", "zidongchufa", "zdcf"],
+    "body": ["$(${1:元素}).triggerHandler(\"${2:事件}\")"],
+    "description": ["jQuery自动触发事件"]
+  },
+
+  "keyCode返回ASSCII码": {
+    "prefix": ["keycode"],
+    "body": ["keyCode()"],
+    "description": ["keyCode返回ASSIC"]
+  },
+
+  "jQuery阻止冒泡": {
+    "prefix": ["stop", "mp"],
+    "body": ["${1:event}.stopPropagation()"],
+    "description": ["jQuery阻止冒泡"]
+  },
+  "func": {
+    "prefix": "func",
+    "body": ["function (${param}) {  }"],
+    "description": "一个匿名函数."
+  },
+  "jq文本选择器": {
+    "prefix": ["jqcontains"],
+    "body": [
+    "$(':contains(${1:要查找的文本})')"
+    ],
+    "description": [
+    "jq文本选择器"
+    ]
+  },
+  "jqserialize搜集表单数据": {
+    "prefix": ["jqserialize", "get"],
+    "body": ["$(${selector}).serialize();"],
+    "description": ["搜集表单数据"]
+  },
+
+  "jqAfter": {
+    "prefix": "jqAfter",
+    "body": ["$(${selector}).after(${content});"],
+    "description": "在匹配元素集中的每个元素之后插入由参数指定的内容。"
+  },
+  "jqAjax": {
+    "prefix": "jqAjax",
+    "body": [
+      "$.ajax({",
+      "\ttype: \"${1|GET,POST|}\",  //默认get",
+      "\turl: \"${2:url}\",  //默认当前页",
+      "\tdata: \"${3:data}\",  //格式{key:value}",
+      "\tdataType: \"${4|json,text,html,script,xml,jsonp|}\",",
+      "\tbeforeSend: function () {}, //请求发送前回调,常用验证",
+      "\tsuccess: function (response) {  //请求成功回调",
+      "\t\t$0",
+      "\t},",
+      "\terror: function (e) {  //请求超时回调",
+      "\t\tif(e.statusText == \"timeout\"){",
+      "\t\t\talert(\"请求超时\");",
+      "\t\t}",
+      "\t},",
+      "\tcomplete: function () {}, //无论请求是成功还是失败都会执行的回调，常用全局成员的释放，或者页面状态的重置",
+      "});"
+    ],
+    "description": "执行异步HTTP（Ajax）请求。"
+  },
+  "jqAjaxAspNetWebService": {
+    "prefix": "jqAjaxAspNetWebService",
+    "body": [
+      "$.ajax({",
+      "\ttype: \"POST\",",
+      "\tcontentType: \"application/json; charset=utf-8\",",
+      "\tdataType: \"${dataType}\",",
+      "\turl: \"${url}\",",
+      "\tdata: \"${data}\",",
+      "\tsuccess: function (response) {",
+      "\t\t$0",
+      "\t}",
+      "});"
+    ],
+    "description": "对ASP.NET Web服务执行异步HTTP（Ajax）请求。"
+  },
+  "jqAppend": {
+    "prefix": "jqAppend",
+    "body": ["$(${selector}).append(${content});"],
+    "description": "将参数指定的内容插入到匹配元素集中每个元素的末尾。"
+  },
+  "jqAppendTo": {
+    "prefix": "jqAppendTo",
+    "body": ["$(${content}).appendTo(${selector});"],
+    "description": "将匹配元素集中的每个元素插入到目标的末尾。"
+  },
+  "jqAttrGet": {
+    "prefix": "jqAttrGet",
+    "body": ["$(${selector}).attr(${attributeName});"],
+    "description": "获取匹配元素集中第一个元素的属性值。"
+  },
+  "jqAttrRemove": {
+    "prefix": "jqAttrRemove",
+    "body": ["$(${selector}).removeAttr(${attributeName});"],
+    "description": "从匹配元素集中的每个元素中删除属性。"
+  },
+  "jqAttrSet": {
+    "prefix": "jqAttrSet",
+    "body": ["$(${selector}).attr(${attributeName}, ${value});"],
+    "description": "为匹配元素集设置一个或多个属性。"
+  },
+  "jqAttrSetFn": {
+    "prefix": "jqAttrSetFn",
+    "body": [
+      "$(${selector}).attr(${attributeName}, function (index, attr) { ",
+      "\t$0 ",
+      "});"
+    ],
+    "description": "为匹配元素集设置一个或多个属性。"
+  },
+  "jqAttrSetObj": {
+    "prefix": "jqAttrSetObj",
+    "body": ["$(${selector}).attr({", "\t${name}: ${value}", "\t$0", "});"],
+    "description": "为匹配元素集设置一个或多个属性。"
+  },
+  "jqBefore": {
+    "prefix": "jqBefore",
+    "body": ["$(${selector}).before(${content});"],
+    "description": "在匹配元素集中的每个元素之前插入由参数指定的内容。"
+  },
+  "jqBind": {
+    "prefix": "jqBind",
+    "body": ["$(${selector}).bind(${eventType}, function (e) {", "\t$0", "});"],
+    "description": "将处理程序附加到元素的事件。"
+  },
+  "jqBindWithData": {
+    "prefix": "jqBindWithData",
+    "body": [
+      "$(${selector}).bind(${eventType}, ${eventData}, function (e) {",
+      "\t$0",
+      "});"
+    ],
+    "description": "将处理程序附加到元素的事件。"
+  },
+  "jqBlur": {
+    "prefix": "jqBlur",
+    "body": [
+      "$(${selector}).blur(function (e) { ",
+      "\te.preventDefault();",
+      "\t$0",
+      "});"
+    ],
+    "description": "将事件处理程序绑定到\"失去焦点\"事件，或在元素上触发该事件。"
+  },
+  "jqChange": {
+    "prefix": "jqChange",
+    "body": [
+      "$(${selector}).change(function (e) { ",
+      "\te.preventDefault();",
+      "\t$0",
+      "});"
+    ],
+    "description": "将事件处理程序绑定到\"状态发生改变\"事件，或在元素上触发该事件。"
+  },
+  "jqClassAdd": {
+    "prefix": "jqClassAdd",
+    "body": ["$(${selector}).addClass(${className});"],
+    "description": "将指定的类添加到每个匹配的元素集中。"
+  },
+  "jqClassRemove": {
+    "prefix": "jqClassRemove",
+    "body": ["$(${selector}).removeClass(${className});"],
+    "description": "从匹配元素集中的每个元素中删除单个类，多个类或所有类。"
+  },
+  "jqClassToggle": {
+    "prefix": "jqClassToggle",
+    "body": ["$(${selector}).toggleClass(${className});"],
+    "description": "(切换类)在匹配元素集中的每个元素中添加或删除一个或多个类，具体取决于类的存在。"
+  },
+  "jqClassToggleSwitch": {
+    "prefix": "jqClassToggleSwitch",
+    "body": ["$(${selector}).toggleClass(${className}, ${switch});"],
+    "description": "根据switch(true添加/false删除)，从匹配元素集中的每个元素添加或删除一个或多个类。"
+  },
+  "jqClick": {
+    "prefix": "jqClick",
+    "body": [
+      "$(${selector}).click(function (e) { ",
+      "\te.preventDefault();",
+      "\t$0",
+      "});"
+    ],
+    "description": "将事件处理程序绑定到\"点击\"事件，或在元素上触发该事件。"
+  },
+  "jqClone": {
+    "prefix": "jqClone",
+    "body": ["$(${selector}).clone();"],
+    "description": "克隆元素。"
+  },
+  "jqCloneWithEvents": {
+    "prefix": "jqCloneWithEvents",
+    "body": ["$(${selector}).clone(true);"],
+    "description": "深度克隆元素"
+  },
+  "jqCssGet": {
+    "prefix": "jqCssGet",
+    "body": ["$(${selector}).css(${propertyName});"],
+    "description": "获取匹配元素集中的CSS属性值。"
+  },
+  "jqCssSet": {
+    "prefix": "jqCssSet",
+    "body": ["$(${selector}).css(${propertyName}, ${value});"],
+    "description": "为匹配元素集设置一个CSS属性。"
+  },
+  "jqCssSetObj": {
+    "prefix": "jqCssSetObj",
+    "body": [
+      "$(${selector}).css({",
+      "\t${propertyName}: ${value}",
+      "\t$0",
+      "});"
+    ],
+    "description": "为匹配元素集设置多个CSS属性。"
+  },
+  "jqdelay": {
+    "prefix": ["jqdelay"],
+    "body": ["delay()"],
+    "description": [
+      "延时，常用显示隐藏",
+      "fadeIn(1000).delay(2000).fadeOut(1000)"
+    ]
+  },
+  "jqDataGet": {
+    "prefix": "jqDataGet",
+    "body": ["$(${selector}).data(${key});"],
+    "description": "返回指定数据存储中jQuery集合中元素的值，由Data (name, value)或HTML5 data- *属性设置。"
+  },
+  "jqDataRemove": {
+    "prefix": "jqDataRemove",
+    "body": ["$(${selector}).removeData(${element});"],
+    "description": "删除以前存储的数据。"
+  },
+  "jqDataSet": {
+    "prefix": "jqDataSet",
+    "body": ["$(${selector}).data(${key}, ${value});"],
+    "description": "存储与匹配元素关联的一个数据。"
+  },
+  "jqDataSetObj": {
+    "prefix": "jqDataSetObj",
+    "body": ["$(${selector}).data({", "\t${key}: ${value}", "\t$0", "});"],
+    "description": "存储与匹配元素关联的多个数据。"
+  },
+  "jqDie": {
+    "prefix": "jqDie",
+    "body": ["$(${selector}).die(${eventType});"],
+    "description": "die() 方法移除所有通过 live() 方法向指定元素添加的一个事件处理程序。"
+  },
+  "jqDieAll": {
+    "prefix": "jqDieAll",
+    "body": ["$(${selector}).die();"],
+    "description": "die() 方法移除所有通过 live() 方法向指定元素添加的多个事件处理程序。"
+  },
+  "jqDieFn": {
+    "prefix": "jqDieFn",
+    "body": ["$(${selector}).die(${eventType}, ${handler});"],
+    "description": "从元素中删除之前使用.live（）添加的事件。"
+  },
+  "jqDocReady": {
+    "prefix": "jqDocReady",
+    "body": ["$(document).ready(function () {", "\t$0", "});"],
+    "description": "DOM完全加载时执行的函数。"
+  },
+  "jqDocReadyShort": {
+    "prefix": "jqDocReadyShort",
+    "body": ["$(function () {", "\t$0", "});"],
+    "description": "DOM完全加载时执行的函数。"
+  },
+  "jqEach": {
+    "prefix": "jqEach",
+    "body": [
+      "$.each(${collection}, function (indexInArray, valueOfElement) { ",
+      "\t$0 ",
+      "});"
+    ],
+    "description": "遍历元素(用于处理数据)。"
+  },
+  "jqEachElement": {
+    "prefix": "jqEachElement",
+    "body": [
+      "$(${selector}).each(function (index, element) {",
+      "\t// element == this",
+      "\t$0",
+      "});"
+    ],
+    "description": "遍历元素(用于DOM) "
+  },
+  "jqEmpty": {
+    "prefix": "jqEmpty",
+    "body": ["$(${selector}).empty();"],
+    "description": "从DOM中删除匹配元素集的所有子节点。"
+  },
+  "jqFadeIn": {
+    "prefix": "jqFadeIn",
+    "body": ["$(${selector}).fadeIn();"],
+    "description": "通过将匹配的元素淡化为不透明来显示它们。"
+  },
+  "jqFadeInFull": {
+    "prefix": "jqFadeInFull",
+    "body": ["$(${selector}).fadeIn(${duration}, function () {", "\t$0", "});"],
+    "description": "通过将匹配的元素淡化为不透明来显示它们。(动画结束执行函数)"
+  },
+  "jqFadeOut": {
+    "prefix": "jqFadeOut",
+    "body": ["$(${selector}).fadeOut();"],
+    "description": "隐藏匹配的元素，将它们淡化为透明。"
+  },
+  "jqFadeOutFull": {
+    "prefix": "jqFadeOutFull",
+    "body": [
+      "$(${selector}).fadeOut(${duration}, function () {",
+      "\t$0",
+      "});"
+    ],
+    "description": "隐藏匹配的元素，将它们淡化为透明。(动画结束执行函数)"
+  },
+  "jqFadeTo": {
+    "prefix": "jqFadeTo",
+    "body": ["$(${selector}).fadeTo(${duration}, ${opacity});"],
+    "description": "调整匹配元素的不透明度。"
+  },
+  "jqFadeToFull": {
+    "prefix": "jqFadeToFull",
+    "body": [
+      "$(${selector}).fadeTo(${duration}, ${opacity}, function () {",
+      "\t$0",
+      "});"
+    ],
+    "description": "调整匹配元素的不透明度。(动画结束执行函数)"
+  },
+  "jqFind": {
+    "prefix": "jqFind",
+    "body": ["$(${selector}).find(${selector2});"],
+    "description": "获取当前匹配元素集中每个元素的后代。"
+  },
+  "jqFocus": {
+    "prefix": "jqFocus",
+    "body": [
+      "$(${selector}).focus(function (e) { ",
+      "\te.preventDefault();",
+      "\t$0",
+      "});"
+    ],
+    "description": "将事件处理程序绑定到\"获得焦点\"事件。"
+  },
+  "jqGet": {
+    "prefix": "jqGet",
+    "body": [
+      "$.get(\"${url}\", ${data},",
+      "\tfunction (data, textStatus, jqXHR) {",
+      "\t\t$0",
+      "\t},",
+      "\t\"${dataType}\"",
+      ");"
+    ],
+    "description": "使用HTTP GET请求从服务器加载数据。"
+  },
+  "jqGetJson": {
+    "prefix": "jqGetJson",
+    "body": [
+      "$.getJSON(\"${url}\", ${data},",
+      "\tfunction (data, textStatus, jqXHR) {",
+      "\t\t$0",
+      "\t}",
+      ");"
+    ],
+    "description": "使用GET HTTP请求从服务器加载JSON编码的数据。"
+  },
+  "jqGetSearch获取浏览器信息": {
+    "prefix": ["jqgetsearch"],
+    "body": ["window.location.href  //获取浏览器信息"],
+    "description": ["jqGetSearch获取浏览器信息"]
+  },
+  "jqGetScript": {
+    "prefix": "jqGetScript",
+    "body": [
+      "$.getScript(\"${url}\", function (script, textStatus, jqXHR) {",
+      "\t$0",
+      "});"
+    ],
+    "description": "使用GET HTTP请求从服务器加载JavaScript文件，然后执行它。"
+  },
+  "jqHasClass": {
+    "prefix": "jqHasClass",
+    "body": ["$(${selector}).hasClass(${className});"],
+    "description": "判断元素是否包含某个类名"
+  },
+  "jqHeightGet": {
+    "prefix": "jqHeightGet",
+    "body": ["$(${selector}).height();"],
+    "description": "获取匹配元素集中第一个元素的高度。"
+  },
+  "jqHeightSet": {
+    "prefix": "jqHeightSet",
+    "body": ["$(${selector}).height(${value});"],
+    "description": "设置每个匹配元素的CSS高度。"
+  },
+  "jqHide": {
+    "prefix": "jqHide",
+    "body": ["$(${selector}).hide();"],
+    "description": "隐藏匹配的元素。"
+  },
+  "jqHideFull": {
+    "prefix": "jqHideFull",
+    "body": ["$(${selector}).hide(${duration}, function () {", "\t$0", "});"],
+    "description": "隐藏匹配的元素。(动画结束执行函数)"
+  },
+  "jqHover": {
+    "prefix": "jqHover",
+    "body": [
+      "$(${selector}).hover(function () {",
+      "\t\t// over",
+      "\t\t$0",
+      "\t}, function () {",
+      "\t\t// out",
+      "\t}",
+      ");"
+    ],
+    "description": "在鼠标指针进入和离开元素时执行函数。"
+  },
+  "jqHtmlGet": {
+    "prefix": "jqHtmlGet",
+    "body": ["$(${selector}).html();"],
+    "description": "获取匹配元素集中第一个元素的HTML内容。(会解析HTML格式)"
+  },
+  "jqHtmlSet": {
+    "prefix": "jqHtmlSet",
+    "body": ["$(${selector}).html(${htmlString});"],
+    "description": "设置匹配元素集中每个元素的HTML内容。"
+  },
+  "jqInnerHeight": {
+    "prefix": "jqInnerHeight",
+    "body": ["$(${selector}).innerHeight();"],
+    "description": "获取匹配元素集中第一个元素高度，包括内边距但不包括边框。"
+  },
+  "jqInnerWidth": {
+    "prefix": "jqInnerWidth",
+    "body": ["$(${selector}).innerWidth();"],
+    "description": "获取匹配元素集中第一个元素的内部宽度，包括内边距但不包括边框。"
+  },
+  "jqInsertAfter": {
+    "prefix": "jqInsertAfter",
+    "body": ["$(${target}).insertAfter(${selector});"],
+    "description": "在目标之后插入匹配元素集中的每个元素。"
+  },
+  "jqInsertBefore": {
+    "prefix": "jqInsertBefore",
+    "body": ["$(${target}).insertBefore(${selector});"],
+    "description": "在目标之前插入匹配元素集中的每个元素。"
+  },
+  "jqKeyDown": {
+    "prefix": "jqKeyDown",
+    "body": ["$(${selector}).keydown(function (e) { ", "\t$0", "});"],
+    "description": "将事件处理程序绑定到\"keydown \"事件，或在元素上触发该事件。"
+  },
+  "jqKeyPress": {
+    "prefix": "jqKeyPress",
+    "body": ["$(${selector}).keypress(function (e) { ", "\t$0", "});"],
+    "description": "将事件处理程序绑定到\"keypress\"事件，或在元素上触发该事件。"
+  },
+  "jqKeyUp": {
+    "prefix": "jqKeyUp",
+    "body": ["$(${selector}).keyup(function (e) { ", "\t$0", "});"],
+    "description": "将事件处理程序绑定到\"keyup\"事件，或在元素上触发该事件。"
+  },
+  "jqLoadGet": {
+    "prefix": "jqLoadGet",
+    "body": [
+      "$(${selector}).load(\"${url}\", \"${data}\", function (response, status, request) {",
+      "\tthis; // dom element",
+      "\t$0",
+      "});"
+    ],
+    "description": "从服务器加载数据并将返回的HTML放入匹配的元素中。"
+  },
+  "jqLoadPost": {
+    "prefix": "jqLoadPost",
+    "body": [
+      "$(${selector}).load(\"${url}\", \"${data}\", function (response, status, request) {",
+      "\tthis; // dom element",
+      "\t$0",
+      "});"
+    ],
+    "description": "从服务器加载数据并将返回的HTML放入匹配的元素中。"
+  },
+  "jqMap": {
+    "prefix": "jqMap",
+    "body": [
+      "$.map(${arrayOrObject}, function (elementOrValue, indexOrKey) {",
+      "\t$0",
+      "});"
+    ],
+    "description": "将数组或对象中的所有项目转换为新的项目数组。"
+  },
+  "jqMouseDown": {
+    "prefix": "jqMouseDown",
+    "body": ["$(${selector}).mousedown(function () { ", "\t$0", "});"],
+    "description": "将事件处理程序绑定到\"mousedown\"事件，或在元素上触发该事件。"
+  },
+  "jqMouseEnter": {
+    "prefix": "jqMouseEnter",
+    "body": ["$(${selector}).mouseenter(function () { ", "\t$0", "});"],
+    "description": "鼠标移入元素事件。(不会触发冒泡)"
+  },
+  "jqMouseLeave": {
+    "prefix": "jqMouseLeave",
+    "body": ["$(${selector}).mouseleave(function () { ", "\t$0", "});"],
+    "description": "鼠标移出元素事件。(不会触发冒泡)"
+  },
+  "jqMouseMove": {
+    "prefix": "jqMouseMove",
+    "body": [
+      "$(${selector}).mousemove(function (e) { ",
+      "\t// values: e.clientX, e.clientY, e.pageX, e.pageY",
+      "\t$0",
+      "});"
+    ],
+    "description": "将事件处理程序绑定到\"mousemove\"事件。"
+  },
+  "jqMouseOut": {
+    "prefix": "jqMouseOut",
+    "body": ["$(${selector}).mouseout(function () { ", "\t$0", "});"],
+    "description": "将事件处理程序绑定到\"mouseout\"事件。"
+  },
+  "jqMouseOver": {
+    "prefix": "jqMouseOver",
+    "body": ["$(${selector}).mouseover(function () { ", "\t$0", "});"],
+    "description": "将事件处理程序绑定到\"mouseover\"事件。"
+  },
+  "jqMouseUp": {
+    "prefix": "jqMouseUp",
+    "body": ["$(${selector}).mouseup(function () { ", "\t$0", "});"],
+    "description": "将事件处理程序绑定到\"mouseup\"事件。"
+  },
+  "jqNamespace": {
+    "prefix": "jqNamespace",
+    "body": [
+      "(function ( ${name}, $, undefined ) {",
+      "\t// Private Property",
+      "\tmyPrivateProperty = \"Private Property\";",
+      "\t\t",
+      "\t// Public Property",
+      "\t${name}.myPublicProperty = \"Publically Accessible Property\";",
+      "\t\t",
+      "\t// Private Method",
+      "\tfunction myPrivateMethod () {",
+      "\t\t",
+      "\t}",
+      "\t\t",
+      "\t// Public Method",
+      "\t${name}.myPublicMethod = function () {",
+      "\t\t",
+      "\t};  ",
+      "}(window.${name} = window.${name} || {}, jQuery ));"
+    ],
+    "description": "命名空间模板. ref: https://enterprisejquery.com/2010/10/how-good-c-habits-can-encourage-bad-javascript-habits-part-1/"
+  },
+  "jqOffsetGet": {
+    "prefix": "jqOffsetGet",
+    "body": [
+      "var offset = $(${selector}).offset();",
+      "var top = offset.top;",
+      "var left = offset.left;",
+      "$0"
+    ],
+    "description": "获取第一个元素的当前坐标。"
+  },
+  "jqOffsetParent": {
+    "prefix": "jqOffsetParent",
+    "body": [
+      "var offset = $(${selector}).offsetParent();",
+      "var top = offset.top;",
+      "var left = offset.left;",
+      "$0"
+    ],
+    "description": "获取最接近的祖先元素坐标。"
+  },
+  "jqOn": {
+    "prefix": "jqOn",
+    "body": ["$(${selector}).on(${events}, function () {", "\t$0", "});"],
+    "description": "创建一个或多个事件处理函数。"
+  },
+  "jqOne": {
+    "prefix": "jqOne",
+    "body": ["$(${selector}).one(${events}, function (e) {", "\t$0", "});"],
+    "description": "创建一个只执行一次的事件处理函数"
+  },
+  "jqOneWithData": {
+    "prefix": "jqOneWithData",
+    "body": [
+      "$(${selector}).one(${events}, ${data}, function (e) {",
+      "\t$0",
+      "});"
+    ],
+    "description": "创建一个只执行一次的事件处理函数"
+  },
+  "jqOuterHeight": {
+    "prefix": "jqOuterHeight",
+    "body": ["$(${selector}).outerHeight(${includeMargin});"],
+    "description": "获取匹配元素集中第一个元素的当前高度，包括内边距,边框。"
+  },
+  "jqOuterWidth": {
+    "prefix": "jqOuterWidth",
+    "body": ["$(${selector}).outerWidth(${includeMargin});"],
+    "description": "获取匹配元素集中第一个元素的当前长度，包括内边距,边框。"
+  },
+  "jqPlugin": {
+    "prefix": "jqPlugin",
+    "body": [
+      "(function ($) {",
+      "\tjQuery.fn.${pluginName} = function (settings) {",
+      "\t\tvar config = {\u0027foo\u0027: \u0027bar\u0027};",
+      " ",
+      "\t\tif (settings) jQuery.extend(config, settings);",
+      " ",
+      "\t\tthis.each(function () {",
+      "\t\t\t// element-specific code here",
+      "\t\t\t$0",
+      "\t\t});",
+      " ",
+      "\t\treturn this;",
+      "\t};",
+      "})(jQuery);"
+    ],
+    "description": "插件模板。"
+  },
+  "jqPosition": {
+    "prefix": "jqPosition",
+    "body": [
+      "var position = $(${selector}).position();",
+      "var top = position.top;",
+      "var left = position.left;",
+      "$0"
+    ],
+    "description": "获取带有定位的父元素到自身的偏移。"
+  },
+  "jqPost": {
+    "prefix": "jqPost",
+    "body": [
+      "$.post(\"${url}\", ${data},",
+      "\tfunction (data, textStatus, jqXHR) {",
+      "\t\t$0",
+      "\t},",
+      "\t\"${dataType}\"",
+      ");"
+    ],
+    "description": "使用HTTP POST请求从服务器加载数据。"
+  },
+  "jqPrepend": {
+    "prefix": "jqPrepend",
+    "body": ["$(${selector}).prepend(${content});"],
+    "description": "将元素插入目标元素内部的前面"
+  },
+  "jqPrependTo": {
+    "prefix": "jqPrependTo",
+    "body": ["$(${content}).prependTo(${selector});"],
+    "description": "将元素插入目标元素内部的前面"
+  },
+  "jqRemove": {
+    "prefix": "jqRemove",
+    "body": ["$(${selector}).remove();"],
+    "description": "从DOM中删除匹配元素集。"
+  },
+  "jqRemoveExp": {
+    "prefix": "jqRemoveExp",
+    "body": ["$(${selector}).remove(${expression});"],
+    "description": "从DOM中删除匹配元素集。"
+  },
+  "jqReplaceAll": {
+    "prefix": "jqReplaceAll",
+    "body": ["$(${selector}).replaceAll(${target});"],
+    "description": "用匹配元素集替换每个目标元素。"
+  },
+  "jqReplaceWith": {
+    "prefix": "jqReplaceWith",
+    "body": ["$(${selector}).replaceWith(${newContent});"],
+    "description": "使用提供的新内容替换匹配元素集中的每个元素，并返回已删除的元素集。"
+  },
+  "jqResize": {
+    "prefix": "jqResize",
+    "body": ["$(${selector}).resize(function () { ", "\t$0", "});"],
+    "description": "将事件处理程序绑定到\"resize\"事件(浏览器发生大小变化)。"
+  },
+  "jqScroll": {
+    "prefix": "jqScroll",
+    "body": ["$(${selector}).scroll(function () { ", "\t$0", "});"],
+    "description": "将事件处理程序绑定到\"scroll\"事件(浏览器发生大小变化)。"
+  },
+  "jqScrollLeftGet": {
+    "prefix": "jqScrollLeftGet",
+    "body": ["$(${selector}).scrollLeft();"],
+    "description": "获取匹配元素集中第一个元素的滚动条的当前水平横向位置。"
+  },
+  "jqScrollLeftSet": {
+    "prefix": "jqScrollLeftSet",
+    "body": ["$(${selector}).scrollLeft(${value});"],
+    "description": "为匹配元素设置滚动条的当前水平横向位置。"
+  },
+  "jqScrollTopGet": {
+    "prefix": "jqScrollTopGet",
+    "body": ["$(${selector}).scrollTop();"],
+    "description": "获取匹配元素集中第一个元素的滚动条的当前垂直位置，或为每个匹配元素设置滚动条的垂直位置。"
+  },
+  "jqScrollTopSet": {
+    "prefix": "jqScrollTopSet",
+    "body": ["$(${selector}).scrollTop(${value});"],
+    "description": "获取匹配元素集中第一个元素的滚动条的当前垂直位置，或为每个匹配元素设置滚动条的垂直位置。"
+  },
+  "jqSelect": {
+    "prefix": "jqSelect",
+    "body": ["$(${selector}).select(function () { ", "\t$0", "});"],
+    "description": "将事件处理程序绑定到\"select\"(被选择[标记]）时)JavaScript事件，或在元素上触发该事件。"
+  },
+  "jqSelectTrigger": {
+    "prefix": "jqSelectTrigger",
+    "body": ["$(${selector}).select();"],
+    "description": "触发被选元素的 select 事件"
+  },
+  "jqShow": {
+    "prefix": "jqShow",
+    "body": ["$(${selector}).show();"],
+    "description": "显示匹配的元素。"
+  },
+  "jqShowFull": {
+    "prefix": "jqShowFull",
+    "body": ["$(${selector}).show(${duration}, function () {", "\t$0", "});"],
+    "description": "显示匹配的元素。(动画结束执行函数)"
+  },
+  "jqSlideDown": {
+    "prefix": "jqSlideDown",
+    "body": ["$(${selector}).slideDown();"],
+    "description": "显示元素下拉动画"
+  },
+  "jqSlideDownFull": {
+    "prefix": "jqSlideDownFull",
+    "body": [
+      "$(${selector}).slideDown(${duration}, function () {",
+      "\t$0",
+      "});"
+    ],
+    "description": "显示元素下拉动画(动画结束后再执行回调函数)"
+  },
+  "jqSlideToggle": {
+    "prefix": "jqSlideToggle",
+    "body": ["$(${selector}).slideToggle();"],
+    "description": "通过滑动切换匹配的元素下拉动画显示隐藏。"
+  },
+  "jqSlideToggleFull": {
+    "prefix": "jqSlideToggleFull",
+    "body": [
+      "$(${selector}).slideToggle(${duration}, function () {",
+      "\t$0",
+      "});"
+    ],
+    "description": "通过滑动切换匹配的元素下拉动画显示隐藏。(动画结束执行函数)"
+  },
+  "jqSlideUp": {
+    "prefix": "jqSlideUp",
+    "body": ["$(${selector}).slideUp();"],
+    "description": "上拉隐藏元素。"
+  },
+  "jqSlideUpFull": {
+    "prefix": "jqSlideUpFull",
+    "body": [
+      "$(${selector}).slideUp(${duration}, function () {",
+      "\t$0",
+      "});"
+    ],
+    "description": "上拉隐藏元素。(动画结束执行函数)"
+  },
+  "jqSubmit": {
+    "prefix": "jqSubmit",
+    "body": [
+      "$(${selector}).submit(function (e) { ",
+      "\te.preventDefault();",
+      "\t$0",
+      "});"
+    ],
+    "description": "将事件处理程序绑定到\"submit\"事件(提交)，或在元素上触发该事件。"
+  },
+  "jqSubmitTrigger": {
+    "prefix": "jqSubmitTrigger",
+    "body": ["$(${selector}).submit();"],
+    "description": "绑定提交事件."
+  },
+  "jqTextGet": {
+    "prefix": "jqTextGet",
+    "body": ["$(${selector}).text();"],
+    "description": "获取元素内的文本内容"
+  },
+  "jqTextSet": {
+    "prefix": "jqTextSet",
+    "body": ["$(${selector}).text(${textString});"],
+    "description": "更改元素的文本内容"
+  },
+  "jqToggle": {
+    "prefix": "jqToggle",
+    "body": ["$(${selector}).toggle();"],
+    "description": "切换显示隐藏元素"
+  },
+  "jqToggleFull": {
+    "prefix": "jqToggleFull",
+    "body": ["$(${selector}).toggle(${duration}, function () {", "\t$0", "});"],
+    "description": "切换显示隐藏元素(动画结束执行函数)"
+  },
+  "jqToggleSwitch": {
+    "prefix": "jqToggleSwitch",
+    "body": ["$(${selector}).toggle(${showOrHide});"],
+    "description": "切换显示隐藏元素"
+  },
+  "jqTrigger": {
+    "prefix": "jqTrigger",
+    "body": ["$(${selector}).trigger(${eventType});"],
+    "description": "自动触发被选元素上指定的事件以及事件的默认行为"
+  },
+  "jqTriggerHandler": {
+    "prefix": "jqTriggerHandler",
+    "body": ["$(${selector}).triggerHandler(${eventType});"],
+    "description": "自动触发被选元素上指定的事件(不包括事件的默认行为)"
+  },
+  "jqTriggerHandlerWithData": {
+    "prefix": "jqTriggerHandlerWithData",
+    "body": [
+      "$(${selector}).triggerHandler(${eventType}, { ${name}: ${value} });"
+    ],
+    "description": "自动触发被选元素上指定的事件(不包括事件的默认行为)"
+  },
+  "jqTriggerWithData": {
+    "prefix": "jqTriggerWithData",
+    "body": ["$(${selector}).trigger(${eventType}, { ${name}: ${value} });"],
+    "description": "自动触发被选元素上指定的事件以及事件的默认行为"
+  },
+  "jqUnbind": {
+    "prefix": "jqUnbind",
+    "body": ["$(${selector}).unbind(${eventType});"],
+    "description": "删除解绑指定事件"
+  },
+  "jqUnbindAll": {
+    "prefix": "jqUnbindAll",
+    "body": ["$(${selector}).unbind();"],
+    "description": "删除解绑所有事件"
+  },
+  "jqUnload": {
+    "prefix": "jqUnload",
+    "body": ["$(${selector}).unload(function () { ", "\t$0", "});"],
+    "description": "绑定\"离开页面时\"的事件"
+  },
+  "jqValGet": {
+    "prefix": "jqValGet",
+    "body": ["$(${selector}).val();"],
+    "description": "获取匹配元素集中第一个元素的当前值。"
+  },
+  "jqValSet": {
+    "prefix": "jqValSet",
+    "body": ["$(${selector}).val(${value});"],
+    "description": "设置匹配元素集中每个元素的值。"
+  },
+  "jqWidthGet": {
+    "prefix": "jqWidthGet",
+    "body": ["$(${selector}).width();"],
+    "description": "获取匹配元素集中第一个元素的宽度。"
+  },
+  "jqWidthSet": {
+    "prefix": "jqWidthSet",
+    "body": ["$(${selector}).width(${value});"],
+    "description": "设置匹配元素集中每个元素的CSS宽度。"
+  },
+  "jqWrap": {
+    "prefix": "jqWrap",
+    "body": [
+      "$(${selector}).wrap(\"\u003c${wrappingElement}\u003e\u003c/${wrappingElement}\u003e\");"
+    ],
+    "description": "使用指定的 HTML 元素来分别包裹被选元素"
+  },
+  "jqWrapAll": {
+    "prefix": "jqWrapAll",
+    "body": [
+      "$(${selector}).wrapAll(\"\u003c${wrappingElement}\u003e\u003c/${wrappingElement}\u003e\");"
+    ],
+    "description": "使用指定的 HTML 元素来包裹所有被选元素"
+  },
+  "jqWrapInner": {
+    "prefix": "jqWrapInner",
+    "body": [
+      "$(${selector}).wrapInner(\"\u003c${wrappingElement}\u003e\u003c/${wrappingElement}\u003e\");"
+    ],
+    "description": "使用指定的 HTML 元素来包裹每个被选元素中的所有内容（innerHTML）"
+  },
+  "instanceof判断对象是否是某个构造函数的对象": {
+    "prefix": ["instanceof", "is", "dx"],
+    "body": ["${1:obj} instanceof ${2:Object}"],
+    "description": [
+      "instanceof判断对象是否是某个构造函数的对象",
+      "arr instanceof Array arr是不是Array构造的对象,返回布尔"
+    ]
+  },
+
+  "prototype原型对象": {
+    "prefix": ["prototype", "yx", "yuanxing", "dx"],
+    "body": ["prototype"],
+    "description": [
+      "prototype原型对象",
+      "创建原型对象方法:",
+      "构造函数.prototype.需要创建的原型对象方法 = function (){}"
+    ]
+  },
+
+  "constructor指向当前实例的构造函数": {
+    "prefix": ["constructor", "dx"],
+    "body": ["constructor"],
+    "description": ["constructor指向当前实例的构造函数"]
+  },
+
+  "jqprototype添加一个原型对象方法": {
+    "prefix": ["jqprototype", "dx"],
+    "body": [
+      "${1:构造函数}.prototype.${2:需要创建的原型对象方法} = function (){",
+      "\t$0",
+      "}"
+    ],
+    "description": ["jqprototype添加一个原型对象方法", "可用与系统内置对象"]
+  },
+
+  "jqprototype添加多个原型对象方法": {
+    "prefix": ["jqprototype", "dx"],
+    "body": [
+      "//对象形式重新创建原型对象",
+      "${1:Fn}.prototype = {",
+      "\tconstructor:${1:Fn},  //手修添加constructor",
+      "\t$0",
+      "}"
+    ],
+    "description": ["jqprototype添加多个原型对象方法", "不可用与系统内置对象"]
+  },
+
+  "自调用函数": {
+    "prefix": ["!"],
+    "body": [";(function(window,undefined){", "\t$0", "}(window,undefined))"],
+    "description": ["自调用函数"]
+  },
+
+  "call()改变this指向": {
+    "prefix": ["changethis", "call"],
+    "body": [
+      "//函数内改变this作用域",
+      "${1:谁里面的this}.call(${2:this},${3:(若有参数需要传入用逗号隔开)})",
+      "//外部调用函数,改变this作用域",
+      "${1:谁里面的this}.call(${2:需要改变的this的作用域},${3:(若有参数需要传入用逗号隔开)})"
+    ],
+    "description": [
+      "改变this指向",
+      "例如Array.prototype.push.call(obj, 100);",
+      "数组原型中的this指向obj,给obj用这个数组方法",
+      "如果第一个参数指定了 null 或者 undefined 则内部 this 指向 window"
+    ]
+  },
+
+  "apply改变this指向": {
+    "prefix": ["changethis", "apply"],
+    "body": [
+      "//函数内改变this作用域",
+      "${1:谁里面的this}.apply(${2:this},${3:(若有参数需要传入用逗号隔开)})",
+      "//外部调用函数,改变this作用域",
+      "${1:谁里面的this}.apply(${2:需要改变的this的作用域},${3:(若有参数需要传入用逗号隔开)})"
+    ],
+    "description": [
+      "改变this指向",
+      "例如Array.prototype.push.apply(obj, [100]);",
+      "数组原型中的this指向obj,给obj用这个数组方法",
+      "如果第一个参数指定了 null 或者 undefined 则内部 this 指向 window"
+    ]
+  },
+  "原型继承": {
+    "prefix": ["yxjc", "get"],
+    "body": [
+      "${1:Chlidren}.prototype = new ${2:Parent}();",
+      "${1:Chlidren}.prototype.constructor = ${1:Chlidren};"
+    ],
+    "description": ["原型继承"]
+  },
+  "图片即时预览": {
+    "prefix": ["yl", "zj"],
+    "body": [
+      "//图片即时预览",
+      "var file = document.querySelector('#file');//input 传入的图片文件 ",
+      "var picDisplay = document.querySelector('#picDisplay'); //需要显示图片的位置",
+      "function instantPreview(file,picDisplay) {",
+      "\tvar img = file.files[0];",
+      "\t//创建读取器",
+      "\tvar a = new FileReader();",
+      "\ta.readAsDataURL(img);",
+      "\ta.onload = () => picDisplay.src = a.result;",
+      "}",
+      "file.addEventListener('change', function () {",
+      "\tinstantPreview(file,picDisplay);",
+      "});"
+    ],
+    "description": ["图片即时预览"]
+  },
+  "状态码": {
+    "prefix": ["ztm", "zhuangtaima"],
+    "body": [
+      "100——客户必须继续发出请求",
+      "101——客户要求服务器根据请求转换HTTP协议版本",
+      "200——交易成功",
+      "201——提示知道新文件的URL",
+      "202——接受和处理、但处理未完成",
+      "203——返回信息不确定或不完整",
+      "204——请求收到，但返回信息为空",
+      "205——服务器完成了请求，用户代理必须复位当前已经浏览过的文件",
+      "206——服务器已经完成了部分用户的GET请求",
+      "300——请求的资源可在多处得到",
+      "301——删除请求数据",
+      "302——在其他地址发现了请求数据",
+      "303——建议客户访问其他URL或访问方式",
+      "304——客户端已经执行了GET，但文件未变化",
+      "305——请求的资源必须从服务器指定的地址得到",
+      "306——前一版本HTTP中使用的代码，现行版本中不再使用",
+      "307——申明请求的资源临时性删除",
+      "400——错误请求，如语法错误（后台问题，找后台）",
+      "401——请求授权失败",
+      "402——保留有效ChargeTo头响应",
+      "403——请求不允许",
+      "404——没有发现文件、查询或URl",
+      "405——用户在Request-Line字段定义的方法不允许",
+      "406——根据用户发送的Accept拖，请求资源不可访问",
+      "407——类似401，用户必须首先在代理服务器上得到授权",
+      "408——客户端没有在用户指定的时间内完成请求",
+      "409——对当前资源状态，请求不能完成",
+      "410——服务器上不再有此资源且无进一步的参考地址",
+      "411——服务器拒绝用户定义的Content-Length属性请求",
+      "412——一个或多个请求头字段在当前请求中错误",
+      "413——请求的资源大于服务器允许的大小",
+      "414——请求的资源URL长于服务器允许的长度",
+      "415——请求资源不支持请求项目格式",
+      "416——请求中包含Range请求头字段，在当前请求资源范围内没有range指示值，请求也不包含If-Range请求头字段",
+      "417——服务器不满足请求Expect头字段指定的期望值，如果是代理服务器，可能是下一级服务器不能满足请求",
+      "500——服务器产生内部错误",
+      "501——服务器不支持请求的函数",
+      "502——服务器暂时不可用，有时是为了防止发生系统过载",
+      "503——服务器过载或暂停维修",
+      "504——关口过载，服务器使用另一个关口或服务来响应用户，等待时间设定值较长",
+      "505——服务器不支持或拒绝支请求头中指定的HTTP版本"
+    ],
+    "description": ["状态码", "404-找不到文件", "400-后台有问题"]
+  },
+  "(创建异步对象)0.构造对象实例": {
+    "prefix": ["new", "create", "ajax"],
+    "body": ["var xhr = new XMLHttpRequest();"],
+    "description": ["创建异步对象"]
+  },
+  "(创建异步对象)1.设置请求行": {
+    "prefix": ["open", "set", "create", "ajax"],
+    "body": ["//设置请求行", "xhr.open(${1:请求方式},${2:请求url})"],
+    "description": [
+      "(创建异步对象)1.设置请求行",
+      "get需要在url后面拼接参数(如果有参数)",
+      "post请求不需要拼接参数"
+    ]
+  },
+  "(创建异步对象)2.设置请求头": {
+    "prefix": ["set", "setRequestHeader", "create", "ajax"],
+    "body": [
+      "//设置请求头(POST)",
+      "xhr.setRequestHeader(\"Content-Type\",\"application/x-www-form-urlencoded\");"
+    ],
+    "description": [
+      "(创建异步对象)2.设置请求头",
+      "如果没有设置，参数无法正确的传递到服务器(本质上说，如果没有参数，也不一定需要设置，不会影响请求的发送)"
+    ]
+  },
+  "(创建异步对象)3.设置请求体": {
+    "prefix": ["send", "set", "create", "ajax"],
+    "body": [
+      "//设置请求体",
+      "xhr.send(${1|get为null,post为参数：key=value&key=value|})"
+    ],
+    "description": [
+      "(创建异步对象)3.设置请求体",
+      "get的参数在url拼接了，所以不需要在这个函数中设置",
+      "post的参数在这个函数中设置(如果有参数)"
+    ]
+  },
+  "监听异步对象的响应状态": {
+    "prefix": ["listen", "ajax", "readyState", "get"],
+    "body": [
+      "//readyState=4：响应的内容解析完毕，可以在客户端使用了--完成",
+      "readyState"
+    ],
+    "description": [
+      "监听异步对象的响应状态",
+      "readyState=0:已经创建了异步对象，但是还没有调用open方法 -- 未初始化",
+      "readyState=1：说明已经调用了open方法，初始化完成 --载入",
+      "readyState=2：send方法执行完毕，请求发送--载入完成",
+      "readyState =3：正在接收响应数据 -- 交互",
+      "readyState=4：响应的内容解析完毕，可以在客户端使用了--完成"
+    ]
+  },
+  "获取当前服务器的响应状态": {
+    "prefix": ["status", "get", "ajax", "listen"],
+    "body": ["//xhr.status:获取当前服务器的响应状态  200=>成功", "status"],
+    "description": [
+      "获取当前服务器的响应状态",
+      "xhr.status:可以获取当前服务器的响应状态  200=>成功"
+    ]
+  },
+  "判断服务器成功响应且数据解析完成": {
+    "prefix": ["is", "ajax"],
+    "body": [
+      "// 服务器成功响应         数据解析完毕可以使用了",
+      "if(xhr.status == 200 && xhr.readyState == 4){",
+      "\t${0:响应成功后执行的内容}",
+      "}"
+    ],
+    "description": ["判断服务器成功响应且数据解析完成"]
+  },
+  "异步对象发送GET请求": {
+    "prefix": ["ajax", "XMLHttpRequest", "xhr"],
+    "body": [
+      "//获取用户数据",
+      "$1",
+      "//创建异步对象",
+      "var xhr = new XMLHttpRequest();",
+      "//设置请求行open()",
+      "xhr.open(\"get\",\"${2:URL以及需要传递的参数数据}\");",
+      "//发送请求",
+      "xhr.send(null);"
+    ],
+    "description": ["异步对象发送GET请求"]
+  },
+  "函数-onreadystatechange 事件(status发生变化)": {
+    "prefix": ["ajax", "hs"],
+    "body": [
+      "xhr.onreadystatechange = function(){",
+      "\t// 服务器成功响应         数据解析完毕可以使用了",
+      "\tif(xhr.status == 200 && xhr.readyState == 4){",
+      "\t\t${1:成功的响应后需要执行的事}",
+      "\t}",
+      "}"
+    ],
+    "description": [
+      "函数-服务器发生相应变化",
+      "每当 readyState 改变时，就会触发 onreadystatechange 事件",
+      "服务器成功响应且数据解析完毕可以使用"
+    ]
+  },
+  "服务器返回值": {
+    "prefix": ["res", "ajax"],
+    "body": ["responseText"],
+    "description": ["服务器返回值"]
+  },
+  "result": {
+    "prefix": ["result"],
+    "body": [
+    "result"
+    ],
+    "description": [
+    "result"
+    ]
+  },
+  "response": {
+    "prefix": ["response"],
+    "body": [
+    "response"
+    ],
+    "description": [
+    "response"
+    ]
+  },
+  "(es6)是否能找到了参数字符串": {
+    "prefix": ["str-includes"],
+    "body": [
+    "includes()"
+    ],
+    "description": [
+    "(es6)是否能找到了参数字符串",
+    "'hi,nihao'.includes('n') //true"
+    ]
+  },
+  "(es6)字符串是否在原字符串的头部": {
+    "prefix": ["str-startsWith"],
+    "body": [
+    "startsWith()"
+    ],
+    "description": [
+    "(es6)字符串是否在原字符串的头部",
+    "'hi,nihao'.startsWith('h') //true"
+    ]
+  },
+  "(es6)字符串是否在原字符串的尾部": {
+    "prefix": ["str-endsWith"],
+    "body": [
+    "endsWith()"
+    ],
+    "description": [
+    "(es6)字符串是否在原字符串的尾部",
+    "'hi,nihao'.endsWith('o') //true"
+    ]
+  },
+  "(es6)将原字符串重复n次": {
+    "prefix": ["str-repeat"],
+    "body": [
+    "repeat(${1:N})"
+    ],
+    "description": [
+    "(es6)将原字符串重复n次"
+    ]
+  },
+  "去除一个数的小数部分(返回整数)": {
+    "prefix": ["math"],
+    "body": [
+    "Math.trunc()"
+    ],
+    "description": [
+    "去除一个数的小数部分(返回整数)"
+    ]
+  },
+  "判断一个数到底是正数、负数、还是零": {
+    "prefix": ["math"],
+    "body": [
+    "Math.sign()"
+    ],
+    "description": [
+    "判断一个数到底是正数、负数、还是零",
+    "参数为正数，返回+1",
+    "参数为负数，返回-1",
+    "参数为 0，返回 0",
+    "参数为-0，返回-0",
+    "其他值，返回NaN"
+    ]
+  },
+  "立方根": {
+    "prefix": ["math"],
+    "body": [
+    "Math.cbrt()"
+    ],
+    "description": [
+    "立方根"
+    ]
+  },
+  "平方和的平方根": {
+    "prefix": ["math"],
+    "body": [
+    "Math.hypot()"
+    ],
+    "description": [
+    "平方和的平方根。"
+    ]
+  },
+  "一个数的N次方": {
+    "prefix": ["math"],
+    "body": [
+    "Math.pow(${1:2,3})"
+    ],
+    "description": [
+    "一个数的N次方"
+    ]
+  },
+  "四舍五入": {
+    "prefix": ["math"],
+    "body": [
+    "Math.round()"
+    ],
+    "description": [
+    "四舍五入"
+    ]
+  },
+  "向上取整": {
+    "prefix": ["math"],
+    "body": [
+    "Math.ceil()"
+    ],
+    "description": [
+    "向上取整"
+    ]
+  },
+  "向下取整": {
+    "prefix": ["math"],
+    "body": [
+    "Math.floor()"
+    ],
+    "description": [
+    "向下取整"
+    ]
+  },
+  "随机数": {
+    "prefix": ["math"],
+    "body": [
+    "Math.random()"
+    ],
+    "description": [
+    "随机数"
+    ]
+  },
+  "字符串补全(从前补全)": {
+    "prefix": ["padStart"],
+    "body": [
+    "padStart(${1:几个字符},'${2:不足用什么补全}')"
+    ],
+    "description": [
+    "字符串补全(从前补全)"
+    ]
+  },
+  "字符串补全(从后补全)": {
+    "prefix": ["padEnd"],
+    "body": [
+    "padEnd(${1:几个字符},'${2:不足用什么补全}')"
+    ],
+    "description": [
+    "字符串补全(从前补全)"
+    ]
+  },
+  "解析字符串并计算": {
+    "prefix": ["get","eval"],
+    "body": [
+    "eval(${1:要计算的字符串，其中含有要计算的 js 表达式或要执行的语句})"
+    ],
+    "description": [
+    "解析字符串并计算"
+    ]
+  },
+  "返回前一页并且刷新": {
+    "prefix": ["location"],
+    "body": [
+    "location.replace(document.referrer); //返回上一页且刷新"
+    ],
+    "description": [
+    "返回前一页并且刷新"
+    ]
+  },
+  "(es6)some循环,找对(找到返回true停止循环)": {
+    "prefix": ["for-some"],
+    "body": [
+    "${1:arr}.some((${2:item}${3:[,index,arr]})=>{",
+    "\nif($0) return true;",
+    "})"
+    ],
+    "description": [
+    "(es6)some循环,找对(找到返回true停止循环)",
+    "不改变原数组的值"
+    ]
+  },
+  "(es6)map遍历数组，返回一个新数组": {
+    "prefix": ["for-map"],
+    "body": [
+    "${1:arr}.map((${2:item}${3:[,index,arr]})=>{$0})"
+    ],
+    "description": [
+    "(es6)map遍历数组，返回一个新数组",
+    "不改变原数组的值"
+    ]
+  },
+  "(es6)filter过滤掉数组中不满足条件的值，返回一个新数组": {
+    "prefix": ["for-filter"],
+    "body": [
+    "${1:arr}.filter((${2:item}${3:[,index,arr]})=>{$0})"
+    ],
+    "description": [
+    "(es6)filter过滤掉数组中不满足条件的值，返回一个新数组",
+    "不改变原数组的值"
+    ]
+  },
+  "(es6)reduce进行某种计算。然后返回其值，并继续计算": {
+    "prefix": ["for-reduce"],
+    "body": [
+    "${1:arr}.reduce((${2:prev}${3:[,cur,index,arr]})=>{$0}${4:[,初始值]})"
+    ],
+    "description": [
+    "(es6)reduce遍历进行某种计算。然后返回其值，并继续计算",
+    "不改变原数组，返回计算的最终结果,从第二项开始计算",
+    "prev为计算结果",
+    "cur为当前项"
+    ]
+  },
+  "(es6)every,找错(找到返回true停止循环)": {
+    "prefix": ["for-every"],
+    "body": [
+    "${1:arr}.every((${2:item}${3:[,index,arr]})=>{$0})"
+    ],
+    "description": [
+    "(es6)every遍历数组每一项，每一项返回true,则最终结果为true。当任何一项返回false时，停止遍历，返回false。不改变原数组",
+    "不改变原数组的值"
+    ]
+  },
+  "(es6)findIndex查找索引": {
+    "prefix": ["for-findIndex"],
+    "body": [
+      "${1:arr}.findIndex((${2:item})=>{",
+      "\nif($0) return true;",
+      "})"
+    ],
+    "description": [
+    "(es6)findIndex查找索引"
+    ]
+  },
+  "(es6)字符串转小写": {
+    "prefix": ["str-toLowerCase"],
+    "body": [
+    "${1:str}.toLowerCase()"
+    ],
+    "description": [
+    "(es6)字符串转小写"
+    ]
+  },
+  "(es6)字符串转大写": {
+    "prefix": ["str-toUpperCase"],
+    "body": [
+    "${1:str}.toUpperCase()"
+    ],
+    "description": [
+    "(es6)字符串转大写"
+    ]
+  }
+}

@@ -1,0 +1,193 @@
+{
+	"name": "super-comprehensive",
+	"displayName": "A-super-comprehensive",
+	"description": "代码补全合集(bootstrap-node-mui-html-js-jquery-php-css)",
+	"keywords": [
+		"vscode",
+		"snippets",
+		"comprehensive",
+		"efficient",
+		"xuedao",
+		"懒人",
+		"easy",
+		"heji",
+		"mui",
+		"html",
+		"js",
+		"javascript",
+		"php",
+		"css",
+		"jquery",
+		"node",
+		"bootstrap",
+		"bootstrap3",
+		"vue",
+		"vue2"
+	],
+	"version": "1.7.2",
+	"publisher": "xuedao",
+	"engines": {
+		"vscode": "^1.27.0"
+	},
+	"categories": [
+		"Other",
+		"Snippets",
+		"Programming Languages"
+	],
+	"icon": "images/icon.png",
+	"activationEvents": [
+		"*"
+	],
+	"main": "./src/extension",
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "超级代码合集",
+			"properties": {
+				"vscodePluginDemo.showTip": {
+					"type": "boolean",
+					"default": false,
+					"description": "启动时显示笔记"
+				}
+			}
+		},
+		"commands": [
+			{
+				"command": "extension.demo.getCurrentFilePath",
+				"title": "获取当前文件(夹)路径"
+			},
+			{
+				"command": "extension.demo.showWelcome",
+				"title": "查询web笔记"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "extension.demo.showWelcome",
+				"key": "ctrl+f10",
+				"mac": "cmd+f10",
+				"when": "editorTextFocus"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "editorFocus",
+					"command": "extension.demo.getCurrentFilePath",
+					"group": "navigation@6"
+				},
+				{
+					"when": "editorFocus",
+					"command": "extension.demo.showWelcome",
+					"group": "navigation@7"
+				}
+			],
+			"explorer/context": [
+				{
+					"command": "extension.demo.getCurrentFilePath",
+					"group": "navigation"
+				}
+			]
+		},
+		"snippets": [
+			{
+				"language": "javascript",
+				"path": "./snippets/javascript.json"
+			},
+			{
+				"language": "javascript",
+				"path": "./snippets/javascript-node.json"
+			},
+			{
+				"language": "html",
+				"path": "./snippets/html.json"
+			},
+			{
+				"language": "html",
+				"path": "./snippets/html-bootstrap3.json"
+			},
+			{
+				"language": "css",
+				"path": "./snippets/css.json"
+			},
+			{
+				"language": "css",
+				"path": "./snippets/css-vue.json"
+			},
+			{
+				"language": "json",
+				"path": "./snippets/json.json"
+			},
+			{
+				"language": "less",
+				"path": "./snippets/less.json"
+			},
+			{
+				"language": "php",
+				"path": "./snippets/php.json"
+			},
+			{
+				"language": "javascript",
+				"path": "./snippets/javascript-vue.json"
+			},
+			{
+				"language": "typescript",
+				"path": "./snippets/javascript-vue.json"
+			},
+			{
+				"language": "html",
+				"path": "./snippets/javascript-vue.json"
+			},
+			{
+				"language": "html",
+				"path": "./snippets/html-vue.json"
+			},
+			{
+				"language": "vue-html",
+				"path": "./snippets/html-vue.json"
+			},
+			{
+				"language": "html",
+				"path": "./snippets/vue-vue.json"
+			},
+			{
+				"language": "vue",
+				"path": "./snippets/javascript-vue.json"
+			},
+			{
+				"language": "vue",
+				"path": "./snippets/html-vue.json"
+			},
+			{
+				"language": "vue",
+				"path": "./snippets/vue-vue.json"
+			},
+			{
+				"language": "jade",
+				"path": "./snippets/pug-vue.json"
+			}
+		],
+		"iconThemes": []
+	},
+	"scripts": {
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+		"test": "node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"typescript": "^2.6.1",
+		"vscode": "^1.1.6",
+		"eslint": "^4.11.0",
+		"@types/node": "^7.0.43",
+		"@types/mocha": "^2.2.42"
+	},
+	"license": "SEE LICENSE IN LICENSE.txt",
+	"bugs": {
+		"url": "https://gitee.com/qq34347476/snippets/issues"
+	},
+	"repository": {
+		"type": "gitee",
+		"url": "https://gitee.com/qq34347476/snippets"
+	},
+	"homepage": "https://gitee.com/qq34347476/snippets/README.md"
+}

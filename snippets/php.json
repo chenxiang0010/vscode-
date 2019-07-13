@@ -1,0 +1,486 @@
+{
+	"修改默认上传文件大小": {
+		"prefix": ["config"],
+		"body": [
+		"//phpStudy => php.ini => upload_max_filesize",
+		"//phpStudy => php.ini => post_max_size"
+		],
+		"description": [
+		"//php默认上传文件大小限制是2M",
+		"//post请求传递的数据限制为8M"
+		]
+	},
+
+	"允许目录": {
+		"prefix": ["config"],
+		"body": [
+		"//其他选项菜单 => 软件设置 => 允许目录列表"
+		],
+		"description": [
+		"允许目录"
+		]
+	},
+
+	"8小时时区设置(timezone)": {
+		"prefix": ["config"],
+		"body": [
+		"//php.ini设置",
+		"//phpStudy => php.ini => data.timezone = PRC"
+		],
+		"description": [
+		"解决时间相差八小时的问题",
+		"PRC代表中国"
+		]
+	},
+
+	"中文编码字符串长度设置": {
+		"prefix": ["config"],
+		"body": [
+		"//php.ini设置",
+		"//phpStudy => php.ini => extension=php_mbstring.dll"
+		],
+		"description": [
+		"常用字符串API设置"
+		]
+	},
+
+	"载入文件(不报错)": {
+		"prefix": ["zr","php","include"],
+		"body": [
+		"include${1:_once} '${0:文件名}';"
+		],
+		"description": [
+		"载入文件",
+		"用于载入公共文件",
+		"这个文件不能影响后面代码的执行"
+		]
+	},
+
+	"载入文件(报错)": {
+		"prefix": ["zr","php","require"],
+		"body": [
+		"require${1:_once} '${0:文件名}';"
+		],
+		"description": [
+		"载入文件",
+		"用于载入不可缺失的文件"
+		]
+	},
+
+	"定义常量(默认大小写敏感)": {
+		"prefix": ["define"],
+		"body": [
+		"define(${1:name},${2:value})"
+		],
+		"description": [
+		"定义常量",
+		"define(name,value,insensitive[默认false敏感大小写])"
+		]
+	},
+
+	"自动获取当前文件的路径": {
+		"prefix": ["php","hq","get"],
+		"body": [
+		"php echo $$_SERVER[\"PHP_SELF\"]$0"
+		],
+		"description": [
+		"自动获取当前文件的路径"
+		]
+	},
+
+	"按钮值获取": {
+		"prefix": ["php","radio","dx","get"],
+		"body": [
+		"//radio单选:给表单添加name,value,默认获取value值",
+		"//checkbox复选框:给表单添加的name[],数据搜集到一个数组中",
+		"//select下来菜单:没设置value会获取option中的innertext,设置value获取value"
+		],
+		"description": [
+		"按钮值获取"
+		]
+	},
+
+	"判断method提交方式": {
+		"prefix": ["php","method","is"],
+		"body": [
+		"if($$_SERVER[\"REQUEST_METHOD\"]===\"POST\")$0"
+		],
+		"description": [
+		"判断method提交方式"
+		]
+	},
+
+	"设置当前页面的返回值类型": {
+		"prefix": ["php","header"],
+		"body": [
+		"//设置当前页面返回值类型",
+		"header(\"Content-Type:${1|image/jpeg,text/html|}\")"
+		],
+		"description": [
+		"设置当前页面的返回值类型"
+		]
+	},
+
+	"文件写入(默认追加写入)": {
+		"prefix": ["php","file"],
+		"body": [
+		"//FILE_APPEND追加,去掉为默认覆盖",
+		"file_put_contents(${1:文件路径},${2:需要写入的内容},${3:FILE_APPEND})$0"
+		],
+		"description": [
+		"文件写入",
+		"FILE_APPEND追加,去掉为默认覆盖"
+		]
+	},
+
+	"字符串分割": {
+		"prefix": ["fg","php","explode","get"],
+		"body": [
+		"explode(${1:分割谁},${2:以什么分割})"
+		],
+		"description": [
+		"字符串分割"
+		]
+	},
+
+	"获取字符串索引值": {
+		"prefix": ["php","sy","strpos","get"],
+		"body": [
+		"strpos(${1:源字符串},${2:搜索字符串});  //获取字符串索引值"
+		],
+		"description": [
+		"获取指定字符串在源字符串中第一次出现的索引值,索引从0开始"
+		]
+	},
+
+	"获取当前文件的扩展名": {
+		"prefix": ["strrchr","php","get"],
+		"body": [
+		"strrchr(${1:源字符串},${2:指定搜索的字符});  //获取当前文件的扩展名"
+		],
+		"description": [
+		"获取当前文件的扩展名"
+		]
+	},
+
+	"json_decode,格式转换": {
+		"prefix": ["php","json","change"],
+		"body": [
+		"json_decode(${1:需要处理的json},true); //true为json转成数组,默认为对象"
+		],
+		"description": [
+		"可以将json格式的字符串转换为php数组或者对象"
+		]
+	},
+
+	"json_encode,格式转换": {
+		"prefix": ["php","json","change"],
+		"body": [
+		"json_encode(${1:需要处理的php});"
+		],
+		"description": [
+		"以将php数组或者对象转换为json格式的字符串"
+		]
+	},
+
+	"判断当前值是否属于数组": {
+		"prefix": ["pd","is","php","in_array"],
+		"body": [
+		"in_array(${1:值},${2:判断的数组})"
+		],
+		"description": [
+		"判断当前值是否属于数组"
+		]
+	},
+
+	"删除数组中的某个(多个)数据": {
+		"prefix": ["del","php","array_splice"],
+		"body": [
+		"array_splice(${1:目标数组},${2:起始索引},${3:删除个数})"
+		],
+		"description": [
+		"删除数组中的某个(多个)数据"
+		]
+	},
+
+	"获取url中各部分": {
+		"prefix": ["url","parse_url","php","get"],
+		"body": [
+		"parse_url(${1:url地址});  //获取url中各部分"
+		],
+		"description": [
+		"获取url中各部分"
+		]
+	},
+
+	"header浏览器跳转": {
+		"prefix": ["tz","header","php"],
+		"body": [
+		"header(\"Location:${1:跳转地址}\");"
+		],
+		"description": [
+		"header浏览器跳转"
+		]
+	},
+
+	"header浏览器延时跳转": {
+		"prefix": ["tz","header","php"],
+		"body": [
+		"header(\"refresh:${1:延时时间(秒)};url=${2:跳转地址}\");"
+		],
+		"description": [
+		"header浏览器延时跳转"
+		]
+	},
+
+	"自动下载(不修改下载名)": {
+		"prefix": ["download","php","header"],
+		"body": [
+		"header(\"Content-Type:application/octet-stream\");  //自动下载"
+		],
+		"description": [
+		"自动下载(不修改下载名)"
+		]
+	},
+
+	"自动下载(可命名)": {
+		"prefix": ["download","php","header"],
+		"body": [
+		"header(\"Content-Disposition:attachment;filename=${1:命名}\");  //自动下载"
+		],
+		"description": [
+		"自动下载(可命名)"
+		]
+	},
+
+	"获取请求报文数据": {
+		"prefix": ["get","php"],
+		"body": [
+		"getallheaders();  //获取请求报文数据"
+		],
+		"description": [
+		"获取请求报文数据"
+		]
+	},
+
+	"设置(删除)cookie": {
+		"prefix": ["cookie","set","php","setcookie"],
+		"body": [
+		"setcookie(\"${1:键名}\",\"${2:值}\",${3|time()+\"有效期\",PHP_INT_MAX|},\"${4:路径(/代表整站)}\" )"
+		],
+		"description": [
+		"设置cookie",
+		"怎么设置怎么删除,值设成\"\""
+		]
+	},
+
+	"判断变量是否存在": {
+		"prefix": ["is","isset","php"],
+		"body": [
+		"isset(${1:需要判断的内容})"
+		],
+		"description": [
+		"判断变量是否存在",
+		"判断变量存在且不为空先isset,再empty"
+		]
+	},
+
+	"判断变量是否为空": {
+		"prefix": ["is","empty","php"],
+		"body": [
+		"empty(${1:需要判断的内容})"
+		],
+		"description": [
+		"判断变量是否为空",
+		"判断变量存在且不为空先isset,再empty"
+		]
+	},
+	"创建链接(建立连接)": {
+		"prefix": ["create","mysqli"],
+		"body": [
+		"${1:$$connect} = mysqli_connect(${2:主机或ip地址},${3:用户名},${4:密码},${5:数据库名称});  //建立数据库连接"
+		],
+		"description": [
+		"创建链接(建立连接)",
+		"如果连接成功，就返回一个连接对象(资源)，如果连接失败，返回false"
+		]
+	},
+
+	"设置响应头编码（解决浏览器乱码问题）": {
+		"prefix": ["lm","set","mysqli","header"],
+		"body": [
+		"//设置响应头(编码格式)",
+		"header(\"Content-Type:${1|text/html,application/x-www-form-urlencoded,application/json|};charset=utf-8\");"
+		],      
+		"description": [
+		"设置编码（解决浏览器乱码问题）"
+		]
+	},
+
+	"设置数据库连接字符集为utf8": {
+		"prefix": ["set","lm","mysqli"],
+		"body": [
+		"// 设置数据库连接字符集utf8",
+		"mysqli_set_charset($$connect,\"utf8\");"
+		],
+		"description": [
+		"设置数据库连接字符集为utf8",
+		"解决乱码问题"
+		]
+	},
+
+	"创建拉取sql语句": {
+		"prefix": ["create","select","mysqli"],
+		"body": [
+		"select * from ${1:目标需要拉取的表}"
+		],
+		"description": [
+		"创建sql语句"
+		]
+	},
+
+	"新增sql语句": {
+		"prefix": ["create","new","insert","mysqli"],
+		"body": [
+		"\"insert into ${1:数据库目标表} values('${2:值1}','${3:值2}')\""
+		],
+		"description": [
+		"新增sql语句"
+		]
+	},
+
+	"修改sql语句": {
+		"prefix": ["update","change","mysqli"],
+		"body": [
+		"\"update ${1:数据库目标表} set ${2:修改内容} where ${3:修改条件}\""
+		],
+		"description": [
+		"修改sql语句"
+		]
+	},
+
+	"删除sql语句": {
+		"prefix": ["delete","del","remove","mysqli"],
+		"body": [
+		"\"delete from ${1:数据库目标表} where ${3:修改条件}\""
+		],
+		"description": [
+		"删除sql语句"
+		]
+	},
+
+	"执行sql语句": {
+		"prefix": ["use","query","mysqli"],
+		"body": [
+		"mysqli_query($$connect,$$sql);"
+		],
+		"description": [
+		"执行sql语句"
+		]
+	},
+
+	"获取sql数据": {
+		"prefix": ["fetch","cx","mysqli"],
+		"body": [
+		"mysqli_fetch_${1|array,assoc,row|}(${2:查询结果集}); //获取sql数据"
+		],
+		"description": [
+		"获取sql数据",
+		"array返回(索引数组，关联数组)",
+		"assoc返回(关联数组)",
+		"row返回(索引数组)"
+		]
+	},
+
+	"循环读取得到sql数据": {
+		"prefix": ["fetchall","cxall","mysqli","get"],
+		"body": [
+		"//循环读取得到sql数据",
+		"while($$row = mysqli_fetch_assoc(${1:结果集})){",
+		"\t$$arr[] = $$row",
+		"};"
+		],
+		"description": [
+		"循环读取sql数据"
+		]
+	},
+
+	"获取随机id": {
+		"prefix": ["round","uniqid","get"],
+		"body": [
+		"uniqid()"
+		],
+		"description": [
+		"获取随机id"
+		]
+	},
+
+	"封装查询操作": {
+		"prefix": ["mysqli","hs","sql"],
+		"body": [
+			"// 封装查询操作",
+			"//调用方法:select(传入需要执行的sql语句)",
+			"//例： select(\"select * from mysql\")",
+			"function select($$sql){",
+			"\t// 创建连接.如果成功就返回连接对象(资源),如果失败就返回fasle",
+			"\t$$conn = mysqli_connect(\"127.0.0.1\",\"root\",\"root\",\"mybase\");  //默认链接",
+			"\t// 判断连接是否成功",
+			"\tif(!$$conn){",
+			"\t\tdie(\"连接失败\");",
+			"\t}",
+			"\t// 设置编码",
+			"\tmysqli_set_charset($$conn,\"utf8\");",
+			"\t// 查询语句的返回值：如果成功就返回资源(结果集)，如果失败返回false",
+			"\t$$res = mysqli_query($$conn,$$sql);",
+			"\tif(!$$res){",
+			"\t\techo '查询失败';",
+			"\t}else if(mysqli_num_rows($$res) ==0){ //有结果集但是没有数据行",
+			"\t\techo '没有查询到数据';",
+			"\t}else{",
+			"\t\t// 有结果集也有数据行",
+			"\t\twhile($$arr = mysqli_fetch_assoc($$res)){",
+			"\t\t\t$$result[] = $$arr;",
+			"\t\t}",
+			"\t\tmysqli_close($$conn);",
+			"\t\treturn $$result;",
+			"\t}",
+			"\t// 释放内存",
+			"\tmysqli_free_result($$res);",
+			"\t// 关闭连接",
+			"\tmysqli_close($$conn);",
+			"}"
+		],
+		"description": [
+		"封装查询操作",
+		"返回查询结果"
+		]
+	},
+
+	"sql查询语句": {
+		"prefix": ["sql"],
+		"body": [
+		"-- 使用方法：直接全部复制到sql中测试,注释前填写内容",
+		"select     -- 需要读取的数据(返回的内容)[查询多条信息用英文 “,” 隔开]",
+		"from       -- 表名(从哪个表读取数据)",
+		"left join  -- 关联另一个表",
+		"on         -- 关联条件",
+		"where      -- 查询条件",
+		"order by   -- 根据哪个数据(返回内容)排序[默认倒序] <倒叙加上 desc>",
+		"limit      -- 需要返回几条数据[如果填写  limit  1,2  表示跳过1个数据返回2个数据]",
+		"offset     -- 跳过几条数据,默认0"
+		],
+		"description": [
+		"sql查询语句"
+		]
+	},
+
+	"返回包含数组中所有键名/键值的一个新数组": {
+		"prefix": ["array"],
+		"body": [
+		"${1|array_key,array_value|}(${2:需要处理的数组})"
+		],
+		"description": [
+		"返回包含数组中所有键名/键值的一个新数组"
+		]
+	},
+}

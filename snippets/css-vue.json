@@ -1,0 +1,94 @@
+{
+    "v-enter": {
+        "prefix": ["v-enter"],
+        "body": [
+        "v-enter"
+        ],
+        "description": [
+        "v-enter【进入之前，元素的起始状态】"
+        ]
+    },
+    "v-leave-to": {
+        "prefix": ["v-leave-to"],
+        "body": [
+        "v-leave-to"
+        ],
+        "description": [
+        "v-leave-to【动画离开之后，离开的终止状态】"
+        ]
+    },
+    "v-enter-active": {
+        "prefix": ["v-enter-active"],
+        "body": [
+        "v-enter-active"
+        ],
+        "description": [
+        "v-enter-active【入场动画的时间段】"
+        ]
+    },
+    "v-leave-active": {
+        "prefix": ["v-leave-active"],
+        "body": [
+        "v-leave-active"
+        ],
+        "description": [
+        "v-leave-active【离场动画的时间段】"
+        ]
+    },
+    "vue动画配置": {
+        "prefix": ["vue-transition"],
+        "body": [
+            "/* v-enter 【进入之前，元素的起始状态】 */",
+            "/* v-leave-to 【动画离开之后，离开的终止状态】 */",
+            ".v-enter,",
+            ".v-leave-to {",
+            "\topacity: 0;",
+            "\ttransform: translateX(150px);",
+            "}",
+            "/* v-enter-active 【入场动画的时间段】 */",
+            "/* v-leave-active 【离场动画的时间段】 */",
+            ".v-enter-active,",
+            ".v-leave-active{",
+            "\ttransition: all 0.8s ease;",
+            "}"
+        ],
+        "description": [
+        "vue动画配置"
+        ]
+    },
+    "v-cloak解决插值表达式闪烁的问题": {
+        "prefix": ["v-cloak"],
+        "body": [
+        "[v-cloak] {\n\tdisplay: none;\n}"
+        ],
+        "description": [
+        "v-cloak解决插值表达式闪烁的问题"
+        ]
+    },
+    "v-move": {
+        "prefix": ["v-move"],
+        "body": [
+        "v-move"
+        ],
+        "description": [
+        "v-move"
+        ]
+    },
+    "v-move(配合v-leave-active)": {
+        "prefix": ["v-move"],
+        "body": [
+            ".v-move {",
+            "\ttransition: all 0.4s ease;",
+            "}",
+            "/* 一般配合 v-leave-active / v-enter-active 使用 */",
+            ".v-leave-active{",
+            "\tposition: absolute;",
+            "}"
+        ],
+        "description": [
+        "v-move(配合v-leave-active)",
+        "可实现循环的列表删除某列后续元素渐渐漂上来效果"
+        ]
+    }
+
+}
