@@ -4,6 +4,10 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+## [1.7.2] 20.19-07-14
+
+- 精简结构代码
+
 ## [1.7.1] 20.19-07-14
 
 - 修改主页，建议，BUG反馈地址
