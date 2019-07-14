@@ -708,14 +708,49 @@
     "description": "showcases the lib Joi and how you can use it to validate incoming requests"
   },
   "module.exports": {
-    "prefix": ["me"],
-    "body": ["module.exports"],
-    "description": ["just a phrase"]
+    "prefix": ["mde"],
+    "body": ["module.exports = {\n\t$0\n};\n"],
+    "description": ["将模块暴露出去,es6"]
   },
   "导出": {
     "prefix": ["exports"],
     "body": ["exports"],
     "description": ["exports(导出)"]
+  },
+  "import": {
+    "prefix": "imp",
+    "body": "import ${2:moduleName} from '${1:module}';$0",
+    "description": "以ES6语法导入整个模块语句"
+  },
+  "importNoModuleName": {
+    "prefix": "imn",
+    "body": "import '${1:module}';$0",
+    "description": "使用ES6语法导入整个模块而不使用模块名称"
+  },
+  "importDestructing": {
+    "prefix": "imd",
+    "body": "import { $2 } from '${1:module}';$0",
+    "description": "在ES6语法中仅导入模块的一部分"
+  },
+  "importEverything": {
+    "prefix": "ime",
+    "body": "import * as ${2:alias} from '${1:module}';$0",
+    "description": "在ES6语法中将所有内容作为别名从模块导入"
+  },
+  "importAs": {
+    "prefix": "ima",
+    "body": "import { ${2:originalName} as ${3:alias} } from '${1:module}';$0",
+    "description": "通过在ES6语法中分配本地别名来导入模块的特定部分"
+  },
+  "require": {
+    "prefix": "rqr",
+    "body": "require('${1:package}');",
+    "description": "引入一个包"
+  },
+  "moduleExports": {
+    "prefix": "mde",
+    "body": "module.exports = {\n\t$0\n};\n",
+    "description": "模块从Common JS导出，ES6的节点语法"
   }
 
 }

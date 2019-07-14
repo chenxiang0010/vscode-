@@ -4332,5 +4332,41 @@
     "description": [
     "(es6)字符串转大写"
     ]
+  },
+  "(ES6)anonymousFunction": {
+    "prefix": "anfn",
+    "body": "(${1:params}) => {\n\t${2}\n}",
+    "description": "(ES6)创建匿名箭头函数"
+  },
+  "(ES6)namedFunction": {
+    "prefix": "nfn",
+    "body": "const ${1:name} = (${2:params}) => {\n\t${3}\n}",
+    "description": "(ES6)创建命名箭头函数"
+  },
+  "(ES6)destructingObject": {
+    "prefix": "dob",
+    "body": "const {${2:propertyName}} = ${1:objectToDestruct};",
+    "description": "(ES6)对象解构"
+  },
+  "(ES6)destructingArray": {
+    "prefix": "dar",
+    "body": "const [${2:propertyName}] = ${1:arrayToDestruct};",
+    "description": "(ES6)数组解构"
+  },
+  "(ES6)promise": {
+    "prefix": "prom",
+    "body": "return new Promise((resolve, reject) => {\n\t${1}\n});",
+    "description": "(ES6)创建并返回新的Promise"
+  },
+  "(ES6)thenCatch": {
+    "prefix": "thenc",
+    "body": ".then((${1:result}) => {\n\t${2}\n}).catch((${3:err}) => {\n\t${4}\n});",
+    "description": "(ES6)添加.then和.catch方法来处理promises"
+  },
+
+  "(ES6)consoleAssert": {
+    "prefix": "cas",
+    "body": "console.assert(${1:expression}, ${2:object});",
+    "description": "(ES6)如果指定的表达式为false，则将消息与堆栈跟踪一起写入控制台"
   }
 }
