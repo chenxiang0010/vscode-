@@ -15,44 +15,46 @@
         ],
         "description": "new Vue()"
     },
-    "silent": {
-        "prefix": "VueConfigSilent",
+    "取消 Vue 所有的日志与警告": {
+        "prefix": "Vue-Config-Silent",
         "body": [
             "Vue.config.silent = ${1:true}"
         ],
-        "description": "Vue.config.silent"
+        "description": "取消 Vue 所有的日志与警告"
     },
-    "optionMergeStrategies": {
-        "prefix": "VueConfigOptionMergeStrategies",
+    "自定义合并策略的选项": {
+        "prefix": "Vue-Config-OptionMergeStrategies",
         "body": [
             "Vue.config.optionMergeStrategies$1"
         ],
-        "description": "Vue.config.optionMergeStrategies"
+        "description": "自定义合并策略的选项"
     },
-    "devtools": {
-        "prefix": "VueConfigDevtools",
+    "配置是否允许 vue-devtools 检查代码": {
+        "prefix": "Vue-Config-Devtools",
         "body": [
             "Vue.config.devtools = ${1:true}"
         ],
-        "description": "Vue.config.devtools"
+        "description": ["配置是否允许 vue-devtools 检查代码","开发版本默认为 true","生产版本默认为 false"]
     },
-    "errorHandler": {
-        "prefix": "VueConfigErrorHandler",
+    "获取错误信息和 Vue 实例": {
+        "prefix": "Vue-Config-ErrorHandler",
         "body": [
             "Vue.config.errorHandler = function (err, vm, info) {",
-            "\t${1:// handle error}",
+            "\t// handle error",
+            "\t// `info` 是 Vue 特定的错误信息，比如错误所在的生命周期钩子",
+            "\t// 只在2.2.0+可用",
             "}"
         ],
-        "description": "Vue.config.errorHandler"
+        "description": ["指定组件的渲染和观察期间未捕获错误的处理函数","获取错误信息和 Vue 实例"]
     },
-    "warnHandler": {
-        "prefix": "VueConfigWarnHandler",
+    "为 Vue 的运行时警告赋予一个自定义处理函数": {
+        "prefix": "Vue-Config-WarnHandler",
         "body": [
             "Vue.config.warnHandler = function (msg, vm, trace) {",
-            "\t${1:// handle warn}",
+            "\t${1:// `trace` 是组件的继承关系追踪}",
             "}"
         ],
-        "description": "Vue.config.warnHandler"
+        "description": "为 Vue 的运行时警告赋予一个自定义处理函数"
     },
     "ignoredElements": {
         "prefix": "VueConfigIgnoredElements",
@@ -63,49 +65,56 @@
         ],
         "description": "Vue.config.ignoredElements"
     },
-    "keyCodes": {
-        "prefix": "VueConfigKeyCodes",
+    "自定义键位别名(修饰符)": {
+        "prefix": "Vue-Config-KeyCodes",
         "body": [
             "Vue.config.keyCodes = {",
-            "\t${1:// camelCase won`t work}",
+            "\t${//键盘事件对应的键码:https://www.cnblogs.com/wuhua1/p/6686237.html }",
             "}"
         ],
-        "description": "Vue.config.keyCodes"
+        "description": "自定义键位别名(修饰符)"
     },
-    "performance": {
-        "prefix": "VueConfigPerformance",
+    "在浏览器开发工具中启用对组件的性能追踪": {
+        "prefix": "Vue-Config-Performance",
         "body": [
             "Vue.config.performance = ${1:true}"
         ],
-        "description": "Vue.config.performance"
+        "description": ["在浏览器开发工具中启用对组件初始化、编译、渲染和打补丁的性能追踪。","只适用于开发模式和支持 performance.mark API 的浏览器上。"]
     },
-    "productionTip": {
-        "prefix": "VueConfigProductionTip",
+    "阻止 vue 在启动时生成生产提示": {
+        "prefix": "Vue-Config-ProductionTip",
         "body": [
             "Vue.config.productionTip = ${1:false}"
         ],
-        "description": "Vue.config.productionTip"
+        "description": "阻止 vue 在启动时生成生产提示"
     },
-    "extend": {
-        "prefix": "vueExtend",
+    "使用Vue.extend()创建全局vue组件": {
+        "prefix": "Vue-Api-Extend",
         "body": [
-            "Vue.extend({",
-            "\ttemplate:${1:template}",
+            "let Profile = Vue.extend({",
+            "\ttemplate:'<p>{{dad}} {{mom}} 生了 {{me}}</p>',",
+            "\tdata: function () {",
+            "\t\treturn {",
+            "\t\t\tdad: '爸爸',",
+            "\t\t\tdad: '妈妈',",
+            "\t\t\tdad: '我'",
+            "\t\t}",
+            "\t}",
             "})"
         ],
-        "description": "Vue.extend( options )"
+        "description": "基础 Vue 构造器，创建一个“子类”"
     },
-    "nextTick": {
-        "prefix": "VueNextTick",
+    "在下次 DOM 更新循环结束之后执行延迟回调": {
+        "prefix": "Vue-Api-NextTick",
         "body": [
             "Vue.nextTick({",
             "\t$1",
             "})"
         ],
-        "description": "Vue.nextTick( callback, [context] )"
+        "description": ["在下次 DOM 更新循环结束之后执行延迟回调","在修改数据之后立即使用这个方法，获取更新后的 DOM"]
     },
-    "nextTickThen": {
-        "prefix": "VueNextTickThen",
+    "在下次 DOM 更新循环结束之后执行延迟回调(v2.1.0+)": {
+        "prefix": "Vue-Api-NextTick-Then",
         "body": [
             "Vue.nextTick({",
             "\t$1",
@@ -113,24 +122,24 @@
             "\t$3",
             "})"
         ],
-        "description": "Vue.nextTick( callback, [context] ).then(function(){ })"
+        "description": "在下次 DOM 更新循环结束之后执行延迟回调(v2.1.0+)"
     },
-    "set": {
-        "prefix": "VueSet",
+    "向响应式对象中添加一个属性，且触发视图更新": {
+        "prefix": "Vue-Api-Set",
         "body": [
-            "Vue.set(${1:target}, ${2:key}, ${3:value})"
+            "Vue.set(${1:target(Object|Array)}, ${2:key(string|number)}, ${3:value})"
         ],
-        "description": "Vue.set( target, key, value )"
+        "description": ["向响应式对象中添加一个属性，新属性同样是响应式，且触发视图更新","对象不能是 Vue 实例，或者 Vue 实例的根数据对象。"]
     },
-    "delete": {
-        "prefix": "VueDelete",
+    "删除对象的属性": {
+        "prefix": "Vue-Api-Delete",
         "body": [
-            "Vue.delete(${1:target}, ${2:key})"
+            "Vue.delete(${1:target(Object|Array)}, ${2:key(string|number)})"
         ],
-        "description": "Vue.delete( target, key )"
+        "description": "删除对象的属性"
     },
     "vue自定义指令(全局)": {
-        "prefix": "VueDirective",
+        "prefix": "Vue-Api-Directive",
         "body": [
             "Vue.directive('${1:指令名称(不加v-)}',{",
             "\t${2|bind: function (el) { /*当指令绑定到元素上[执行一次]*/ },inserted: function (el) { /*当元素插入到DOM中时[执行一次]*/ },updated: function (el) { /*当VNode更新的时候执行[可能会触发多次]*/ },unbind: function(el){ /*与元素解绑时[执行一次]*/ },componentUpdated: function(el){ /*当所有VNode及VNode孩子全部更新的时候执行*/ }|}",
@@ -139,7 +148,7 @@
         "description": "vue自定义指令(全局)"
     },
     "inserted: function(){}": {
-        "prefix": ["vue-directive-inserted"],
+        "prefix": ["vue-api-directive-inserted"],
         "body": [
             "inserted: function(el,binding){",
             "\t//el:指令绑定的元素",
@@ -154,7 +163,7 @@
         ]
     },
     "bind: function(){}": {
-        "prefix": ["vue-directive-bind"],
+        "prefix": ["vue-api-directive-bind"],
         "body": [
             "bind: function(el,binding){",
             "\t//el:指令绑定的元素",
@@ -169,7 +178,7 @@
         ]
     },
     "updated: function(){}": {
-        "prefix": ["vue-directive-updated"],
+        "prefix": ["vue-api-directive-updated"],
         "body": [
             "updated: function(el,binding){",
             "\t//el:指令绑定的元素",
@@ -184,7 +193,7 @@
         ]
     },
     "componentUpdated: function(){}": {
-        "prefix": ["vue-directive-componentUpdated"],
+        "prefix": ["vue-api-directive-componentUpdated"],
         "body": [
             "componentUpdated: function(el,binding){",
             "\t//el:指令绑定的元素",
@@ -199,7 +208,7 @@
         ]
     },
     "unbind: function(){}": {
-        "prefix": ["vue-directive-unbind"],
+        "prefix": ["vue-api-directive-unbind"],
         "body": [
             "unbind: function(el,binding){",
             "\t//el:指令绑定的元素",
@@ -213,16 +222,16 @@
         "与元素解绑时调用只一次"
         ]
     },
-    "vue过滤器(全局)": {
-        "prefix": "VueFilter",
+    "注册过滤器(全局)": {
+        "prefix": "Vue-Api-Filter",
         "body": [
             "// {{ msg | msgFormat }}",
             "Vue.filter(${1:'msgFormat'}, (dataStr, arg) => dataStr.replace( /你好/g, arg ))"
         ],
-        "description": "vue过滤器(全局)"
+        "description": "注册过滤器(全局)"
     },
     "vue简易时间格式化(全局)": {
-        "prefix": ["vue-filter-time"],
+        "prefix": ["vue-api-filter-time"],
         "body": [
             "//{{ date | dateFormat('yyyy-mm-dd') }} 不填默认 yyyy-mm-dd hh-mm-ss",
             "// 过滤器， 进行时间的格式化",
@@ -246,42 +255,51 @@
         "vue简易时间格式化(全局)"
         ]
     },
-    "component": {
-        "prefix": "VueComponent",
+    "注册全局组件": {
+        "prefix": "Vue-Api-Component-Registered",
         "body": [
-            "Vue.component(${1:id}${2:, [definition]})$0"
+            "Vue.component('${1:组件名称}', ${2|创建出来的组件模板对象(有且只有一个根标签),({template:'<p>你好!</p>'})|})"
         ],
-        "description": "Vue.component( id, [definition] )"
+        "description": "注册全局组件"
     },
-    "use": {
-        "prefix": "VueUse",
+    "安装vue.js插件": {
+        "prefix": "Vue-Api-Use",
         "body": [
-            "Vue.use(${1:plugin})$0"
+            "Vue.use(${1:plugin}) //需要在调用 new Vue() 之前被调用 $0"
         ],
-        "description": "Vue.use( plugin )"
+        "description": ["安装vue.js插件","new Vue()"]
     },
-    "mixin": {
+    "全局混入": {
         "prefix": "VueMixin",
         "body": [
             "Vue.mixin({${1:mixin}})"
         ],
-        "description": "Vue.mixin( mixin )"
+        "description": "全局混入"
     },
-    "compile": {
-        "prefix": "VueCompile",
+    "模板编译": {
+        "prefix": "Vue-Api-Compile",
         "body": [
             "Vue.compile(${1:template})"
         ],
-        "description": "Vue.compile( template )"
+        "description": "模板编译"
     },
-    "version": {
-        "prefix": "VueVersion",
+    "让一个对象可响应": {
+        "prefix": ["Vue-Api-Observable"],
+        "body": [
+        "vue.observable({${1:object}})"
+        ],
+        "description": [
+        "让一个对象可响应"
+        ]
+    },
+    "返回字符串形式的 Vue 安装版本号": {
+        "prefix": "Vue-Api-Version",
         "body": [
             "Vue.version$0"
         ],
-        "description": "Vue.version.split('.')[]"
+        "description": "提供字符串形式的 Vue 安装版本号"
     },
-    "data": {
+    "Vue实例的数据对象": {
         "prefix": "data",
         "body": [
             "data() {",
@@ -290,21 +308,21 @@
             "\t}",
             "},$0"
         ],
-        "description": "The data object for the Vue instance."
+        "description": "Vue实例的数据对象"
     },
-    "props": {
+    "用于接收来自父组件的数据": {
         "prefix": "props",
         "body": [
             "props"
         ],
-        "description": "A list/hash of attributes that are exposed to accept data from the parent component. "
+        "description": "用于接收来自父组件的数据 "
     },
-    "propsData": {
+    "创建实例时传递 props 主要作用是方便测试。": {
         "prefix": "propsData",
         "body": [
-            "propsData"
+            "propsData: { ${1:key(string)}: value}"
         ],
-        "description": "Restriction: only respected in instance creation via `new`. Pass props to an instance during its creation. This is primarily intended to make unit testing easier."
+        "description": ["创建实例时传递 props 主要作用是方便测试","限制：只用于 new 创建的实例中"]
     },
     "scopedSlots": {
         "prefix": "scopedSlots",
@@ -313,16 +331,16 @@
         ],
         "description": "just a word"
     },
-    "computed": {
+    "混入计算属性到 Vue 实例中": {
         "prefix": "computed",
         "body": [
             "computed: {",
             "\t$1",
             "},$0"
         ],
-        "description": "Computed properties to be mixed into the Vue instance. "
+        "description": "混入计算属性到 Vue 实例中"
     },
-    "methods": {
+    "Vue实例中的方法": {
         "prefix": "methods",
         "body": [
             "methods: {",
@@ -338,7 +356,7 @@
             "\t$1",
             "},$0"
         ],
-        "description": "An object where keys are expressions to watch and values are the corresponding callbacks. The value can also be a string of a method name, or an Object that contains additional options. Note that you should not use an arrow function to define a watcher."
+        "description": ["键是要观察的表达式的对象，值是相应的回调. 该值也可以是方法名称的字符串，或包含其他选项的Object.","不能使用箭头函数来定义 "]
     },
     "watchWithOptions": {
         "prefix": "watchWithOptions",
@@ -1247,6 +1265,15 @@
         ],
         "description": [
         "vue-resource全局配置"
+        ]
+    },
+    "创建组件(使用vue.extend)": {
+        "prefix": ["vue-create-component"],
+        "body": [
+        
+        ],
+        "description": [
+        "创建组件(使用vue.extend)"
         ]
     }
 }

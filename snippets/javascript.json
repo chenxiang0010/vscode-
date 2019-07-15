@@ -2890,7 +2890,7 @@
   "splice删除数组中的某些数据": {
     "prefix": ["splice", "del", "remove"],
     "body": ["splice(${1:从第几个开始删除},${2:删除几个})"],
-    "description": ["splice删除数组中的某些数据"]
+    "description": ["splice删除数组中的某些数据(返回删除的那个)"]
   },
 
   "删除对象中的属性": {

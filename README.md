@@ -66,6 +66,11 @@ As shown in the table below, snippet `vmData` has body like `${this, vm}.$data` 
 
 如下表所示，`vmData` 的内容是 `${this, vm}.$data`，这表明这个 snippet 会提供 `this.$data` and `vm.$data` 两种选项供你选择。
 
+大类别的使用：
+
+    如果你想找vue全局配置  键入 `vue-config`
+    api类  键入`api`
+
 | Prefix                           | JavaScript Snippet Content                                         |
 | -------------------------------- | ------------------------------------------------------------------ |
 | `import`                         | `import ... from ...`                                              |
