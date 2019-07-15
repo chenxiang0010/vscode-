@@ -1266,14 +1266,5 @@
         "description": [
         "vue-resource全局配置"
         ]
-    },
-    "创建组件(使用vue.extend)": {
-        "prefix": ["vue-create-component"],
-        "body": [
-        
-        ],
-        "description": [
-        "创建组件(使用vue.extend)"
-        ]
     }
 }

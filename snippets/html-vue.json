@@ -15,20 +15,35 @@
       "\t</${1:div}>",
       "</template>"
     ],
-    "description": "template element"
+    "description": "template标签结构"
+  },
+  "template模板结构": {
+    "prefix": ["template"],
+    "body": [
+      "<template id=\"${1:temp}\"> <!-- vue实例外创建 -->",
+      "\t<div>",
+      "\t\t",
+      "\t</div>",
+      "</template>",
+      "<!-- 调用   <${2:mycom}></${2:mycom}> -->",
+      "<script>",
+      "\tVue.component('${2:mycom}',{template: '#${1:temp}'})",
+      "</script>"
+    ],
+    "description": ["template模板结构"]
   },
   "v-text": {
-    "prefix": "vText",
+    "prefix": "v-Text",
     "body": ["v-text=\"${1:msg}\""],
     "description": "Expects: string. Updates the element’s textContent."
   },
   "v-html": {
-    "prefix": "vHtml",
+    "prefix": "v-Html",
     "body": ["v-html=\"${1:html}\""],
     "description": "html-Expects: string. Updates the element’s innerHTML."
   },
   "v-show": {
-    "prefix": "vShow",
+    "prefix": "v-Show",
     "body": ["v-show=\"${1:condition}\""],
     "description": "Expects: any"
   },
@@ -38,41 +53,46 @@
     "description": "Expects: any"
   },
   "v-else": {
-    "prefix": "vElse",
+    "prefix": "v-Else",
     "body": ["v-else"],
     "description": "Does not expect expression. previous sibling element must have v-if or v-else-if."
   },
   "v-else-if": {
-    "prefix": "vElseIf",
+    "prefix": "v-Else-If",
     "body": ["v-else-if=\"${1:condition}\""],
     "description": "Expects: any. previous sibling element must have v-if or v-else-if."
   },
   "v-for循环(不带:key)": {
-    "prefix": "vFor-Without-Key",
+    "prefix": "v-For-Without-Key",
     "body": ["v-for=\"${1:item} in ${2:items}\""],
     "description": "v-for循环(不带:key)"
   },
   "v-for循环": {
-    "prefix": "vFor",
+    "prefix": "v-For",
     "body": [
       "v-for=\"(${1:item}, ${2:index}) in ${3:items}\" :key=\"${4:index}\""
     ],
     "description": "v-for循环"
   },
   "v-on": {
-    "prefix": "vOn",
+    "prefix": "v-On",
     "body": ["v-on:${1:event}=\"${2:handle}\""],
     "description": "Expects: Function | Inline Statement"
   },
   "v-bind数据单向绑定": {
-    "prefix": "vBind",
+    "prefix": "v-Bind",
     "body": ["v-bind$1=\"${2}\""],
     "description": "数据单向绑定"
   },
   "v-model": {
-    "prefix": "vModel",
+    "prefix": "v-Model",
     "body": ["v-model=\"${1:双向绑定的数据(只能用在表单元素)}\""],
     "description": "数据双向绑定: 根据表单输入元素的值或组件的输出而变化"
+  },
+  "v-model修饰符": {
+    "prefix": ["V-model-xsf"],
+    "body": ["v-model.${1|number,trim,lazy|}=\"$0\""],
+    "description": ["v-model修饰符"]
   },
   "v-pre": {
     "prefix": "vPre",
@@ -80,12 +100,12 @@
     "description": "原样输出(不编译渲染)"
   },
   "v-cloak解决 插值表达式闪烁的问题": {
-    "prefix": "vCloak",
+    "prefix": "v-Cloak",
     "body": ["v-cloak"],
     "description": ["解决 插值表达式闪烁的问题", "放在插值表达式的同级标签中"]
   },
   "v-once": {
-    "prefix": "vOnce",
+    "prefix": "v-Once",
     "body": ["v-once"],
     "description": "只编译一次"
   },
@@ -383,7 +403,7 @@
     "description": ["vue键盘事件"]
   },
   "vue键盘事件修饰符": {
-    "prefix": ["v-key-sj"],
+    "prefix": ["v-key-xsf"],
     "body": ["${1|enter,tab,delete,esc,space,up,down,left,right|}"],
     "description": [
       "vue鼠标事件修饰符",
@@ -392,12 +412,12 @@
     ]
   },
   "vue事件修饰符": {
-    "prefix": ["v-sj"],
+    "prefix": ["v-xsf"],
     "body": ["${1|stop,prevent,capture,self,once|}"],
     "description": ["vue键盘事件修饰符", "例: @keyup.enter 键盘输入回车"]
   },
   "vue手势事件": {
-    "prefix": ["v-sj"],
+    "prefix": ["v-tap"],
     "body": [
       "${1|tap,doubletap,longtap,hold,release,swipeleft,swiperight,swipeup,swipedown,dragstart,drag,dragend|}"
     ],
@@ -407,5 +427,30 @@
     "prefix": ["click"],
     "body": ["click"],
     "description": ["click点击"]
+  },
+  "input:checkbox": {
+    "prefix": ["v-input-checkbox"],
+    "body": [
+      "<input type=\"checkbox\" name=\"$1\" id=\"$2\" value=\"$3\" v-model=\"$4\">"
+    ],
+    "description": ["input:checkbox"]
+  },
+  "input:radio": {
+    "prefix": ["v-input-radio"],
+    "body": [
+      "<input type=\"radio\" name=\"$1\" id=\"$2\" value=\"$3\" v-model=\"$4\">"
+    ],
+    "description": ["input:radio"]
+  },
+  "v-select下拉框": {
+      "prefix": ["v-select"],
+      "body": [
+        "<select name=\"$1\" id=\"$2\" v-model=\"$3\">",
+        "\t<option value=\"$4\">$0</option>",
+        "</select>"
+      ],
+      "description": [
+      "v-select下拉框"
+      ]
   }
 }
