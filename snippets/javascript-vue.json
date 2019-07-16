@@ -314,12 +314,12 @@
         ],
         "description": "Vue(组件中)实例数据对象"
     },
-    "用于接收来自父组件的数据": {
+    "用于接收来自父组件的数据(只读)": {
         "prefix": "props",
         "body": [
-            "props"
+            "props: ['${0:父组件传递的自定义属性名(str)}']"
         ],
-        "description": "用于接收来自父组件的数据 "
+        "description": "用于接收来自父组件的数据(只读)"
     },
     "创建实例时传递 props 主要作用是方便测试。": {
         "prefix": "propsData",
@@ -338,7 +338,7 @@
     "计算属性(用于计算总价,总数)": {
         "prefix": "computed",
         "body": [
-            "computed: {",
+            "computed: { // 直接调用不加括号 ",
             "\t$1",
             "},$0"
         ],
@@ -357,7 +357,7 @@
         "prefix": "watch",
         "body": [
             "watch: {",
-            "\t${1:要观察的表达式的对象(data中的键)}:function(val){",
+            "\t${1:要观察的表达式的对象(data中的键)}:function(value){",
             "\t",
             "\t}",
             "},$0"
@@ -410,58 +410,58 @@
         "description": "Provide an alternative render output when the default render function encounters an error."
     },
     "(vue创建阶段的第一个生命周期函数)实例未完全创建出来执行的生命周期函数": {
-        "prefix": "vue-life-beforeCreate",
+        "prefix": "vue-life-1beforeCreate",
         "body": [
             "beforeCreate() {  //实例未完全创建出来执行 ",
             "\t$1",
             "},"
         ],
-        "description": ["(vue创建阶段的第一个生命周期函数)","实例未完全创建出来执行"]
+        "description": ["实例创建之前","实例未完全创建出来执行"]
     },
     "(vue创建阶段的第二个生命周期函数)实例创建出来才执行的生命周期函数": {
-        "prefix": "vue-life-created",
+        "prefix": "vue-life-2created",
         "body": [
             "created() {  //methods和data已经初始化,常用于操作数据，发起ajax请求",
             "\t$1",
             "},"
         ],
-        "description": ["(vue创建阶段的第二个生命周期函数)","常用于操作数据，发起ajax请求","调用methods方法或者调用data数据，最早能在created执行"]
+        "description": ["已经创建初始化数据","常用于操作数据，发起ajax请求","调用methods方法或者调用data数据，最早能在created执行"]
     },
     "(vue创建阶段的第三个生命周期函数)模板已在内存编译但尚未渲染": {
-        "prefix": "vue-life-beforeMount",
+        "prefix": "vue-life-3beforeMount",
         "body": [
-            "beforeMount() { //模板已在内存编译完成，尚未渲染到页面(未替换)",
+            "beforeMount() { //挂载数据之前",
             "\t$1",
             "},"
         ],
-        "description": ["(vue创建阶段的第三个生命周期函数)","模板已在内存编译但尚未渲染"]
+        "description": ["挂载数据之前","模板已在内存编译但尚未渲染"]
     },
     "(vue创建阶段的第四个生命周期函数)模板已渲染到浏览器": {
-        "prefix": "vue-life-mounted",
+        "prefix": "vue-life-4mounted",
         "body": [
-            "mounted() { //实例创建期间最后一个生命周期函数,内存中的模板挂载到页面中",
+            "mounted() { //内存中的模板已挂载到页面中",
             "\t$1",
             "},"
         ],
-        "description": ["(vue创建阶段的第四个生命周期函数)模板已渲染到浏览器","实例创建期间最后一个生命周期函数","操作dom节点最早在mounted进行","vue实例初始化完毕"]
+        "description": ["内存中的模板已挂载到页面中","操作dom节点最早在mounted进行"]
     },
     "(vue运行阶段的第一个生命周期函数)页面尚未和最新数据保持一致": {
-        "prefix": "vue-life-beforeUpdate",
+        "prefix": "vue-life-5beforeUpdate",
         "body": [
-            "beforeUpdate() { //页面数据为旧的，尚未和最新数据保持一致",
+            "beforeUpdate() { //数据更新之前",
             "\t$1",
             "},"
         ],
-        "description": ["(vue运行阶段的第一个生命周期函数)","页面尚未和最新数据保持一致"]
+        "description": ["数据更新之前","页面尚未和最新数据保持一致"]
     },
     "(vue运行阶段的第二个生命周期函数)页面数据已和最新数据同步为最新": {
-        "prefix": "vue-life-updated",
+        "prefix": "vue-life-6updated",
         "body": [
-            "updated() { //页面数据已和最新数据同步为最新",
+            "updated() { //页面数据已更新",
             "\t$1",
             "},"
         ],
-        "description": ["(vue运行阶段的第二个生命周期函数)","页面数据已和最新数据同步为最新"]
+        "description": ["页面数据已更新"]
     },
     "activated": {
         "prefix": "vue-life-activated",
@@ -482,22 +482,22 @@
         "description": "Type: Function."
     },
     "(vue销毁阶段第一个生命周期函数)还未真正执行销毁过程": {
-        "prefix": "vue-life-beforeDestroy",
+        "prefix": "vue-life-7beforeDestroy",
         "body": [
-            "beforeDestroy() { //进入销毁阶段，但未真正执行销毁过程",
+            "beforeDestroy() { //vue销毁之前",
             "\t$1",
             "},"
         ],
-        "description": ["(vue销毁阶段第一个生命周期函数)","还未真正执行销毁过程"]
+        "description": ["vue销毁之前"]
     },
     "(vue销毁阶段第二个生命周期函数)已完全销毁": {
-        "prefix": "vue-life-destroyed",
+        "prefix": "vue-life-8destroyed",
         "body": [
-            "destroyed() {",
+            "destroyed() {  //已完全销毁",
             "\t$1",
             "},"
         ],
-        "description": ["(vue销毁阶段第二个生命周期函数)","已完全销毁"]
+        "description": ["已完全销毁"]
     },
     "errorCaptured": {
         "prefix": "errorCaptured",
@@ -762,12 +762,12 @@
         ],
         "description": "vm.$off( [event, callback] )"
     },
-    "vm.$emit": {
-        "prefix": "vmEmit",
+    "vm.$emit调用触发父组件的方法(可用于子=>父传参)": {
+        "prefix": "vmEmit-params",
         "body": [
-            "${1|this,vm|}.\\$emit('${2:event}'${3:, […args]})$4"
+            "${1|this,vm|}.\\$emit('${2:自定义事件}'${3:, [要传递的参数]})$4"
         ],
-        "description": "vm.$emit( event, […args] )"
+        "description": ["调用触发父组件的方法(可用于子=>父传参)","通过子组件绑定自定义事件的方式调用父"]
     },
     "vm.$mount": {
         "prefix": "vmMount",

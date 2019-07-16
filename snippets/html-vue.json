@@ -139,10 +139,19 @@
     "body": ["scope=\"${1:this api replaced by slot-scope in 2.5.0+}\"$0"],
     "description": "Used to denote a <template> element as a scoped slot, which is replaced by `slot-scope` in 2.5.0+."
   },
-  "component": {
+  "component占位符(用于组件切换)": {
     "prefix": "component",
-    "body": ["<component :is=\"${1:componentId}\"></component>$0"],
-    "description": "component element"
+    "body": ["<component :is=\"${1:指定要展示的组件名称}\"></component>$0"],
+    "description": "component占位符(用于组件切换)"
+  },
+  "component占位符(用于动画组件切换)": {
+    "prefix": "component",
+    "body": [
+      "<transiton mode=\"${1:out-in}\">",
+      "\t<component :is=\"${2:指定要展示的组件名称}\"></component>$0",
+      "</transiton>"
+    ],
+    "description": "component占位符(用于动画组件切换)"
   },
   "keep-alive": {
     "prefix": "keepAlive",
