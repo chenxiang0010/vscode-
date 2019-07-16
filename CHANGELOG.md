@@ -4,6 +4,10 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+## [1.7.6] 2019-07-16
+
+- 更新vue部分语法 API相关 `vue-api`  配置相关 `vue-config`
+
 ## [1.7.5] 2019-07-15
 
 - 更新vue部分语法 `v-input` `v-select`

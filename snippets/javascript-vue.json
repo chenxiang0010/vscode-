@@ -142,7 +142,7 @@
         "prefix": "Vue-Api-Directive",
         "body": [
             "Vue.directive('${1:指令名称(不加v-)}',{",
-            "\t${2|bind: function (el) { /*当指令绑定到元素上[执行一次]*/ },inserted: function (el) { /*当元素插入到DOM中时[执行一次]*/ },updated: function (el) { /*当VNode更新的时候执行[可能会触发多次]*/ },unbind: function(el){ /*与元素解绑时[执行一次]*/ },componentUpdated: function(el){ /*当所有VNode及VNode孩子全部更新的时候执行*/ }|}",
+            "\t${2|bind: function (el) { /*用于样式相关操作(只执行一次)*/ },inserted: function (el) { /*用于行为相关操作*/ },updated: function (el) { /*当VNode更新的时候执行[可能会触发多次]*/ },unbind: function(el){ /*与元素解绑时[执行一次]*/ },componentUpdated: function(el){ /*当所有VNode及VNode孩子全部更新的时候执行*/ }|}",
             "})"
         ],
         "description": "vue自定义指令(全局)"
@@ -157,7 +157,6 @@
             "}"
         ],
         "description": [
-        "inserted: function(){}",
         "vue自定义指令中的钩子函数",
         "一般用于行为相关操作"
         ]
@@ -172,7 +171,6 @@
             "}"
         ],
         "description": [
-        "bind: function(){}",
         "vue自定义指令中的钩子函数",
         "一般用于样式相关操作"
         ]
@@ -187,7 +185,6 @@
             "}"
         ],
         "description": [
-        "updated: function(){}",
         "vue自定义指令中的钩子函数",
         "当VNode更新的时候执行"
         ]
@@ -202,7 +199,6 @@
             "}"
         ],
         "description": [
-        "componentUpdated: function(){}",
         "vue自定义指令中的钩子函数",
         "当所有VNode及VNode孩子全部更新的时候执行"
         ]
@@ -217,7 +213,6 @@
             "}"
         ],
         "description": [
-        "unbind: function(){}",
         "vue自定义指令中的钩子函数",
         "与元素解绑时调用只一次"
         ]
@@ -225,8 +220,10 @@
     "注册过滤器(全局)": {
         "prefix": "Vue-Api-Filter",
         "body": [
-            "// {{ msg | msgFormat }}",
-            "Vue.filter(${1:'msgFormat'}, (dataStr, arg) => dataStr.replace( /你好/g, arg ))"
+            "// 调用  {{ msg | ${1:过滤器名字}() }}",
+            "Vue.filter('${1:过滤器名字}', (${2:管道前的值(msg的值)}, ${3:过滤器传入的参数}) => {",
+            "\t${0:代码}",
+            "}"
         ],
         "description": "注册过滤器(全局)"
     },
@@ -255,12 +252,19 @@
         "vue简易时间格式化(全局)"
         ]
     },
-    "注册全局组件": {
+    "注册全局组件(引用外部template)": {
+        "prefix": "Vue-Api-Component-Registered",
+        "body": [
+            "Vue.component('${1:组件名称}', {template: '#${2:外部template模板id}'}})"
+        ],
+        "description": "注册全局组件(引用外部template)"
+    },
+    "注册全局组件(内部template)": {
         "prefix": "Vue-Api-Component-Registered",
         "body": [
             "Vue.component('${1:组件名称}', ${2|创建出来的组件模板对象(有且只有一个根标签),({template:'<p>你好!</p>'})|})"
         ],
-        "description": "注册全局组件"
+        "description": "注册全局组件(内部template)"
     },
     "安装vue.js插件": {
         "prefix": "Vue-Api-Use",
@@ -308,7 +312,7 @@
             "\t}",
             "},$0"
         ],
-        "description": "Vue实例的数据对象"
+        "description": "Vue(组件中)实例数据对象"
     },
     "用于接收来自父组件的数据": {
         "prefix": "props",
@@ -331,14 +335,14 @@
         ],
         "description": "just a word"
     },
-    "混入计算属性到 Vue 实例中": {
+    "计算属性(用于计算总价,总数)": {
         "prefix": "computed",
         "body": [
             "computed: {",
             "\t$1",
             "},$0"
         ],
-        "description": "混入计算属性到 Vue 实例中"
+        "description": "计算属性(用于计算总价,总数)"
     },
     "Vue实例中的方法": {
         "prefix": "methods",
@@ -349,14 +353,16 @@
         ],
         "description": "Vue实例中的方法"
     },
-    "watch": {
+    "侦听器(很少用)": {
         "prefix": "watch",
         "body": [
             "watch: {",
-            "\t$1",
+            "\t${1:要观察的表达式的对象(data中的键)}:function(val){",
+            "\t",
+            "\t}",
             "},$0"
         ],
-        "description": ["键是要观察的表达式的对象，值是相应的回调. 该值也可以是方法名称的字符串，或包含其他选项的Object.","不能使用箭头函数来定义 "]
+        "description": ["侦听器(很少用)","不能使用箭头函数来定义"]
     },
     "watchWithOptions": {
         "prefix": "watchWithOptions",
@@ -528,7 +534,7 @@
         "body": [
             "components"
         ],
-        "description": "just a word"
+        "description": ["just a word","注册私有组件"]
     },
     "parent": {
         "prefix": "parent",
