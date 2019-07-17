@@ -24,7 +24,7 @@
 		"vue",
 		"vue2"
 	],
-	"version": "1.7.8",
+	"version": "1.7.9",
 	"publisher": "xuedao",
 	"engines": {
 		"vscode": "^1.27.0"
