@@ -4,6 +4,16 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+## [1.7.9] 2019-07-16
+
+- 修复bug
+
+## [1.7.8] 2019-07-16
+
+- 更新jquery语法
+- 新增字符串操作  `str-..`
+- 新增数组操作  `arr-`
+
 ## [1.7.7] 2019-07-16
 
 - 更新vue部分语法

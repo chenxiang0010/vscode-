@@ -158,6 +158,26 @@
     "body": ["<keep-alive$1>", "$2", "</keep-alive>$0"],
     "description": "keep-alive element"
   },
+  "transition动画标签": {
+    "prefix": "transition",
+    "body": [
+      "<transition>",
+      "\t<div>",
+      "\t\t$2",
+      "\t</div>",
+      "</transition>$0"
+    ],
+    "description": "transition动画标签"
+  },
+  "transition-group通过v-for渲染出来需要做过渡动画": {
+    "prefix": "transition-Group",
+    "body": [
+      "<transition-group tag=\"${1|渲染为指定标签(默认span),ul,div|}\" ${2|页面刚渲染时是否要动画,appear|}>",
+      "\t$3",
+      "</transition-group>"
+    ],
+    "description": "transition-group通过v-for渲染出来需要做过渡动画"
+  },
   "动画标签(vue官方)": {
     "prefix": "transition",
     "body": [
@@ -220,15 +240,7 @@
     ],
     "description": ["动画(钩子函数半场动画)"]
   },
-  "通过v-for渲染出来需要做过渡动画": {
-    "prefix": "transitionGroup",
-    "body": [
-      "<transition-group tag=\"${1|渲染为指定标签(默认span),ul,div|}\" ${2|页面刚渲染时是否要动画,appear|}>",
-      "\t$3",
-      "</transition-group>"
-    ],
-    "description": "通过v-for渲染出来需要做过渡动画"
-  },
+
   "enter-class": {
     "prefix": "enterClass",
     "body": ["enter-class=\"$1\"$0"],
