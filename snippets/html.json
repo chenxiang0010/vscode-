@@ -88,7 +88,7 @@
     "description": ["jQuery File Upload"]
   },
   "artTemplate引擎模板": {
-    "prefix": ["zj", "temp"],
+    "prefix": [ "template-art"],
     "body": [
       "下载地址:https://github.com/qq34347476/artTemplate",
       "<!-- 模板引擎 -->",
@@ -120,34 +120,43 @@
     "description": ["输出<%-  %>","引入模板"]
   },
   "vue-resource(AJAX) CDN": {
-    "prefix": ["script-cdn-resource"],
+    "prefix": ["cdn-vue-resource"],
     "body": [
-    "<script src=\"https://cdn.jsdelivr.net/npm/vue-resource@1.5.1\"></script>"
+    "https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"
     ],
     "description": [
     "vue-resource(AJAX) CDN"
     ]
   },
-  "animate.css(第三方动画) CDN": {
-    "prefix": ["script-cdn-animate"],
+  "vue-router-CDN": {
+    "prefix": ["cdn-vue-router"],
     "body": [
-    "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css\"></script>"
+    "https://unpkg.com/vue-router/dist/vue-router.js"
+    ],
+    "description": [
+    "vue-router-CDN"
+    ]
+  },
+  "animate.css(第三方动画) CDN": {
+    "prefix": ["cdn-animate"],
+    "body": [
+    "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
     ],
     "description": [
     "animate.css(第三方动画) CDN"
     ]
   },
   "jQuery百度 CDN": {
-    "prefix": ["script-cdn-jquery"],
+    "prefix": ["cdn-jquery"],
     "body": [
-      "<script src=\"https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js\"></script>"
+      "https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"
     ],
     "description": ["jQuery百度 CDN"]
   },
   "jQuery又拍云 CDN": {
-    "prefix": ["script-cdn-jquery"],
+    "prefix": ["cdn-jquery"],
     "body": [
-      "<script src=\"https://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.2.min.js\"></script>"
+      "https://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.2.min.js"
     ],
     "description": ["jQuery又拍云 CDN"]
   },

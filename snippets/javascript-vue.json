@@ -695,7 +695,7 @@
     "vm.$refs": {
         "prefix": ["vmRefs","this-refs"],
         "body": [
-            "${1|this,vm|}.\\$refs$2"
+            "${1|this,vm|}.\\$refs.${0:需要获取的dom元素(标签中ref的值)}"
         ],
         "description": "Type: Object. Read only."
     },
@@ -746,7 +746,7 @@
         "body": [
             "${1|this,vm|}.\\$on('${2:event}', ${3:callback})$4"
         ],
-        "description": "vm.$on( event, callback )"
+        "description": "监听事件中心事件"
     },
     "vm.$once": {
         "prefix": ["vmOnce","this-once"],
@@ -760,7 +760,7 @@
         "body": [
             "${1|this,vm|}.\\$off('${2:event}', ${3:callback})$4"
         ],
-        "description": "vm.$off( [event, callback] )"
+        "description": "销毁事件中心事件"
     },
     "vm.$emit调用触发父组件的方法(可用于子=>父传参)": {
         "prefix": ["vmEmit-params","this-emit-params"],

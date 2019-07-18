@@ -122,17 +122,17 @@
   "slotA": {
     "prefix": "slotA",
     "body": ["slot=\"$1\"$0"],
-    "description": "slot=''. Expects: string. Used on content inserted into child components to indicate which named slot the content belongs to."
+    "description": "组件具名插槽(调用用)"
   },
   "slotE": {
     "prefix": "slotE",
-    "body": ["<slot$1>$2</slot>$0"],
-    "description": "<slot></slot>. Expects: string. Used on content inserted into child components to indicate which named slot the content belongs to."
+    "body": ["<slot name='${1:插槽名}'>$2</slot>$0"],
+    "description": "组件插槽(组件模板中用)"
   },
   "slotScope": {
     "prefix": "slotScope",
     "body": ["slot-scope=\"$1\"$0"],
-    "description": "Used to denote an element or component as a scoped slot. The attribute’s value should be a valid JavaScript expression that can appear in the argument position of a function signature. This means in supported environments you can also use ES2015 destructuring in the expression. Serves as a replacement for scope in 2.5.0+."
+    "description": "作用域插槽"
   },
   "scope": {
     "prefix": "scope",
