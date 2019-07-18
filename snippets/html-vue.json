@@ -6,6 +6,92 @@
     ],
     "description": ["v-html骨架"]
   },
+  "v-路由命名视图之经典布局": {
+    "prefix": ["!vue-demo-namedView"],
+    "body": [
+      "<!DOCTYPE html>",
+      "<html lang=\"en\">",
+      "<head>",
+      "  <meta charset=\"UTF-8\">",
+      "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+      "  <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">",
+      "  <title>Document</title>",
+      "  <script src=\"${1:./lib/vue-2.4.0.js}\"></script>",
+      "  <script src=\"${2:./lib/vue-router-3.0.1.js}\"></script>",
+      "  <style>",
+      "    html,",
+      "    body {",
+      "      margin: 0;",
+      "      padding: 0;",
+      "    }",
+      "    .header {",
+      "      background-color: orange;",
+      "      height: 80px;",
+      "    }",
+      "    h1 {",
+      "      margin: 0;",
+      "      padding: 0;",
+      "      font-size: 16px;",
+      "    }",
+      "    .container {",
+      "      display: flex;",
+      "      height: 600px;",
+      "    }",
+      "    .left {",
+      "      background-color: lightgreen;",
+      "      flex: 2;",
+      "    }",
+      "    .main {",
+      "      background-color: lightpink;",
+      "      flex: 8;",
+      "    }",
+      "  </style>",
+      "</head>",
+      "<body>",
+      "  <div id=\"app\">",
+      "    <router-view></router-view>",
+      "    <div class=\"container\">",
+      "      <router-view name=\"left\"></router-view>",
+      "      <router-view name=\"main\"></router-view>",
+      "    </div>",
+      "  </div>",
+      "  <script>",
+      "    var header = {",
+      "      template: '<h1 class=\"header\">Header头部区域</h1>'",
+      "    }",
+      "    var leftBox = {",
+      "      template: '<h1 class=\"left\">Left侧边栏区域</h1>'",
+      "    }",
+      "    var mainBox = {",
+      "      template: '<h1 class=\"main\">mainBox主体区域</h1>'",
+      "    }",
+      "    // 创建路由对象",
+      "    var router = new VueRouter({",
+      "      routes: [",
+      "        {",
+      "          path: '/', components: {",
+      "            'default': header,",
+      "            'left': leftBox,",
+      "            'main': mainBox",
+      "          }",
+      "        }",
+      "      ]",
+      "    })",
+      "    // 创建 Vue 实例，得到 ViewModel",
+      "    var vm = new Vue({",
+      "      el: '#app',",
+      "      data: {},",
+      "      methods: {},",
+      "      router",
+      "    });",
+      "  </script>",
+      "</body>",
+      "</html>"
+    ],
+    "description": [
+    "v-路由命名视图之经典布局"
+    ]
+  },
   "template": {
     "prefix": "template",
     "body": [
@@ -117,7 +203,11 @@
   "ref": {
     "prefix": "ref",
     "body": ["ref=\"${1:reference}\"$0"],
-    "description": ["引用DOM","普通DOM元素，则引用将是该元素","子组件上使用，则引用将是组件实例"]
+    "description": [
+      "引用DOM",
+      "普通DOM元素，则引用将是该元素",
+      "子组件上使用，则引用将是组件实例"
+    ]
   },
   "slotA": {
     "prefix": "slotA",
@@ -161,11 +251,11 @@
   "transition动画标签": {
     "prefix": "transition",
     "body": [
-      "<transition>",
+      "<transition mode=\"${1:out-in}\" name=\"${2:}\" ${3:appear}>",
       "\t<div>",
-      "\t\t$2",
+      "\t\t$0",
       "\t</div>",
-      "</transition>$0"
+      "</transition>"
     ],
     "description": "transition动画标签"
   },
@@ -173,7 +263,7 @@
     "prefix": "transition-Group",
     "body": [
       "<transition-group tag=\"${1|渲染为指定标签(默认span),ul,div|}\" ${2|页面刚渲染时是否要动画,appear|}>",
-      "\t$3",
+      "\t$0",
       "</transition-group>"
     ],
     "description": "transition-group通过v-for渲染出来需要做过渡动画"
@@ -181,9 +271,9 @@
   "动画标签(vue官方)": {
     "prefix": "transition",
     "body": [
-      "<transition name=\"$1\">",
-      "\t$2",
-      "</transition>$0",
+      "<transition name=\"$1\" mode=\"out-in\">",
+      "\t$0",
+      "</transition>",
       "<style>",
       "/* ${1:v}-enter 【进入之前，元素的起始状态】 */",
       "/* ${1:v}-leave-to 【动画离开之后，离开的终止状态】 */",
@@ -208,8 +298,8 @@
       "<!-- 演示及下载 https://daneden.github.io/animate.css/ -->",
       "<!-- $ npm install animate.css -S -->",
       "<transition enter-active-class=\"animated ${1:bounceIn}\" leave-active-class=\"animated ${2:bounceOut}\" :duration=\"{ enter: ${3:200}, leave: ${4:400} }\">",
-      "\t$2",
-      "</transition>$0"
+      "\t$0",
+      "</transition>"
     ],
     "description": "动画标签(使用第三方animate.css)"
   },
@@ -347,14 +437,17 @@
     "description": "@appear-cancelled=''"
   },
   "routerLink": {
-    "prefix": "routerLink",
+    "prefix": "router-Link",
     "body": ["<router-link $1>$2</router-link>$0"],
-    "description": "router-link element"
+    "description": "router-link占位符(默认渲染为a标签)"
   },
   "routerLinkTo": {
-    "prefix": "routerLinkTo",
-    "body": ["<router-link to=\"$1\">$2</router-link>$0"],
-    "description": "<router-link to=''></router-link>. router-link element"
+    "prefix": "router-Link-To",
+    "body": ["<router-link to=\"${1:路由path路径}\">$2</router-link>$0"],
+    "description": [
+      "router-link-to占位符(默认渲染为a标签)",
+      "<router-link to=''></router-link>"
+    ]
   },
   "to": {
     "prefix": "to",
@@ -367,9 +460,9 @@
     "description": "tag=''"
   },
   "routerView": {
-    "prefix": "routerView",
+    "prefix": "router-View",
     "body": ["<router-view>$1</router-view>$0"],
-    "description": "router-view element"
+    "description": "router-view占位符"
   },
   "nuxt": {
     "prefix": "nuxt",
@@ -464,14 +557,17 @@
     "description": ["input:radio"]
   },
   "v-select下拉框": {
-      "prefix": ["v-select"],
-      "body": [
-        "<select name=\"$1\" id=\"$2\" v-model=\"$3\">",
-        "\t<option value=\"$4\">$0</option>",
-        "</select>"
-      ],
-      "description": [
-      "v-select下拉框"
-      ]
+    "prefix": ["v-select"],
+    "body": [
+      "<select name=\"$1\" id=\"$2\" v-model=\"$3\">",
+      "\t<option value=\"$4\">$0</option>",
+      "</select>"
+    ],
+    "description": ["v-select下拉框"]
+  },
+  "mode": {
+    "prefix": "mode",
+    "body": ["mode=\"${0:out-in}\""],
+    "description": "transition属性"
   }
 }

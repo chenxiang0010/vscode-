@@ -89,6 +89,15 @@
         "v-move(配合v-leave-active)",
         "可实现循环的列表删除某列后续元素渐渐漂上来效果"
         ]
+    },
+    "router-link-active": {
+        "prefix": ["router-link-active"],
+        "body": [
+        "router-link-active"
+        ],
+        "description": [
+        "router-link被选中时默认标签"
+        ]
     }
 
 }
