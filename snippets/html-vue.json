@@ -27,7 +27,7 @@
       "</template>",
       "<!-- 调用   <${2:mycom}></${2:mycom}> -->",
       "<script>",
-      "\tVue.component('${2:mycom}',{template: '#${1:temp}'})",
+      "\tVue.component('${2:mycom}',{\n\t\tprops:[],\n\t\ttemplate: '#${1:temp}'})",
       "</script>"
     ],
     "description": ["template模板结构"]
@@ -117,7 +117,7 @@
   "ref": {
     "prefix": "ref",
     "body": ["ref=\"${1:reference}\"$0"],
-    "description": "Expects: string. ref is used to register a reference to an element or a child component. The reference will be registered under the parent component’s $refs object. If used on a plain DOM element, the reference will be that element; if used on a child component, the reference will be component instance."
+    "description": ["引用DOM","普通DOM元素，则引用将是该元素","子组件上使用，则引用将是组件实例"]
   },
   "slotA": {
     "prefix": "slotA",
