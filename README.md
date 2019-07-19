@@ -70,62 +70,68 @@ As shown in the table below, snippet `vmData` has body like `${this, vm}.$data` 
 
     如果你想找vue全局配置  键入 `vue-config`
     api类  键入`api`
+    axios:  键入`axios`  配置相关(如配置baseURL,拦截器等),  第二类键入 `config`  
 
-| Prefix                           | JavaScript Snippet Content                                         |
-| -------------------------------- | ------------------------------------------------------------------ |
-| `import`                         | `import ... from ...`                                              |
-| `newVue`                         | `new Vue({...})`                                                   |
-| `VueConfigSilent`                | `Vue.config.silent = true`                                         |
-| `VueConfigOptionMergeStrategies` | `Vue.config.optionMergeStrategies`                                 |
-| `VueConfigDevtools`              | `Vue.config.devtools = true`                                       |
-| `VueConfigErrorHandler`          | `Vue.config.errorHandler = function (err, vm, info) {...}`         |
-| `VueConfigWarnHandler`           | `Vue.config.warnHandler = function (msg, vm, trace) {...}`         |
-| `VueConfigIgnoredElements`       | `Vue.config.ignoredElements = ['']` \                              |
-| `VueConfigKeyCodes`              | `Vue.config.keyCodes`                                              |
-| `VueConfigPerformance`           | `Vue.config.performance = true`                                    |
-| `VueConfigProductionTip`         | `Vue.config.productionTip = false`                                 |
-| `vueExtend`                      | `Vue.extend( options )`                                            |
-| `VueNextTick`                    | `Vue.nextTick( callback, [context] )`                              |
-| `VueNextTickThen`                | `Vue.nextTick( callback, [context] ).then(function(){ })`          |
-| `VueSet`                         | `Vue.set( target, key, value )`                                    |
-| `VueDelete`                      | `Vue.delete( target, key )`                                        |
-| `VueDirective`                   | `Vue.directive( id, [definition] )`                                |
-| `VueFilter`                      | `Vue.filter( id, [definition] )`                                   |
-| `VueComponent`                   | `Vue.component( id, [definition] )`                                |
-| `VueUse`                         | `Vue.use( plugin )`                                                |
-| `VueMixin`                       | `Vue.mixin({ mixin })`                                             |
-| `VueCompile`                     | `Vue.compile( template )`                                          |
-| `VueVersion`                     | `Vue.version`                                                      |
-| `data`                           | `data() { return {} }`                                             |
-| `watchWithOptions`               | `key: { deep: true, immediate: true, handler: function () { } }`   |
-| `vmData`                         | `${this, vm}.$data`                                                |
-| `vmProps`                        | `${this, vm}.$props`                                               |
-| `vmEl`                           | `${this, vm}.$el`                                                  |
-| `vmOptions`                      | `${this, vm}.$options`                                             |
-| `vmParent`                       | `${this, vm}.$parent`                                              |
-| `vmRoot`                         | `${this, vm}.$root`                                                |
-| `vmChildren`                     | `${this, vm}.$children`                                            |
-| `vmSlots`                        | `${this, vm}.$slots`                                               |
-| `vmScopedSlots`                  | `${this, vm}.$scopedSlots.default({})`                             |
-| `vmRefs`                         | `${this, vm}.$refs`                                                |
-| `vmIsServer`                     | `${this, vm}.$isServer`                                            |
-| `vmAttrs`                        | `${this, vm}.$attrs`                                               |
-| `vmListeners`                    | `${this, vm}.listeners`                                            |
-| `vmWatch`                        | `${this, vm}.$watch( expOrFn, callback, [options] )`               |
-| `vmSet`                          | `${this, vm}.$set( object, key, value )`                           |
-| `vmDelete`                       | `${this, vm}.$delete( object, key )`                               |
-| `vmOn`                           | `${this, vm}.$on( event, callback )`                               |
-| `vmOnce`                         | `${this, vm}.$once( event, callback )`                             |
-| `vmOff`                          | `${this, vm}.$off( [event, callback] )`                            |
-| `vmEmit`                         | `${this, vm}.$emit( event, […args] )`                              |
-| `vmMount`                        | `${this, vm}.$mount( [elementOrSelector] )`                        |
-| `vmForceUpdate`                  | `${this, vm}.$forceUpdate()`                                       |
-| `vmNextTick`                     | `${this, vm}.$nextTick( callback )`                                |
-| `vmDestroy`                      | `${this, vm}.$destroy()`                                           |
-| `renderer`                       | `const renderer = require('vue-server-renderer').createRenderer()` |
-| `createRenderer`                 | `createRenderer({ })`                                              |
-| `preventDefault`                 | `preventDefault();`                                                |
-| `stopPropagation`                | `stopPropagation();`                                               |
+| Prefix                               | JavaScript Snippet Content                                         |
+| ------------------------------------ | ------------------------------------------------------------------ |
+| `axios-get/post/delete/put`          | `发送axios请求`                                                    |
+| `axios-config-baseURL`               | 配置请求的基准URL地址                                              |
+| `axios-config-headers`               | 配置请求头信息                                                     |
+| `axios-config-interceptors-request`  | axios设置请求拦截器                                                |
+| `axios-config-interceptors-response` | axios设置响应拦截器                                                 |
+| `import`                             | `import ... from ...`                                              |
+| `newVue`                             | `new Vue({...})`                                                   |
+| `VueConfigSilent`                    | `Vue.config.silent = true`                                         |
+| `VueConfigOptionMergeStrategies`     | `Vue.config.optionMergeStrategies`                                 |
+| `VueConfigDevtools`                  | `Vue.config.devtools = true`                                       |
+| `VueConfigErrorHandler`              | `Vue.config.errorHandler = function (err, vm, info) {...}`         |
+| `VueConfigWarnHandler`               | `Vue.config.warnHandler = function (msg, vm, trace) {...}`         |
+| `VueConfigIgnoredElements`           | `Vue.config.ignoredElements = ['']` \                              |
+| `VueConfigKeyCodes`                  | `Vue.config.keyCodes`                                              |
+| `VueConfigPerformance`               | `Vue.config.performance = true`                                    |
+| `VueConfigProductionTip`             | `Vue.config.productionTip = false`                                 |
+| `vueExtend`                          | `Vue.extend( options )`                                            |
+| `VueNextTick`                        | `Vue.nextTick( callback, [context] )`                              |
+| `VueNextTickThen`                    | `Vue.nextTick( callback, [context] ).then(function(){ })`          |
+| `VueSet`                             | `Vue.set( target, key, value )`                                    |
+| `VueDelete`                          | `Vue.delete( target, key )`                                        |
+| `VueDirective`                       | `Vue.directive( id, [definition] )`                                |
+| `VueFilter`                          | `Vue.filter( id, [definition] )`                                   |
+| `VueComponent`                       | `Vue.component( id, [definition] )`                                |
+| `VueUse`                             | `Vue.use( plugin )`                                                |
+| `VueMixin`                           | `Vue.mixin({ mixin })`                                             |
+| `VueCompile`                         | `Vue.compile( template )`                                          |
+| `VueVersion`                         | `Vue.version`                                                      |
+| `data`                               | `data() { return {} }`                                             |
+| `watchWithOptions`                   | `key: { deep: true, immediate: true, handler: function () { } }`   |
+| `vmData`                             | `${this, vm}.$data`                                                |
+| `vmProps`                            | `${this, vm}.$props`                                               |
+| `vmEl`                               | `${this, vm}.$el`                                                  |
+| `vmOptions`                          | `${this, vm}.$options`                                             |
+| `vmParent`                           | `${this, vm}.$parent`                                              |
+| `vmRoot`                             | `${this, vm}.$root`                                                |
+| `vmChildren`                         | `${this, vm}.$children`                                            |
+| `vmSlots`                            | `${this, vm}.$slots`                                               |
+| `vmScopedSlots`                      | `${this, vm}.$scopedSlots.default({})`                             |
+| `vmRefs`                             | `${this, vm}.$refs`                                                |
+| `vmIsServer`                         | `${this, vm}.$isServer`                                            |
+| `vmAttrs`                            | `${this, vm}.$attrs`                                               |
+| `vmListeners`                        | `${this, vm}.listeners`                                            |
+| `vmWatch`                            | `${this, vm}.$watch( expOrFn, callback, [options] )`               |
+| `vmSet`                              | `${this, vm}.$set( object, key, value )`                           |
+| `vmDelete`                           | `${this, vm}.$delete( object, key )`                               |
+| `vmOn`                               | `${this, vm}.$on( event, callback )`                               |
+| `vmOnce`                             | `${this, vm}.$once( event, callback )`                             |
+| `vmOff`                              | `${this, vm}.$off( [event, callback] )`                            |
+| `vmEmit`                             | `${this, vm}.$emit( event, […args] )`                              |
+| `vmMount`                            | `${this, vm}.$mount( [elementOrSelector] )`                        |
+| `vmForceUpdate`                      | `${this, vm}.$forceUpdate()`                                       |
+| `vmNextTick`                         | `${this, vm}.$nextTick( callback )`                                |
+| `vmDestroy`                          | `${this, vm}.$destroy()`                                           |
+| `renderer`                           | `const renderer = require('vue-server-renderer').createRenderer()` |
+| `createRenderer`                     | `createRenderer({ })`                                              |
+| `preventDefault`                     | `preventDefault();`                                                |
+| `stopPropagation`                    | `stopPropagation();`                                               |
 
 <br />
 

@@ -4,9 +4,13 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+## [1.7.14] 2019-07-19
+
+- 新增axios相关全局配置配置 `axios-config` 
+
 ## [1.7.13] 2019-07-19
 
-
+- 新增axios相关配置 发送请求  键入  `axios`    - get/post/delete/put
 
 ## [1.7.12] 2019-07-19
 
