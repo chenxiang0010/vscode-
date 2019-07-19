@@ -1045,5 +1045,50 @@
       "Vue.http.options.emulateJSON = true;"
     ],
     "description": ["vue-resource全局配置"]
+  },
+  "axios-get/delete": {
+    "prefix": ["axios-get/delete"],
+    "body": [
+      "axios.${1|get,delete|}('${2:axios}', {",
+      "  params: {$0}",
+      "}).then((ret) => {",
+      "  console.log(ret.data);",
+      "})"
+    ],
+    "description": [
+    "axios发送get/delete请求"
+    ]
+  },
+  "axios-post/put": {
+    "prefix": ["axios-post/put"],
+    "body": [
+      "axios.${1|post,put|}('${2:axios}',{$0}).then((ret) => {",
+        "  console.log(ret.data);",
+        "})"
+    ],
+    "description": [
+    "axios发送post/put"
+    ]
+  },
+  "axios-config-baseURL": {
+    "prefix": ["axios-config-baseURL"],
+    "body": [
+      "// 配置请求的基准URL地址",
+      "axios.defaults.baseURL = '${1:http://localhost:3000/}';"
+    ],
+    "description": [
+    "axios配置请求的基准URL地址"
+    ]
+  },
+  "axios-config-headers": {
+    "prefix": ["axios-config-headers"],
+    "body": [
+      "// 配置请求头信息",
+      "axios.defaults.headers['${1:token}'] = '${2:key}';"
+    ],
+    "description": [
+    "axios-config-headers"
+    ]
   }
+
 }
