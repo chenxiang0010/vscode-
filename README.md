@@ -52,7 +52,7 @@ A-super-change-case: [驼峰,下划线等词组格式互转](https://marketplace
 
 有时候你也可以输入中文 , `自动补全`
 
-### vue
+### **vue**
 
 这个部分单独做说明
 
@@ -228,7 +228,7 @@ As shown in the table below, snippet `vmData` has body like `${this, vm}.$data` 
 
 ### html
 
-#### Bootstrap代码片段
+#### **Bootstrap代码片段**
 
 此部分插件食用说明单独做成阅读文档    [详细说明地址1](https://gitee.com/qq34347476/bootstrap-3.3.2-dist) , [详细说明地址2](https://github.com/qq34347476/bootstrap-3.3.2-dist)
 
@@ -240,7 +240,7 @@ bootstrap3参考官网文档[bootstrap3文档](https://v3.bootcss.com/)
 
 再举个栗子:如果你想用栏栅系统 输入`b35`,`b37`，就可以分出5份跟7份的一排格栅
 
-### mui代码片段
+### **mui代码片段**
 
 mui片段使用参考官网文档[MUI中文文档](http://dev.dcloud.net.cn/mui/ui/)
 
@@ -264,7 +264,7 @@ mui片段使用参考官网文档[MUI中文文档](http://dev.dcloud.net.cn/mui/
 | 表单类        |   form |
 | 惊喜彩蛋      |     sm |
 
-### css/less
+### **css/less**
 
 | 内容          |    快捷键 |
 | :------------ | --------: |
@@ -279,7 +279,30 @@ mui片段使用参考官网文档[MUI中文文档](http://dev.dcloud.net.cn/mui/
 
 ### javascript
 
-#### nodeJS详解姿势
+### **webpack**
+
+前缀wp4,即 想查找所有webpack相关代码，键入 `wp4`
+
+- wp4-template
+- wp4-dev-server
+- wp4-source-map
+- wp4-inline-source-map
+- wp4-loader-babel
+- wp4-loader-css
+- wp4-loader-less
+- wp4-loader-scss
+- wp4-loader-ts
+- wp4-loader-url
+- wp4-loader-img
+- wp4-loader-ttf
+- wp4-optimization
+- wp4-requireHTMLPlugin
+- wp4-requireCleanPlugin
+- wp4-clean-plugin
+- wp4-html-plugin
+- wp4-resolve
+
+#### **nodeJS详解姿势**
 
 > 快捷键 nodejs查看所有
 
@@ -368,7 +391,7 @@ npm 常用资源包 键入`npm`
 | 服务器返回值                         |        res |
 | 服务器成功响应且数据解析完毕可以使用 |     ajaxon |
 
-### jquery
+### **jquery**
 
 | 内容     | 快捷键 |
 | :------- | -----: |
@@ -376,7 +399,7 @@ npm 常用资源包 键入`npm`
 
 如果你需要使用ajax,那么就是`jqajax`
 
-### php
+### **php**
 
 | 内容         | 快捷键 |
 | :----------- | -----: |

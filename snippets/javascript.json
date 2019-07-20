@@ -3362,6 +3362,16 @@
     "body": "return new Promise((resolve, reject) => {\n\t${1}\n});",
     "description": "(ES6)创建并返回新的Promise"
   },
+  "(ES6)命名promise": {
+    "prefix": "anprom",
+    "body": [
+      "const p = new Promise((resolve, reject) => {",
+      "  //  成功时回调resolve() , 失败时回调reject()",
+      "\t\t${0:代码块}",
+      "})"
+    ],
+    "description": "(ES6)创建命名promise"
+  },
   "(ES6)thenCatch": {
     "prefix": "thenc",
     "body": ".then((${1:result}) => {\n\t${2}\n}).catch((${3:err}) => {\n\t${4}\n});",
@@ -3404,5 +3414,45 @@
     "description": [
     "(ES7)fetch发送ajax-post/put"
     ]
+  },
+
+  "(ES6)async": {
+    "prefix": ["async"],
+    "body": [
+    "async"
+    ],
+    "description": [
+    "async","juest a word"
+    ]
+  },
+
+  "(ES6)await": {
+    "prefix": ["await"],
+    "body": [
+    "await"
+    ],
+    "description": [
+    "await","juest a word"
+    ]
+  },
+
+  "(ES6)export default向外暴露成员": {
+    "prefix": ["export-default"],
+    "body": [
+    "export default {$0}"
+    ],
+    "description": [
+    "(ES6)export default向外暴露成员"
+    ]
+  },
+  "(ES6)import ... from ...导入模块": {
+    "prefix": "import",
+    "body": ["import ${1:自定义模块名称} from '${2:模块标识符}'"],
+    "description": "(ES6)import ... from ...导入模块"
+  },
+  "(ES6)import 导入样式": {
+    "prefix": "import",
+    "body": ["import '${1:路径}'"],
+    "description": "(ES6)import 导入样式"
   }
 }

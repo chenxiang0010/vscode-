@@ -1,7 +1,7 @@
 {
 	"name": "super-comprehensive",
 	"displayName": "A-super-comprehensive",
-	"description": "代码补全合集(bootstrap-node-mui-html-js-jquery-php-css)",
+	"description": "代码补全合集(vue-webpack-bootstrap-node-mui-html-js-jquery-php-css)",
 	"keywords": [
 		"vscode",
 		"snippets",
@@ -22,9 +22,12 @@
 		"bootstrap",
 		"bootstrap3",
 		"vue",
-		"vue2"
+		"vue2",
+		"webpack",
+		"webpack4",
+		"片段"
 	],
-	"version": "1.7.14",
+	"version": "1.8.0",
 	"publisher": "xuedao",
 	"engines": {
 		"vscode": "^1.27.0"
@@ -93,6 +96,10 @@
 			{
 				"language": "javascript",
 				"path": "./snippets/javascript.json"
+			},
+			{
+				"language": "javascript",
+				"path": "./snippets/javascript-webpack4.json"
 			},
 			{
 				"language": "javascript",

@@ -1,9 +1,5 @@
 {
-  "import": {
-    "prefix": "import",
-    "body": ["import $1 from '$2'"],
-    "description": "import ... from ..."
-  },
+
   "vue": {
     "prefix": "newVue",
     "body": ["new Vue({", "\t$1", "})"],
@@ -342,8 +338,10 @@
   },
   "render": {
     "prefix": "render",
-    "body": ["render(h) {", "\t$1", "},"],
-    "description": "An alternative to string templates allowing you to leverage the full programmatic power of JavaScript."
+    "body": [
+     "render: createElements => createElements(${1:组件名})"
+    ],
+    "description": "render渲染模板"
   },
   "renderError": {
     "prefix": "renderError",
@@ -1110,8 +1108,7 @@
     "body": [
       "//axios设置响应拦截器",
       "axios.interceptors.response.use(function(response) {",
-      "  const data = response.data //拦截处理响应结果，直接返回需要的数据",
-      "  return data;",
+      "  return = response.data //拦截处理响应结果，直接返回需要的数据",
       "}, function(err){",
       "  console.log(err)",
       "})"

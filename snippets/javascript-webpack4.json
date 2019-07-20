@@ -1,0 +1,215 @@
+{
+  "template": {
+    "prefix": "wp4-template-forLoop",
+    "body": [
+      "module.exports = {",
+      "\tentry: {",
+      "\t\tvendor: \"./src/index.js$0\"",
+      "\t},",
+      "\tmode: \"development\",",
+      "\tmodule: {",
+      "\t\trules: []",
+      "\t},",
+      "\tplugins: [],",
+      "\toutput: {",
+      "\t\t$1filename: \"bundle.js\",",
+      "\t\tpath: path.resolve(__dirname,\"dist\")",
+      "\t},",
+      "}"
+    ],
+    "description": "template(For Loop)"
+  },
+  "template(带注释)": {
+    "prefix": ["wp4-template"],
+    "body": [
+      "const path = require('path')",
+      "const webpack = require('webpack')",
+      "const htmlWebpackPlugin = require('html-webpack-plugin') //自动将指定页面生存到内存,自动追加bundle.js到页面",
+      "",
+      "module.exports = {",
+      "    entry: { ",
+      "        vendor: path.join(__dirname, './src/main.js')  //要使用 webpack 打包哪个文件",
+      "    },",
+      "    output: { // 输出文件相关的配置",
+      "        filename: \"bundle.js\", //指定输出的文件名称",
+      "        path: path.join(__dirname,\"./dist\") // 指定 打包好的文件，输出目录",
+      "    },",
+      "    devServer: { // 这是配置 dev-server 命令参数",
+      "        //  --open --port 3000 --contentBase src --hot",
+      "        open: true, // 自动打开浏览器",
+      "        port: 3000, // 设置启动时候的运行端口",
+      "        contentBase: 'src', // 指定托管的根目录",
+      "        hot: true // 启用热更新",
+      "    },",
+      "    plugins: [ //配置插件的节点",
+      "        new webpack.HotModuleReplacementPlugin(),  // new 一个热更新的 模块对象",
+      "        new htmlWebpackPlugin({ // 创建一个 在内存中 生成 HTML  页面的插件",
+      "            template: path.join(__dirname, './src/index.html'), // 指定 模板页面",
+      "            filename: 'index.html' // 指定生成的页面的名称",
+      "          })",
+      "    ],",
+      "    module: { //配置 所有 第三方模块 加载器 ",
+      "        rules: [ // 所有第三方模块的 匹配规则",
+      "            { test: /\\.css$/, use: ['style-loader', 'css-loader'] }, // 配置处理 .css 文件的第三方loader 规则",
+      "            { test: /\\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] }, //配置处理 .less 文件的第三方 loader 规则",
+      "            { test: /\\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] }, // 配置处理 .scss 文件的 第三方 loader 规则",
+      "            { test: /\\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?limit=7631&name=[hash:8]-[name].[ext]' }, // 处理 图片路径的 loader",
+      "             // limit 给定的值，是图片的大小，单位是 byte， 如果引用的 图片，大于或等于给定的 limit值，则不会被转为base64格式的字符串， 如果 图片小于给定的 limit 值，则会被转为 base64的字符串",
+      "            { test: /\\.(ttf|eot|svg|woff|woff2)$/, use: 'url-loader' }, // 处理 字体文件的 loader ",
+      "            { test: /\\.js$/, use: 'babel-loader', exclude: /node_modules/ }, // 配置 Babel 来转换高级的ES语法",
+      "        ]",
+      "    }",
+      "}"
+    ],
+    "description": ["template(带注释)"]
+  },
+
+  "dev-server": {
+    "prefix": "wp4-dev-server",
+    "body": [
+        "devServer: {", 
+        "\tcontentBase: \"./dist\",", 
+        "\topen: true", 
+        "\thot: true", 
+        "\tport: 3000",
+        "},"],
+    "description": "devServer节点"
+  },
+  "source-map": {
+    "prefix": "wp4-source-map",
+    "body": ["devtool: \"source-map\""]
+  },
+  "inline-source-map": {
+    "prefix": "wp4-inline-source-map",
+    "body": ["devtool: \"inline-source-map\","]
+  },
+  "resolve": {
+    "prefix": "wp4-reolve",
+    "body": ["resolve:{", "\textensions: ['.js','jsx','.ts', '.tsx' ]", "}"]
+  },
+  "resolve-vue(修改路径)": {
+    "prefix": ["wp4-reolve-vue"],
+    "body": [
+        "resolve: {",
+        "  alias: { // 修改 Vue 被导入时候的包的路径",
+        "    \"vue$\": \"vue/dist/vue.js\"",
+        "  }",
+        "}"
+    ],
+    "description": [
+    "resolve(修改导入包路径[默认修改vue])"
+    ]
+  },
+  "optimization": {
+    "prefix": "wp4-optimization",
+    "body": [
+      "optimization: {",
+      "\tsplitChunks: {",
+      "\t\tcacheGroups: {",
+      "\t\t\tcommons: {",
+      "\t\t\t\tname: \"commons\",",
+      "\t\t\t\tchunks: \"initial\"",
+      "\t\t\t}",
+      "\t\t}",
+      "\t}",
+      "},"
+    ]
+  },
+  "requireHTMLPlugin": {
+    "prefix": "wp4-requireHTMLPlugin",
+    "body": ["var HTMLWebpackPlugin = require(\"html-webpack-plugin\");"]
+  },
+  "requireCleanPlugin": {
+    "prefix": "wp4-requireCleanPlugin",
+    "body": ["var CleanWebpackPlugin = require(\"clean-webpack-plugin\");"]
+  },
+  "cleanPlugin": {
+    "prefix": "wp4-clean-plugin",
+    "body": ["new CleanWebpackPlugin([\"dist\"]),"]
+  },
+  "HTMLPlugin": {
+    "prefix": "wp4-html-plugin",
+    "body": [
+      "new HTMLWebpackPlugin({ title: \"$0Title\", template: \"./src/index.html\" }),"
+    ]
+  },
+
+  "babel-loader": {
+    "prefix": "wp4-loader-babel",
+    "body": [
+        "cnpm i babel-core babel-loader babel-plugin-transform-runtime -D",
+        "cnpm i babel-preset-env babel-preset-stage-0 -D",
+        "{",
+        "\ttest: /\\.js$/,",
+        "\tuse: {",
+        "\t\tloader: \"babel-loader\",",
+        "\t\toptions: {",
+        "\t\t\tpresets: [\"stage-0\", \"${1|env,react|}\"],",
+        "\t\t\tplugins: [\"${0:transform-runtime}\"]",
+        "\t\t},",
+        "\texclude: /node_modules/,",
+        "\t}",
+        "}"
+    ],
+    "description": ["配置 Babel 来转换高级的ES语法"]
+  },
+  "css-loader": {
+    "prefix": "wp4-loader-css",
+    "body": [
+      "cnpm i style-loader css-loader -D",
+      "{ test: /\\.css$/, use: ['style-loader', 'css-loader'] } // 处理 CSS 文件的 loader"
+    ],
+    "description": ["配置处理 CSS 文件的 loader 规则"]
+  },
+  "ts-loader": {
+    "prefix": "wp4-loader-ts",
+    "body": [
+      "{",
+      "\ttest: /\\.tsx?$/,",
+      "\tloader: 'ts-loader'",
+      "}  // 处理 ts 文件的 loader"
+    ],
+    "description": ["配置处理 ts 文件的 loader 规则"]
+  },
+  "img-loader": {
+    "prefix": ["wp4-loader-url-img"],
+    "body": [
+      "cnpm i url-loader file-loader --save-dev",
+      "{ test: /\\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?limit=7631&name=[hash:8]-[name].[ext]' }, // 处理 图片路径的 loader",
+      "// limit 给定的值，是图片的大小，单位是 byte， 如果引用的 图片，大于或等于给定的 limit值，则不会被转为base64格式的字符串， 如果 图片小于给定的 limit 值，则会被转为 base64的字符串"
+    ],
+    "description": ["配置处理 图片 文件的 loader 规则"]
+  },
+  "ttf-loader": {
+    "prefix": ["wp4-loader-ttf"],
+    "body": [
+      "{ test: /\\.(ttf|eot|svg|woff|woff2)$/, use: 'url-loader' }, // 处理 字体文件的 loader "
+    ],
+    "description": ["配置处理 字体图标 文件的 loader 规则"]
+  },
+  "less-loader": {
+    "prefix": ["wp4-loader-less"],
+    "body": [
+        "cnpm i less-loader less -D",
+        "{ test: /\\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] }, // 处理 less 文件的 loader"
+    ],
+    "description": ["配置处理 less 文件的 loader 规则"]
+  },
+  "scss-loader": {
+    "prefix": ["wp4-loader-scss"],
+    "body": [
+        "cnpm i sass-loader node-sass -D",
+        "{ test: /\\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] }, // 处理 scss 文件的 loader"
+    ],
+    "description": ["配置处理 scss 文件的 loader 规则"]
+  },
+  "vue-loader": {
+      "prefix": ["wp4-loader-vue"],
+      "body": [
+        "{ test: /\\.vue$/, use: 'vue-loader' } // 处理 .vue 文件的 loader"
+      ],
+      "description": [
+      "处理 .vue 文件的 loader 规则"
+      ]
+  }
+}
