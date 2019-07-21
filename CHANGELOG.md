@@ -4,6 +4,11 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+## [1.8.1] 2019-07-21
+
+- 新增部分单词
+- 新增vue部分模板片段
+
 ## [1.8.0] 2019-07-20
 
 - 新增webpack相关配置代码  键入 `wp4`

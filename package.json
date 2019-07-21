@@ -27,7 +27,7 @@
 		"webpack4",
 		"片段"
 	],
-	"version": "1.8.0",
+	"version": "1.8.1",
 	"publisher": "xuedao",
 	"engines": {
 		"vscode": "^1.27.0"

@@ -280,6 +280,11 @@
     "body": ["default"],
     "description": ["just a word", "default默认"]
   },
+  "redirect": {
+    "prefix": ["redirect"],
+    "body": ["redirect"],
+    "description": ["just a word", "redirect定向跳转"]
+  },
   "scopedSlots": {
     "prefix": "scopedSlots",
     "body": ["scopedSlots"],
@@ -692,6 +697,24 @@
     "prefix": "new-VueRouter",
     "body": ["const ${1:router} = new VueRouter({", "\t$2", "})$0"],
     "description": "const router = newVueRouter({ })"
+  },
+  "vue-routes-path-component": {
+    "prefix": ["routes-path-component"],
+    "body": [
+      "{path:'${1:/login}', component: ${2:login}}"
+    ],
+    "description": [
+    "{path:'/login', component: login}"
+    ]
+  },
+  "vue-routes-path-component-children": {
+    "prefix": ["routes-path-component-children"],
+    "body": [
+      "{path:'${1:/login}', component: ${2:login},children:[$0]}"
+    ],
+    "description": [
+    "{path:'/login', component: login, children: []}"
+    ]
   },
   "newVueRouter-temp": {
     "prefix": "new-VueRouter-temp",
