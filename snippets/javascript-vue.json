@@ -275,6 +275,24 @@
       "限制：只用于 new 创建的实例中"
     ]
   },
+  "created": {
+    "prefix": ["created"],
+    "body": [
+    "created"
+    ],
+    "description": [
+      "just a word", "created已创建"
+    ]
+  },
+  "mounted": {
+    "prefix": ["mounted"],
+    "body": [
+    "mounted"
+    ],
+    "description": [
+      "just a word", "mounted已挂载"
+    ]
+  },
   "default": {
     "prefix": ["default"],
     "body": ["default"],
@@ -698,21 +716,33 @@
     "body": ["const ${1:router} = new VueRouter({", "\t$2", "})$0"],
     "description": "const router = newVueRouter({ })"
   },
-  "vue-routes-path-component": {
+  "routes-path-component": {
     "prefix": ["routes-path-component"],
     "body": [
       "{path:'${1:/login}', component: ${2:login}}"
     ],
     "description": [
+    "routes配置",
     "{path:'/login', component: login}"
     ]
   },
-  "vue-routes-path-component-children": {
+  "routes-path-component-parmas": {
+    "prefix": ["routes-path-component-parmas"],
+    "body": [
+      "{path:'${1:/login}', component: ${2:login}, route => ({ '${3:parmas}': route.parmas })} // 相应 ${2:login}组件 上配置props:[]接收传参"
+    ],
+    "description": [
+      "routes配置(含传参)",
+    "{path:'/login', component: login, props: route => ({ 'parmas': route.parmas, 'name': name })}"
+    ]
+  },
+  "routes-path-component-children": {
     "prefix": ["routes-path-component-children"],
     "body": [
       "{path:'${1:/login}', component: ${2:login},children:[$0]}"
     ],
     "description": [
+    "routes配置嵌套路由",
     "{path:'/login', component: login, children: []}"
     ]
   },

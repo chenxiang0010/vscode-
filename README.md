@@ -10,13 +10,15 @@
 
 更多优秀插件：
 
-A-super-comprehensive: [vue-bootstrap-js-nodejs-html-css-mui-less等前端超级合集代码补全](https://marketplace.visualstudio.com/items?itemName=xuedao.super-comprehensive)
+A-super-comprehensive: [vue-webpack-bootstrap-js-nodejs-html-css-less等前端超级合集代码补全](https://marketplace.visualstudio.com/items?itemName=xuedao.super-comprehensive)
 
 A-super-themes: [荧光字体主题美化](https://marketplace.visualstudio.com/items?itemName=xuedao.super-themes)
 
 A-super-translate: [英语小白必备悬浮翻译](https://marketplace.visualstudio.com/items?itemName=xuedao.super-translate)
 
 A-super-change-case: [驼峰,下划线等词组格式互转](https://marketplace.visualstudio.com/items?itemName=xuedao.super-change-case)
+
+Snippets-for-mui: [Mui框架代码补全](https://marketplace.visualstudio.com/items?itemName=xuedao.super-change-case)
 
 ## 前言
 
@@ -32,7 +34,7 @@ A-super-change-case: [驼峰,下划线等词组格式互转](https://marketplace
 
 [A-super-comprehensive下载地址](https://marketplace.visualstudio.com/items?itemName=xuedao.super-comprehensive)
 
-`代码补全` 包含 vue,bootstrap3,mui,javascript,css,html,php,ajax,node 等等..
+`代码补全` 包含 vue,webpack,bootstrap3,javascript,css,html,php,ajax,node 等等..
 
 `26国语翻译言` 链接：[点击](https://marketplace.visualstudio.com/items?itemName=xuedao.super-translate)
 
@@ -239,30 +241,6 @@ bootstrap3参考官网文档[bootstrap3文档](https://v3.bootcss.com/)
 例:如果你想用bootstrap3,键入`bs3`,想要通栏`block`,想要链接型`link`,想要按钮`button`,想要导航`nav`等等
 
 再举个栗子:如果你想用栏栅系统 输入`b35`,`b37`，就可以分出5份跟7份的一排格栅
-
-### **mui代码片段**
-
-mui片段使用参考官网文档[MUI中文文档](http://dev.dcloud.net.cn/mui/ui/)
-
-例：mui轮播图:   `mslider`  或者 `mui-lbt` (使用轮播图缩写)
-
-再举个栗子:
-
-    一套mui基础框架，你只需要
-    `mheader`(生成头部[关于顶部的mui会多选生成，如顶部选项卡，顶部标题栏，顶部导航栏等])
-    `mfooter`(同上，关于底部相关内容会直接生成)
-    `mbody`生成内容区
-
-| 内容          | 快捷键 |
-| :------------ | -----: |
-| 显示全部      |   html |
-| mui框架类     |    mui |
-| 骨架          |      ! |
-| 常用各种模板  |     zj |
-| script 云 CDN | script |
-| 引入类        |   link |
-| 表单类        |   form |
-| 惊喜彩蛋      |     sm |
 
 ### **css/less**
 
