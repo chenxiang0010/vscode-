@@ -1,39 +1,66 @@
 {
-  "template": {
-    "prefix": "wp4-template-forLoop",
+  "webpack-help": {
+    "prefix": ["wp4-help"],
     "body": [
+      "基础配置依赖包",
+      "npm i webpack webpack-cli webpack-dev-server html-webpack-plugin -D",
+      "扩展loader依赖包",
+      "//  css + autoprefixer ",
+      "npm i style-loader css-loader -D",
+      "npm install postcss-loader autoprefixer -D",
+      "// less ",
+      "npm i less-loader less -D",
+      "// sass",
+      "npm i sass-loader node-sass -D",
+      "// url",
+      "npm i url-loader file-loader -D",
+      "// bable",
+      "npm install babel-loader @babel/core @babel/runtime -D",
+      "npm install @babel/preset-env @babel/plugin-transform-runtime @babel/plugin-proposal-class-properties -D",
+      "// vue",
+      "npm install vue-loader vue-template-compiler -D"
+    ],
+    "description": [
+    "webpack-help"
+    ]
+  },
+  "template": {
+    "prefix": "wp4-template",
+    "body": [
+      "//npm i webpack webpack-cli webpack-dev-server html-webpack-plugin -D",
+      "const path = require('path')",
+      "const HTMLWebpackPlugin = require('html-webpack-plugin') //自动将指定页面生成到内存指定目录",
+      "const htmlPlguin = new HTMLWebpackPlugin({ template: '${1:./src/index.html}', filename: '${2:index.html}' })",
+      "",
       "module.exports = {",
-      "\tentry: {",
-      "\t\tvendor: \"./src/index.js$0\"",
-      "\t},",
-      "\tmode: \"${1|development,production|}\",",
-      "\tmodule: {",
-      "\t\trules: []",
-      "\t},",
-      "\tplugins: [],",
+      "\tmode: \"${3|development,production|}\",",
+      "\tentry: path.join(__dirname, '${4:./src/main.js}'), //入口js文件",
       "\toutput: {",
-      "\t\t$1filename: \"bundle.js\",",
-      "\t\tpath: path.resolve(__dirname,\"dist\")",
+      "\t\tfilename: '${5:bundle.js}',",
+      "\t\tpath: path.join(__dirname, '${6:./dist}')",
       "\t},",
+      "\tmodule: {",
+      "\t\trules: [$0]",
+      "\t},",
+      "\tplugins: [ htmlPlguin ],",
       "}"
     ],
-    "description": "template(For Loop)"
+    "description": "快捷生成基础webpack.config.js配置"
   },
-  "template(带注释)": {
+  "template(已配置模板)": {
     "prefix": ["wp4-template"],
     "body": [
       "const path = require('path')",
       "const webpack = require('webpack')",
       "const htmlWebpackPlugin = require('html-webpack-plugin') //自动将指定页面生存到内存,自动追加bundle.js到页面",
-      "",
       "module.exports = {",
-      "    mode: \"${1|development,production|}\",  //打包模式development开发模式, production发布模式",
+      "    mode: 'development',  //打包模式development开发模式, production发布模式",
       "    entry: { ",
       "        vendor: path.join(__dirname, './src/main.js')  //要使用 webpack 打包哪个文件",
       "    },",
       "    output: { // 输出文件相关的配置",
-      "        filename: \"bundle.js\", //指定输出的文件名称",
-      "        path: path.join(__dirname,\"./dist\") // 指定 打包好的文件，输出目录",
+      "        filename: 'bundle.js', //指定输出的文件名称",
+      "        path: path.join(__dirname,'./dist') // 指定 打包好的文件，输出目录",
       "    },",
       "    devServer: { // 这是配置 dev-server 命令参数",
       "        //  --open --port 3000 --contentBase src --hot",
@@ -51,18 +78,53 @@
       "    ],",
       "    module: { //配置 所有 第三方模块 加载器 ",
       "        rules: [ // 所有第三方模块的 匹配规则",
-      "            { test: /\\.css$/, use: ['style-loader', 'css-loader'] }, // 配置处理 .css 文件的第三方loader 规则",
-      "            { test: /\\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] }, //配置处理 .less 文件的第三方 loader 规则",
-      "            { test: /\\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] }, // 配置处理 .scss 文件的 第三方 loader 规则",
-      "            { test: /\\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?limit=7631&name=[hash:8]-[name].[ext]' }, // 处理 图片路径的 loader",
-      "             // limit 给定的值，是图片的大小，单位是 byte， 如果引用的 图片，大于或等于给定的 limit值，则不会被转为base64格式的字符串， 如果 图片小于给定的 limit 值，则会被转为 base64的字符串",
+      "            { test: /\\.css$/, use: ['style-loader', 'css-loader','postcss-loader'] }, // 处理 CSS 文件的 loader",
+      "            { test: /\\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] }, // 处理 less 文件的 loader",
+      "            { test: /\\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] }, // 处理 scss 文件的 loader",
       "            { test: /\\.(ttf|eot|svg|woff|woff2)$/, use: 'url-loader' }, // 处理 字体文件的 loader ",
-      "            { test: /\\.js$/, use: 'babel-loader', exclude: /node_modules/ }, // 配置 Babel 来转换高级的ES语法",
+      "            { test: /\\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?limit=7631&name=[hash:8]-[name].[ext]' }, // 处理 图片路径的 loader",
+      "            // limit 给定的值，是图片的大小，单位是 byte， 如果引用的 图片，大于或等于给定的 limit值，则不会被转为base64格式的字符串， 图片小于给定的 limit 值，则,会被转为 base64的字符串",
+      "            {",
+      "                test: /\\.js$/,",
+      "                use: {",
+      "                    loader: 'babel-loader',",
+      "                    options: {",
+      "                        presets: ['@babel/preset-env'],",
+      "                        plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties']",
+      "                    },",
+      "                },",
+      "                exclude: /node_modules/",
+      "            },",
+      "            { test: /\\.vue$/, use: 'vue-loader' } // 处理 .vue 文件的 loader",
       "        ]",
       "    }",
+      "}",
+      "//依赖包",
+      "基础配置依赖包",
+      "npm i webpack webpack-cli webpack-dev-server html-webpack-plugin -D",
+      "扩展loader依赖包",
+      "//  css + autoprefixer ",
+      "npm i style-loader css-loader -D",
+      "npm install postcss-loader autoprefixer -D",
+      "// less ",
+      "npm i less-loader less -D",
+      "// sass",
+      "npm i sass-loader node-sass -D",
+      "// url",
+      "npm i url-loader file-loader -D",
+      "// bable",
+      "npm install babel-loader @babel/core @babel/runtime -D",
+      "npm install @babel/preset-env @babel/plugin-transform-runtime @babel/plugin-proposal-class-properties -D",
+      "// vue",
+      "npm install vue-loader vue-template-compiler -D",
+      "// ================================",
+      "新建根目录文件postcss.config.js，将下列代码复制进去",
+      "const autoprefixer = require('autoprefixer');",
+      "module.exports = {",
+      "  plugins:[ autoprefixer ]",
       "}"
     ],
-    "description": ["template(带注释)"]
+    "description": ["(详细注释)生成基础webpack.config.js配置"]
   },
 
   "dev-server": {
@@ -117,37 +179,46 @@
     ]
   },
   "requireHTMLPlugin": {
-    "prefix": "wp4-requireHTMLPlugin",
+    "prefix": "wp4-Plugin-requireHTML",
     "body": ["const HTMLWebpackPlugin = require(\"html-webpack-plugin\");"]
   },
   "requireCleanPlugin": {
-    "prefix": "wp4-requireCleanPlugin",
+    "prefix": "wp4-Plugin-requireClean",
     "body": ["const CleanWebpackPlugin = require(\"clean-webpack-plugin\");"]
   },
   "cleanPlugin": {
-    "prefix": "wp4-clean-plugin",
+    "prefix": "wp4-plugin-clean",
     "body": ["new CleanWebpackPlugin([\"dist\"]),"]
   },
   "HTMLPlugin": {
-    "prefix": "wp4-html-plugin",
+    "prefix": "wp4-plugin-html",
     "body": [
       "const HTMLWebpackPlugin = require('html-webpack-plugin') //自动将指定页面生成到内存",
       "const htmlPlguin = new HTMLWebpackPlugin({ template: '${1:./src/index.html}', filename: '${2:index.html}' }) //需要挂载到plugins中"
-    ]
+    ],
+    "description": ["配置wp4-html-plugin (htmlPlguin需要挂载到plugins中)"]
+  },
+  "VuePlugin": {
+    "prefix": "wp4-plugin-vue",
+    "body": [
+      "const VueLoaderPlugin = require('vue-loader/lib/plugin'); //Vue",
+      "const vuePlugin = new VueLoaderPlugin();  //需要挂载到plugins中"
+    ],
+    "description": ["配置 vue (vuePlugin需要挂载到plugins中)"]
   },
 
   "babel-loader": {
     "prefix": "wp4-loader-babel",
     "body": [
-        "cnpm i babel-core babel-loader babel-plugin-transform-runtime -D",
-        "cnpm i babel-preset-env babel-preset-stage-0 -D",
+        "npm install babel-loader @babel/core @babel/runtime -D",
+        "npm install @babel/preset-env @babel/plugin-transform-runtime @babel/plugin-proposal-class-properties -D",
         "{",
         "\ttest: /\\.js$/,",
         "\tuse: {",
-        "\t\tloader: \"babel-loader\",",
+        "\t\tloader: 'babel-loader',",
         "\t\toptions: {",
-        "\t\t\tpresets: [\"stage-0\", \"${1|env,react|}\"],",
-        "\t\t\tplugins: [\"${0:transform-runtime}\"]",
+        "\t\t\tpresets: ['@babel/preset-env'],",
+        "\t\t\tplugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-class-properties']",
         "\t\t},",
         "\texclude: /node_modules/,",
         "\t}",
@@ -158,8 +229,14 @@
   "css-loader": {
     "prefix": "wp4-loader-css",
     "body": [
-      "cnpm i style-loader css-loader -D",
-      "{ test: /\\.css$/, use: ['style-loader', 'css-loader'] } // 处理 CSS 文件的 loader"
+      "//npm i style-loader css-loader -D",
+      "//npm install postcss-loader autoprefixer -D",
+      "{ test: /\\.css$/, use: ['style-loader', 'css-loader', 'postcss-loader'] }",
+      "新建根目录文件postcss.config.js，将下列代码复制进去",
+      "const autoprefixer = require('autoprefixer');",
+      "module.exports = {",
+      "  plugins:[ autoprefixer ]",
+      "}"
     ],
     "description": ["配置处理 CSS 文件的 loader 规则"]
   },
@@ -173,26 +250,20 @@
     ],
     "description": ["配置处理 ts 文件的 loader 规则"]
   },
-  "img-loader": {
-    "prefix": ["wp4-loader-url-img"],
+  "img/font-loader": {
+    "prefix": ["wp4-loader-url"],
     "body": [
-      "cnpm i url-loader file-loader --save-dev",
+      "npm i url-loader file-loader -D",
+      "{ test: /\\.(ttf|eot|svg|woff|woff2)$/, use: 'url-loader' }, // 处理 字体文件的 loader ",
       "{ test: /\\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?limit=7631&name=[hash:8]-[name].[ext]' }, // 处理 图片路径的 loader",
       "// limit 给定的值，是图片的大小，单位是 byte， 如果引用的 图片，大于或等于给定的 limit值，则不会被转为base64格式的字符串， 如果 图片小于给定的 limit 值，则会被转为 base64的字符串"
     ],
     "description": ["配置处理 图片 文件的 loader 规则"]
   },
-  "ttf-loader": {
-    "prefix": ["wp4-loader-ttf"],
-    "body": [
-      "{ test: /\\.(ttf|eot|svg|woff|woff2)$/, use: 'url-loader' }, // 处理 字体文件的 loader "
-    ],
-    "description": ["配置处理 字体图标 文件的 loader 规则"]
-  },
   "less-loader": {
     "prefix": ["wp4-loader-less"],
     "body": [
-        "cnpm i less-loader less -D",
+        "npm i less-loader less -D",
         "{ test: /\\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] }, // 处理 less 文件的 loader"
     ],
     "description": ["配置处理 less 文件的 loader 规则"]
@@ -200,7 +271,7 @@
   "scss-loader": {
     "prefix": ["wp4-loader-scss"],
     "body": [
-        "cnpm i sass-loader node-sass -D",
+        "npm i sass-loader node-sass -D",
         "{ test: /\\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] }, // 处理 scss 文件的 loader"
     ],
     "description": ["配置处理 scss 文件的 loader 规则"]
@@ -208,6 +279,7 @@
   "vue-loader": {
       "prefix": ["wp4-loader-vue"],
       "body": [
+        "npm install vue-loader vue-template-compiler -D",
         "{ test: /\\.vue$/, use: 'vue-loader' } // 处理 .vue 文件的 loader"
       ],
       "description": [

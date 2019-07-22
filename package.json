@@ -26,7 +26,7 @@
 		"webpack4",
 		"片段"
 	],
-	"version": "1.8.3",
+	"version": "1.8.4",
 	"publisher": "xuedao",
 	"engines": {
 		"vscode": "^1.27.0"
@@ -92,6 +92,10 @@
 			]
 		},
 		"snippets": [
+			{
+				"language": "vue",
+				"path": "./snippets/vue.json"
+			},
 			{
 				"language": "javascript",
 				"path": "./snippets/javascript.json"
