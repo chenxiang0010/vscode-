@@ -707,11 +707,6 @@
     ],
     "description": "showcases the lib Joi and how you can use it to validate incoming requests"
   },
-  "module.exports": {
-    "prefix": ["mde"],
-    "body": ["module.exports = {\n\t$0\n};\n"],
-    "description": ["将模块暴露出去,es6"]
-  },
   "导出": {
     "prefix": ["exports"],
     "body": ["exports"],

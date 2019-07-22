@@ -6,7 +6,7 @@
       "\tentry: {",
       "\t\tvendor: \"./src/index.js$0\"",
       "\t},",
-      "\tmode: \"development\",",
+      "\tmode: \"${1|development,production|}\",",
       "\tmodule: {",
       "\t\trules: []",
       "\t},",
@@ -27,6 +27,7 @@
       "const htmlWebpackPlugin = require('html-webpack-plugin') //自动将指定页面生存到内存,自动追加bundle.js到页面",
       "",
       "module.exports = {",
+      "    mode: \"${1|development,production|}\",  //打包模式development开发模式, production发布模式",
       "    entry: { ",
       "        vendor: path.join(__dirname, './src/main.js')  //要使用 webpack 打包哪个文件",
       "    },",
@@ -117,11 +118,11 @@
   },
   "requireHTMLPlugin": {
     "prefix": "wp4-requireHTMLPlugin",
-    "body": ["var HTMLWebpackPlugin = require(\"html-webpack-plugin\");"]
+    "body": ["const HTMLWebpackPlugin = require(\"html-webpack-plugin\");"]
   },
   "requireCleanPlugin": {
     "prefix": "wp4-requireCleanPlugin",
-    "body": ["var CleanWebpackPlugin = require(\"clean-webpack-plugin\");"]
+    "body": ["const CleanWebpackPlugin = require(\"clean-webpack-plugin\");"]
   },
   "cleanPlugin": {
     "prefix": "wp4-clean-plugin",
@@ -130,7 +131,8 @@
   "HTMLPlugin": {
     "prefix": "wp4-html-plugin",
     "body": [
-      "new HTMLWebpackPlugin({ title: \"$0Title\", template: \"./src/index.html\" }),"
+      "const HTMLWebpackPlugin = require('html-webpack-plugin') //自动将指定页面生成到内存",
+      "const htmlPlguin = new HTMLWebpackPlugin({ template: '${1:./src/index.html}', filename: '${2:index.html}' }) //需要挂载到plugins中"
     ]
   },
 
