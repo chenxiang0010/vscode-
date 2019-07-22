@@ -234,7 +234,7 @@
   },
   "安装vue.js插件": {
     "prefix": "Vue-Api-Use",
-    "body": ["Vue.use(${1:plugin}) //需要在调用 new Vue() 之前被调用 $0"],
+    "body": ["Vue.use(${1:plugin})$0"],
     "description": ["安装vue.js插件", "new Vue()"]
   },
   "全局混入": {

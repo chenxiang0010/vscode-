@@ -4,6 +4,10 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+## [1.8.5] 2019-07-21
+
+- 去除部分不合理的代码注释
+
 ## [1.8.4] 2019-07-21
 
 - 新增vue中模板  快捷键  `!`
