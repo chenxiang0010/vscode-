@@ -1,5 +1,4 @@
 {
-
   "vue": {
     "prefix": "newVue",
     "body": ["new Vue({", "\t$1", "})"],
@@ -277,21 +276,13 @@
   },
   "created": {
     "prefix": ["created"],
-    "body": [
-    "created"
-    ],
-    "description": [
-      "just a word", "created已创建"
-    ]
+    "body": ["created"],
+    "description": ["just a word", "created已创建"]
   },
   "mounted": {
     "prefix": ["mounted"],
-    "body": [
-    "mounted"
-    ],
-    "description": [
-      "just a word", "mounted已挂载"
-    ]
+    "body": ["mounted"],
+    "description": ["just a word", "mounted已挂载"]
   },
   "default": {
     "prefix": ["default"],
@@ -311,13 +302,14 @@
   "计算属性(用于计算总价,总数)": {
     "prefix": "computed",
     "body": [
-        "computed: {", 
-        "\t// 直接当做普通属性调用不加括号",
-        "\t// 任何data中数据变化立即重新计算",
-        "\t// 计算属性会缓存",
-        "\t$1", 
-        "\treturn ${2:必须retrun结果}", 
-        "},$0"],
+      "computed: {",
+      "\t// 直接当做普通属性调用不加括号",
+      "\t// 任何data中数据变化立即重新计算",
+      "\t// 计算属性会缓存",
+      "\t$1",
+      "\treturn ${2:必须retrun结果}",
+      "},$0"
+    ],
     "description": "计算属性(用于计算总价,总数)"
   },
   "Vue实例中的方法": {
@@ -361,9 +353,7 @@
   },
   "render": {
     "prefix": "render",
-    "body": [
-     "render: createElements => createElements(${1:组件名})"
-    ],
+    "body": ["render: createElements => createElements(${1:组件名})"],
     "description": "render渲染模板"
   },
   "renderError": {
@@ -718,13 +708,8 @@
   },
   "routes-path-component": {
     "prefix": ["routes-path-component"],
-    "body": [
-      "{path:'${1:/login}', component: ${2:login}}"
-    ],
-    "description": [
-    "routes配置",
-    "{path:'/login', component: login}"
-    ]
+    "body": ["{path:'${1:/login}', component: ${2:login}}"],
+    "description": ["routes配置", "{path:'/login', component: login}"]
   },
   "routes-path-component-parmas": {
     "prefix": ["routes-path-component-parmas"],
@@ -733,17 +718,15 @@
     ],
     "description": [
       "routes配置(含传参)",
-    "{path:'/login', component: login, props: route => ({ 'parmas': route.parmas, 'name': name })}"
+      "{path:'/login', component: login, props: route => ({ 'parmas': route.parmas, 'name': name })}"
     ]
   },
   "routes-path-component-children": {
     "prefix": ["routes-path-component-children"],
-    "body": [
-      "{path:'${1:/login}', component: ${2:login},children:[$0]}"
-    ],
+    "body": ["{path:'${1:/login}', component: ${2:login},children:[$0]}"],
     "description": [
-    "routes配置嵌套路由",
-    "{path:'/login', component: login, children: []}"
+      "routes配置嵌套路由",
+      "{path:'/login', component: login, children: []}"
     ]
   },
   "newVueRouter-temp": {
@@ -766,11 +749,26 @@
   "routerBeforeEach": {
     "prefix": "routerBeforeEach",
     "body": [
+      "//设置路由导航守卫",
       "${1:router}.beforeEach((to, from, next) => {",
-      "\t${2:// to and from are both route objects. must call `next`.}",
+      "\t${2:// to要去的页面 from从哪里来 next放行 }",
       "})$0"
     ],
-    "description": "router.beforeEach"
+    "description": "路由导航守卫"
+  },
+  "routerBeforeEach-template": {
+    "prefix": ["router-BeforeEach-template"],
+    "body": [
+      "// 挂载路由守卫",
+      "router.beforeEach((to, from, next) => {",
+      "  // to and from are both route objects. must call `next`.",
+      "  if (to.path === '/login') return next()",
+      "  const tokenStr = window.sessionStorage.getItem('token')",
+      "  if (!tokenStr) return next('/login')",
+      "  next()",
+      "})"
+    ],
+    "description": ["router-BeforeEach-template"]
   },
   "routerBeforeResolve": {
     "prefix": "routerBeforeResolve",
@@ -868,7 +866,7 @@
       "\t}}",
       "]$0"
     ],
-    "description": ["路由命名视图","<router-view name=''>添加相应name属性"]
+    "description": ["路由命名视图", "<router-view name=''>添加相应name属性"]
   },
   "beforeEnter": {
     "prefix": "beforeEnter",
@@ -1106,20 +1104,16 @@
       "  console.log(ret.data);",
       "})"
     ],
-    "description": [
-    "axios发送get/delete请求"
-    ]
+    "description": ["axios发送get/delete请求"]
   },
   "axios-post/put": {
     "prefix": ["axios-post/put"],
     "body": [
       "axios.${1|post,put|}('${2:axios}',{$0}).then((ret) => {",
-        "  console.log(ret.data);",
-        "})"
+      "  console.log(ret.data);",
+      "})"
     ],
-    "description": [
-    "axios发送post/put"
-    ]
+    "description": ["axios发送post/put"]
   },
   "axios-config-baseURL": {
     "prefix": ["axios-config-baseURL"],
@@ -1127,9 +1121,7 @@
       "// 配置请求的基准URL地址",
       "axios.defaults.baseURL = '${1:http://localhost:3000/}';"
     ],
-    "description": [
-    "axios配置请求的基准URL地址"
-    ]
+    "description": ["axios配置请求的基准URL地址"]
   },
   "axios-config-headers": {
     "prefix": ["axios-config-headers"],
@@ -1137,9 +1129,7 @@
       "// 配置请求头信息",
       "axios.defaults.headers['${1:token}'] = '${2:key}';"
     ],
-    "description": [
-    "axios-config-headers"
-    ]
+    "description": ["axios-config-headers"]
   },
   "axios-config-interceptors-request": {
     "prefix": ["axios-config-interceptors-request"],
@@ -1152,9 +1142,7 @@
       "  console.log(err)",
       "})"
     ],
-    "description": [
-    "axios设置请求拦截器"
-    ]
+    "description": ["axios设置请求拦截器"]
   },
   "axios-config-interceptors-response": {
     "prefix": ["axios-config-interceptors-response"],
@@ -1166,8 +1154,6 @@
       "  console.log(err)",
       "})"
     ],
-    "description": [
-    "axios设置响应拦截器"
-    ]
+    "description": ["axios设置响应拦截器"]
   }
 }

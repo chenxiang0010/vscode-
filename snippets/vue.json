@@ -1,32 +1,30 @@
 {
-    "vue模板结构": {
-        "prefix": ["!"],
-        "body": [
-            "<template>",
-            "  <div>",
-            "",
-            "  </div>",
-            "</template>",
-            "",
-            "<script>",
-            "export default {",
-            "  data() {",
-            "    return {",
-            "",
-            "    };",
-            "  },",
-            "  methods: {",
-            "",
-            "  },",
-            "};",
-            "</script>",
-            "",
-            "<style lang=\"less\" scoped>",
-            "",
-            "</style>"
-        ],
-        "description": [
-        "vue模板结构"
-        ]
-    }
+  "vue模板结构": {
+    "prefix": ["!"],
+    "body": [
+      "<template>",
+      "  <div>",
+      "       $0",
+      "  </div>",
+      "</template>",
+      "",
+      "<script>",
+      "export default {",
+      "  data() {",
+      "    return {",
+      "",
+      "    };",
+      "  },",
+      "  methods: {",
+      "",
+      "  },",
+      "};",
+      "</script>",
+      "",
+      "<style lang=\"less\" scoped>",
+      "",
+      "</style>"
+    ],
+    "description": ["vue模板结构"]
+  }
 }
