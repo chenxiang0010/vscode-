@@ -1135,10 +1135,10 @@
     "prefix": ["axios-config-interceptors-request"],
     "body": [
       "//axios设置请求拦截器",
-      "axios.interceptors.request.use(function(config) {",
-      "  config.headers.mytoken = 'nihao'; //设置响应头",
+      "axios.interceptors.request.use(config => {",
+      "  config.headers.${1:mytoken} = 'nihao'; //设置响应头",
       "  return config;",
-      "}, function(err){",
+      "}, err => {",
       "  console.log(err)",
       "})"
     ],
@@ -1148,9 +1148,9 @@
     "prefix": ["axios-config-interceptors-response"],
     "body": [
       "//axios设置响应拦截器",
-      "axios.interceptors.response.use(function(response) {",
+      "axios.interceptors.response.use(response => {",
       "  return = response.data //拦截处理响应结果，直接返回需要的数据",
-      "}, function(err){",
+      "}, err => {",
       "  console.log(err)",
       "})"
     ],
