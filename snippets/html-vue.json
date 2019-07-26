@@ -88,9 +88,7 @@
       "</body>",
       "</html>"
     ],
-    "description": [
-    "v-路由命名视图之经典布局"
-    ]
+    "description": ["v-路由命名视图之经典布局"]
   },
   "template": {
     "prefix": "template",
@@ -102,6 +100,18 @@
       "</template>"
     ],
     "description": "template标签结构"
+  },
+  "template作用域插槽": {
+    "prefix": "template",
+    "body": [
+      "<template  slot-scope=\"scope\">",
+      "\t<${1:div}$2>",
+      "\t\t<!-- 获取一行数据 -->",
+      "\t\t{{ scope.row }}",
+      "\t</${1:div}>",
+      "</template>"
+    ],
+    "description": "template作用域插槽"
   },
   "template模板结构": {
     "prefix": ["template"],

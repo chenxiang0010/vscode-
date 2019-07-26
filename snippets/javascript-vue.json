@@ -1106,6 +1106,36 @@
     ],
     "description": ["axios发送get/delete请求"]
   },
+  "this.$http发axios(get/delete)": {
+    "prefix": ["this.$http.get/delete"],
+    "body": [
+      "this.$$http.${1|get,delete|}('${2:路径}', {",
+      "  params: {$0}",
+      "})"
+    ],
+    "description": ["this.$http发axios(get/delete)"]
+  },
+  "(await)this.$http发axios(get/delete)": {
+    "prefix": ["this.$http.get/delete-await"],
+    "body": [
+      "const { data: res } = await this.$$http.${1|get,delete|}('${2:路径}', {",
+      "  params: {$0}",
+      "})"
+    ],
+    "description": ["(await)this.$http发axios(get/delete)"]
+  },
+  "this.$http发axios(post/put)": {
+    "prefix": ["this.$http.post/put"],
+    "body": ["this.$$http.${1|post,put|}('${2:路径}', {$3})"],
+    "description": ["this.$http发axios(post/put)"]
+  },
+  "(await)this.$http发axios(post/put)": {
+    "prefix": ["this.$http.post/put"],
+    "body": [
+      "const { data: res } = await this.$$http.${1|post,put|}('${2:路径}', {$3})"
+    ],
+    "description": ["(await)this.$http发axios(post/put)"]
+  },
   "axios-post/put": {
     "prefix": ["axios-post/put"],
     "body": [
@@ -1114,6 +1144,30 @@
       "})"
     ],
     "description": ["axios发送post/put"]
+  },
+  "axios注册到全局原型链": {
+    "prefix": ["axios-config"],
+    "body": [
+      "//导入axios",
+      "import axios from 'axios'",
+      "// 配置请求的基准URL地址",
+      "axios.defaults.baseURL = '${1:http://127.0.0.1:8888/}'",
+      "// axios设置请求拦截器,设置响应头token",
+      "axios.interceptors.request.use(",
+      "  config => {",
+      "    config.headers.${2:token} = ${3:window.sessionStorage.getItem('token')} //每次发送请求之前自动将在session中的token提取出来当做响应头header",
+      "    return config",
+      "  },",
+      "  err => {",
+      "    console.log(err)",
+      "  }",
+      ")",
+      "//把axios注册到Vue",
+      "Vue.prototype.$$http = axios",
+      "//关闭vue在console中的默认提示",
+      "Vue.config.productionTip = false"
+    ],
+    "description": ["axios注册模板"]
   },
   "axios-config-baseURL": {
     "prefix": ["axios-config-baseURL"],

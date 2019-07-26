@@ -1,0 +1,13 @@
+{
+  "el-表单二次验证": {
+    "prefix": ["el-form-validate"],
+    "body": [
+      "this.$$refs.${1:form标签中设置的ref=\"自定义\"}.validate(async valid => {",
+      "\tif (!valid) return",
+      "\t//如果验证通过执行下面代码",
+      "\t${0:二次验证通过执行代码(ajax)}",
+      "})"
+    ],
+    "description": ["el-表单二次验证"]
+  }
+}

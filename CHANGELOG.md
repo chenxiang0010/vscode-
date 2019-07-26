@@ -4,6 +4,13 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+
+## [1.8.7] 2019-07-26
+
+- 更新使用说明文档
+- 新增axios一键设置 `axios-config`
+- 新增this.$http.get() 以及 async 发送axios 发送请求模板 `this.$http`
+
 ## [1.8.6] 2019-07-24
 
 - 新增路由守卫模板片段 键入`router-BeforeEach-template`

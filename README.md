@@ -54,9 +54,81 @@ Snippets-for-mui: [Mui框架代码补全](https://marketplace.visualstudio.com/i
 
 有时候你也可以输入中文 , `自动补全`
 
-### **vue**
+<!-- 模板 -->
+<!-- <details>
+  <summary style="font-size:30px;font-weight: bold;">iview </summary>
 
-这个部分单独做说明
+</details> -->
+
+<details>
+  <summary style="font-size:30px;font-weight: bold;">javaScript指南</summary>
+
+| 内容                                 |     快捷键 |
+| :----------------------------------- | ---------: |
+| 显示全部                             |         js |
+| node类                               |       node |
+| module.exports                       |         me |
+| 淘宝flexble.js自适应                 |        csh |
+| 清除h5 click300ms延时                |        csh |
+| 笔记算法用法等                       |       help |
+| 获取类                               |        get |
+| 常用正则表达式                       |      zzbds |
+| 存储                                 |    storage |
+| touch手指触摸事件                    |      touch |
+| 物理像素比                           |        dpr |
+| 对象类                               |         dx |
+| 单词                                 |         dc |
+| location相关                         |   location |
+| 清除类                               |      clear |
+| 定时器                               |        dsq |
+| 事件                                 |         sj |
+| 鼠标事件                             |      mouse |
+| 键盘事件                             |        key |
+| 选择元素(以及元素操作)               |        dom |
+| 坐标                                 |         zb |
+| 创建                                 |     create |
+| 设置                                 |        set |
+| 删除                                 |        del |
+| 克隆                                 |      clone |
+| 添加                                 |        add |
+| 阻止(禁用)                           |       stop |
+| 封装的几个函数                       |         hs |
+| 兼容处理的函数                       |         jr |
+| 反选按钮                             |         fx |
+| 全选按钮                             |         qx |
+| 排序                                 |         px |
+| 数组去重                             |         qc |
+| 构造函数                             |       gzhs |
+| 随机整数                             |       sjqz |
+| 获取时间                             |       time |
+| 倒计时                               |        djs |
+| BOM加载事件                          |       load |
+| 动画函数                             |         dh |
+| 拖动元素                             |         td |
+| 放大镜                               |        fdj |
+| 根据浏览器不同实现跳转               |         tz |
+| 导航栏鼠标动画效果                   |        nav |
+| 移动端拖动元素                       |         td |
+| 轮播图(移动端)                       |        lbt |
+| 返回顶部函数                         |     goback |
+| 判断                                 |         is |
+| 自调用函数                           |          ! |
+| 改变this指向                         | changethis |
+| 原型继承                             |       yxjc |
+| 图片即时预览                         |         yl |
+| 状态码                               |        ztm |
+| 创建异步对象                         |     create |
+| ajax相关                             |       ajax |
+| 监听响应状态                         |     listen |
+| 判断服务器成功响应且数据解析完成     |         is |
+| 异步对象发送GET请求                  |        xhr |
+| 服务器返回值                         |        res |
+| 服务器成功响应且数据解析完毕可以使用 |     ajaxon |
+
+</details>
+
+<details>
+  <summary style="font-size:30px;font-weight: bold;">vue指南</summary>
 
 > 基于最新的 Vue 2 的 API 添加了Code Snippets,以及部分常用代码块模板. 沿用vue 2 Snippets插件使用方法
 
@@ -80,7 +152,7 @@ As shown in the table below, snippet `vmData` has body like `${this, vm}.$data` 
 | `axios-config-baseURL`               | 配置请求的基准URL地址                                              |
 | `axios-config-headers`               | 配置请求头信息                                                     |
 | `axios-config-interceptors-request`  | axios设置请求拦截器                                                |
-| `axios-config-interceptors-response` | axios设置响应拦截器                                                 |
+| `axios-config-interceptors-response` | axios设置响应拦截器                                                |
 | `import`                             | `import ... from ...`                                              |
 | `newVue`                             | `new Vue({...})`                                                   |
 | `VueConfigSilent`                    | `Vue.config.silent = true`                                         |
@@ -228,9 +300,10 @@ As shown in the table below, snippet `vmData` has body like `${this, vm}.$data` 
 | `nuxtLink`  | `<nuxt-link to=""/>`    |
 | `asyncData` | `asyncData() {}`        |
 
-### html
+</details>
 
-#### **Bootstrap代码片段**
+<details>
+  <summary style="font-size:30px;font-weight: bold;">Bootstrap3指南</summary>
 
 此部分插件食用说明单独做成阅读文档    [详细说明地址1](https://gitee.com/qq34347476/bootstrap-3.3.2-dist) , [详细说明地址2](https://github.com/qq34347476/bootstrap-3.3.2-dist)
 
@@ -242,7 +315,10 @@ bootstrap3参考官网文档[bootstrap3文档](https://v3.bootcss.com/)
 
 再举个栗子:如果你想用栏栅系统 输入`b35`,`b37`，就可以分出5份跟7份的一排格栅
 
-### **css/less**
+</details>
+
+<details>
+  <summary style="font-size:30px;font-weight: bold;">css/less指南</summary>
 
 | 内容          |    快捷键 |
 | :------------ | --------: |
@@ -255,9 +331,10 @@ bootstrap3参考官网文档[bootstrap3文档](https://v3.bootcss.com/)
 | flex相关属性  |      flex |
 | @media        |         @ |
 
-### javascript
+</details>
 
-### **webpack**
+<details>
+  <summary style="font-size:30px;font-weight: bold;">webpack指南</summary>
 
 前缀wp4,即 想查找所有webpack相关代码，键入 `wp4`
 
@@ -280,7 +357,10 @@ bootstrap3参考官网文档[bootstrap3文档](https://v3.bootcss.com/)
 - wp4-html-plugin
 - wp4-resolve
 
-#### **nodeJS详解姿势**
+</details>
+
+<details>
+  <summary style="font-size:30px;font-weight: bold;">nodeJS指南</summary>
 
 > 快捷键 nodejs查看所有
 
@@ -307,69 +387,10 @@ npm 常用资源包 键入`npm`
 - node-async-await，使用async / await
 - node-express-schema-validation，为express添加模式验证，[点击这里](https://github.com/hapijs/joi)可以阅读有关模式验证用法的更多信息
 
-| 内容                                 |     快捷键 |
-| :----------------------------------- | ---------: |
-| 显示全部                             |         js |
-| node类                               |       node |
-| module.exports                       |         me |
-| 淘宝flexble.js自适应                 |        csh |
-| 清除h5 click300ms延时                |        csh |
-| 笔记算法用法等                       |       help |
-| 获取类                               |        get |
-| 常用正则表达式                       |      zzbds |
-| 存储                                 |    storage |
-| touch手指触摸事件                    |      touch |
-| 物理像素比                           |        dpr |
-| 对象类                               |         dx |
-| 单词                                 |         dc |
-| location相关                         |   location |
-| 清除类                               |      clear |
-| 定时器                               |        dsq |
-| 事件                                 |         sj |
-| 鼠标事件                             |      mouse |
-| 键盘事件                             |        key |
-| 选择元素(以及元素操作)               |        dom |
-| 坐标                                 |         zb |
-| 创建                                 |     create |
-| 设置                                 |        set |
-| 删除                                 |        del |
-| 克隆                                 |      clone |
-| 添加                                 |        add |
-| 阻止(禁用)                           |       stop |
-| 封装的几个函数                       |         hs |
-| 兼容处理的函数                       |         jr |
-| 反选按钮                             |         fx |
-| 全选按钮                             |         qx |
-| 排序                                 |         px |
-| 数组去重                             |         qc |
-| 构造函数                             |       gzhs |
-| 随机整数                             |       sjqz |
-| 获取时间                             |       time |
-| 倒计时                               |        djs |
-| BOM加载事件                          |       load |
-| 动画函数                             |         dh |
-| 拖动元素                             |         td |
-| 放大镜                               |        fdj |
-| 根据浏览器不同实现跳转               |         tz |
-| 导航栏鼠标动画效果                   |        nav |
-| 移动端拖动元素                       |         td |
-| 轮播图(移动端)                       |        lbt |
-| 返回顶部函数                         |     goback |
-| 判断                                 |         is |
-| 自调用函数                           |          ! |
-| 改变this指向                         | changethis |
-| 原型继承                             |       yxjc |
-| 图片即时预览                         |         yl |
-| 状态码                               |        ztm |
-| 创建异步对象                         |     create |
-| ajax相关                             |       ajax |
-| 监听响应状态                         |     listen |
-| 判断服务器成功响应且数据解析完成     |         is |
-| 异步对象发送GET请求                  |        xhr |
-| 服务器返回值                         |        res |
-| 服务器成功响应且数据解析完毕可以使用 |     ajaxon |
+</details>
 
-### **jquery**
+<details>
+  <summary style="font-size:30px;font-weight: bold;">jquery指南</summary>
 
 | 内容     | 快捷键 |
 | :------- | -----: |
@@ -377,7 +398,10 @@ npm 常用资源包 键入`npm`
 
 如果你需要使用ajax,那么就是`jqajax`
 
-### **php**
+</details>
+
+<details>
+  <summary style="font-size:30px;font-weight: bold;">php指南</summary>
 
 | 内容         | 快捷键 |
 | :----------- | -----: |
@@ -395,6 +419,8 @@ npm 常用资源包 键入`npm`
 | 修改类       | change |
 | 执行类(使用) |    use |
 | 封装的函数   |     hs |
+
+</details>
 
 ## Known Issues
 
