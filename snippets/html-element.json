@@ -300,8 +300,8 @@
       "  v-model=\"${1|绑定一个空数组,value|}\"",
       "  :options=\"${2:渲染成级联的数据对象}\"",
       "  ${3|可清空,clearable|}",
-      "  ${4|仅显示最后一级,show-all-levels=\"false\"|}",
-      "  ${5|hover 触发子菜单(默认点击选中),:props=\"{ expandTrigger: 'hover' }\"|}",
+      "  ${4|仅显示最后一级,:show-all-levels=\"false\"|}",
+      "  ${5|配置级联选择框,:props=\"cascaderProps\"|}",
       "  @change=\"handleChange\"></el-cascader>"
     ],
     "description": ["cascader级联选择器"]
@@ -324,5 +324,50 @@
       "<el-slider v-model=\"value3\" ${1|禁用tooltip提示,:show-tooltip=\"false\"|} ${2|设置步长,:step=\"10\"|} ${3|显示步长断点,show-stops|} ${4|开启范围选择(v-model绑定的为数组),range :max=\"10\"|} ${5|竖向,vertical height=\"200px\"|} ${6|展示标记,:marks=\"marks\"|}></el-slider>"
     ],
     "description": ["el-slider滑块"]
+  },
+  "el-tabs": {
+    "prefix": ["el-tabs"],
+    "body": [
+      "<el-tabs v-model=\"${1|绑定激活项（字符串值为tab-pane中的name）,activeName|}\"",
+      "         @tab-click=\"${2|传入activeName值,tabHandleClick|}\">",
+      "  <el-tab-pane label=\"tab1名字\"",
+      "               name=\"first\">动态参数</el-tab-pane>",
+      "  <el-tab-pane label=\"tab2名字\"",
+      "               name=\"second\">静态属性</el-tab-pane>",
+      "</el-tabs>"
+    ],
+    "description": ["el-tabs"]
+  },
+  "el-dialog": {
+    "prefix": ["el-dialog"],
+    "body": [
+      "<el-dialog title=\"添加\"",
+      "           :visible.sync=\"dialogVisible\"",
+      "           width=\"50%\">",
+      "   <span>这是一个dialog</span>",
+      "  <span slot=\"footer\"",
+      "        class=\"dialog-footer\">",
+      "    <el-button @click=\"dialogVisible = false\">取 消</el-button>",
+      "    <el-button type=\"primary\"",
+      "               @click=\"dialogVisible = false\">确 定</el-button>",
+      "  </span>",
+      "</el-dialog>"
+    ],
+    "description": ["el-dialog"]
+  },
+  "el-table": {
+    "prefix": ["el-table"],
+    "body": [
+      "<el-table :data=\"${1|绑定的数据,tableData|}\"",
+      "          style=\"width: 100%\">",
+      "  <el-table-column type=\"${2|设置类型,expand,index,selection|}\"> ",
+      "  </el-table-column>",
+      "  <el-table-column prop=\"${3:渲染绑定的表数据tableDate中的哪个数据}\"",
+      "                   label=\"${4:显示名字}\"",
+      "                   width=\"180\">",
+      "  </el-table-column>",
+      "</el-table>"
+    ],
+    "description": ["el-table"]
   }
 }

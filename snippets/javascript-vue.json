@@ -1109,7 +1109,7 @@
   "this.$http发axios(get/delete)": {
     "prefix": ["this.$http.get/delete"],
     "body": [
-      "this.$$http.${1|get,delete|}('${2:路径}', {",
+      "this.$$http.${1|get,delete|}(`${2:路径}`, {",
       "  params: {$0}",
       "})"
     ],
@@ -1118,7 +1118,7 @@
   "(await)this.$http发axios(get/delete)": {
     "prefix": ["this.$http.get/delete-await"],
     "body": [
-      "const { data: res } = await this.$$http.${1|get,delete|}('${2:路径}', {",
+      "const { data: res } = await this.$$http.${1|get,delete|}(`${2:路径}`, {",
       "  params: {$0}",
       "})"
     ],
@@ -1126,20 +1126,20 @@
   },
   "this.$http发axios(post/put)": {
     "prefix": ["this.$http.post/put"],
-    "body": ["this.$$http.${1|post,put|}('${2:路径}', {$3})"],
+    "body": ["this.$$http.${1|post,put|}(`${2:路径}`, {$3})"],
     "description": ["this.$http发axios(post/put)"]
   },
   "(await)this.$http发axios(post/put)": {
     "prefix": ["this.$http.post/put"],
     "body": [
-      "const { data: res } = await this.$$http.${1|post,put|}('${2:路径}', {$3})"
+      "const { data: res } = await this.$$http.${1|post,put|}(`${2:路径}`, {$3})"
     ],
     "description": ["(await)this.$http发axios(post/put)"]
   },
   "axios-post/put": {
     "prefix": ["axios-post/put"],
     "body": [
-      "axios.${1|post,put|}('${2:axios}',{$0}).then((ret) => {",
+      "axios.${1|post,put|}(`${2:axios}`,{$0}).then((ret) => {",
       "  console.log(ret.data);",
       "})"
     ],

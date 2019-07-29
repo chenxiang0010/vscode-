@@ -17,6 +17,7 @@
       "    label: '${1:显示的名字}',",
       "    value: '${2:提交时对应的唯一Id值}',",
       "    children: '${3:对应子选项}'",
+      "    expandTrigger: 'hover' //hover 触发子菜单",
       "}"
     ],
     "description": ["el-cascader-props配置"]
