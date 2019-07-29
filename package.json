@@ -24,9 +24,10 @@
     "vue2",
     "webpack",
     "webpack4",
-    "片段"
+    "片段",
+    "element-ui"
   ],
-  "version": "1.8.7",
+  "version": "1.8.8",
   "publisher": "xuedao",
   "engines": {
     "vscode": "^1.27.0"
@@ -119,6 +120,10 @@
       {
         "language": "html",
         "path": "./snippets/html-bootstrap3.json"
+      },
+      {
+        "language": "html",
+        "path": "./snippets/html-element.json"
       },
       {
         "language": "css",

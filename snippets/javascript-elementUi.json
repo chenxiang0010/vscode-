@@ -9,5 +9,16 @@
       "})"
     ],
     "description": ["el-表单二次验证"]
+  },
+  "el-cascader-props配置": {
+    "prefix": ["el-cascader-props"],
+    "body": [
+      "cascaderProps: {",
+      "    label: '${1:显示的名字}',",
+      "    value: '${2:提交时对应的唯一Id值}',",
+      "    children: '${3:对应子选项}'",
+      "}"
+    ],
+    "description": ["el-cascader-props配置"]
   }
 }

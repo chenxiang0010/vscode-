@@ -303,6 +303,13 @@ As shown in the table below, snippet `vmData` has body like `${this, vm}.$data` 
 </details>
 
 <details>
+  <summary style="font-size:30px;font-weight: bold;">element指南</summary>
+
+  > 配合element-helper 使用更方便
+
+</details>
+
+<details>
   <summary style="font-size:30px;font-weight: bold;">Bootstrap3指南</summary>
 
 此部分插件食用说明单独做成阅读文档    [详细说明地址1](https://gitee.com/qq34347476/bootstrap-3.3.2-dist) , [详细说明地址2](https://github.com/qq34347476/bootstrap-3.3.2-dist)

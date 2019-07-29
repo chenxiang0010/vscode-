@@ -1,0 +1,328 @@
+{
+  "el-tree": {
+    "prefix": ["el-tree"],
+    "body": [
+      "<!-- 树形控件 -->",
+      "<el-tree :data=\"${1:树形控件展示数据}\"",
+      "        :props=\"${2:配置树中每层对应树中哪个数据(单独建array)}\"",
+      "        node-key=\"${3|每个树节点对应的唯一值|id}\"",
+      "        ${3|显示复选框,show-checkbox|}",
+      "        ${4|展开树,default-expand-all|}",
+      "        >",
+      " </el-tree>"
+    ],
+    "description": ["el-tree树形控件"]
+  },
+  "el-row(行)": {
+    "prefix": ["el-row"],
+    "body": [
+      "  <el-row ${1:type=\"flex\"} ${2|justify=\"\",align=\"\"|} >",
+      "      <el-col :span=\"\"></el-col>",
+      "  </el-row>"
+    ],
+    "description": ["el-row(行)"]
+  },
+  "el-col-1": {
+    "prefix": ["el-col-1"],
+    "body": ["<el-col :span=\"1\"></el-col>"],
+    "description": ["el-col-1"]
+  },
+  "el-col-2": {
+    "prefix": ["el-col-2"],
+    "body": ["<el-col :span=\"2\"></el-col>"],
+    "description": ["el-col-2"]
+  },
+  "el-col-3": {
+    "prefix": ["el-col-3"],
+    "body": ["<el-col :span=\"3\"></el-col>"],
+    "description": ["el-col-3"]
+  },
+  "el-col-4": {
+    "prefix": ["el-col-4"],
+    "body": ["<el-col :span=\"4\"></el-col>"],
+    "description": ["el-col-4"]
+  },
+  "el-col-5": {
+    "prefix": ["el-col-5"],
+    "body": ["<el-col :span=\"5\"></el-col>"],
+    "description": ["el-col-5"]
+  },
+  "el-col-6": {
+    "prefix": ["el-col-6"],
+    "body": ["<el-col :span=\"6\"></el-col>"],
+    "description": ["el-col-6"]
+  },
+  "el-col-7": {
+    "prefix": ["el-col-7"],
+    "body": ["<el-col :span=\"7\"></el-col>"],
+    "description": ["el-col-7"]
+  },
+  "el-col-8": {
+    "prefix": ["el-col-8"],
+    "body": ["<el-col :span=\"8\"></el-col>"],
+    "description": ["el-col-8"]
+  },
+  "el-col-9": {
+    "prefix": ["el-col-9"],
+    "body": ["<el-col :span=\"9\"></el-col>"],
+    "description": ["el-col-9"]
+  },
+  "el-col-10": {
+    "prefix": ["el-col-10"],
+    "body": ["<el-col :span=\"10\"></el-col>"],
+    "description": ["el-col-10"]
+  },
+  "el-col-11": {
+    "prefix": ["el-col-11"],
+    "body": ["<el-col :span=\"11\"></el-col>"],
+    "description": ["el-col-11"]
+  },
+  "el-col-12": {
+    "prefix": ["el-col-12"],
+    "body": ["<el-col :span=\"12\"></el-col>"],
+    "description": ["el-col-12"]
+  },
+  "el-col-13": {
+    "prefix": ["el-col-13"],
+    "body": ["<el-col :span=\"13\"></el-col>"],
+    "description": ["el-col-13"]
+  },
+  "el-col-14": {
+    "prefix": ["el-col-14"],
+    "body": ["<el-col :span=\"14\"></el-col>"],
+    "description": ["el-col-14"]
+  },
+  "el-col-15": {
+    "prefix": ["el-col-15"],
+    "body": ["<el-col :span=\"15\"></el-col>"],
+    "description": ["el-col-15"]
+  },
+  "el-col-16": {
+    "prefix": ["el-col-16"],
+    "body": ["<el-col :span=\"16\"></el-col>"],
+    "description": ["el-col-16"]
+  },
+  "el-col-17": {
+    "prefix": ["el-col-17"],
+    "body": ["<el-col :span=\"17\"></el-col>"],
+    "description": ["el-col-17"]
+  },
+  "el-col-18": {
+    "prefix": ["el-col-18"],
+    "body": ["<el-col :span=\"18\"></el-col>"],
+    "description": ["el-col-18"]
+  },
+  "el-col-19": {
+    "prefix": ["el-col-19"],
+    "body": ["<el-col :span=\"19\"></el-col>"],
+    "description": ["el-col-19"]
+  },
+  "el-col-20": {
+    "prefix": ["el-col-20"],
+    "body": ["<el-col :span=\"20\"></el-col>"],
+    "description": ["el-col-20"]
+  },
+  "el-col-21": {
+    "prefix": ["el-col-21"],
+    "body": ["<el-col :span=\"21\"></el-col>"],
+    "description": ["el-col-21"]
+  },
+  "el-col-22": {
+    "prefix": ["el-col-22"],
+    "body": ["<el-col :span=\"22\"></el-col>"],
+    "description": ["el-col-22"]
+  },
+  "el-col-23": {
+    "prefix": ["el-col-23"],
+    "body": ["<el-col :span=\"23\"></el-col>"],
+    "description": ["el-col-23"]
+  },
+  "el-col-24": {
+    "prefix": ["el-col-24"],
+    "body": ["<el-col :span=\"24\"></el-col>"],
+    "description": ["el-col-24"]
+  },
+  "el-button": {
+    "prefix": ["el-button"],
+    "body": [
+      "<el-button type=\"${1|primary,success,info,warning,danger|}\" ${2|浅色,plain|} ${3|样式(圆角/圆),round,circle|} ${4:disabled}>$0</el-button>"
+    ],
+    "description": ["el-button"]
+  },
+  "el-link": {
+    "prefix": ["el-link"],
+    "body": [
+      "<el-link href=\"#\" type=\"${1|primary,success,info,warning,danger|}\" ${2:disabled} ${3|无下划线,:underline=\"false\"|} ${4|带文字前图标,icon=\"el-icon-edit\"|}>$0</el-link>"
+    ],
+    "description": ["el-link"]
+  },
+  "el-radio": {
+    "prefix": ["el-radio"],
+    "body": [
+      "<el-radio v-model=\"$1\" label=\"${2:str/num/bool}\" ${3|带边框,border|} @change=\"${4}\">${0:备选项}</el-radio>"
+    ],
+    "description": ["单选框"]
+  },
+  "el-radio-group": {
+    "prefix": ["el-radio-group"],
+    "body": [
+      "<el-radio-group v-model=\"radio\" ${1|选中时的文本颜色,text-color=\"\"|} ${2|选中时的填充色和边框,fill=\"\"|} ${3:@change=\"\"}>",
+      "  <el-radio :label=\"1\">备选项</el-radio>",
+      "  <el-radio :label=\"2\">备选项</el-radio>",
+      "  <el-radio :label=\"3\">备选项</el-radio>",
+      "</el-radio-group>"
+    ],
+    "description": ["单选组"]
+  },
+  "el-radio-button": {
+    "prefix": ["el-radio-button"],
+    "body": [
+      "<el-radio-group v-model=\"radio\" size=\"${1|medium,mini,small|}\">",
+      "    <el-radio-button label=\"上海\"></el-radio-button>",
+      "    <el-radio-button label=\"北京\"></el-radio-button>",
+      "    <el-radio-button label=\"广州\"></el-radio-button>",
+      "    <el-radio-button label=\"深圳\"></el-radio-button>",
+      "</el-radio-group>"
+    ],
+    "description": ["btn样式的单选框"]
+  },
+  "el-checkbox-group": {
+    "prefix": ["el-checkbox-group"],
+    "body": [
+      "<el-checkbox-group v-model=\"checkList\" ${1|最大值最小值,:min=\"1\" :max=\"2\"|}>",
+      "  <el-checkbox label=\"复选框 A\"></el-checkbox>",
+      "  <el-checkbox label=\"复选框 B\"></el-checkbox>",
+      "  <el-checkbox label=\"复选框 C\"></el-checkbox>",
+      "  <el-checkbox label=\"禁用\" disabled></el-checkbox>",
+      "  <el-checkbox label=\"选中且禁用\" disabled></el-checkbox>",
+      "</el-checkbox-group>"
+    ],
+    "description": ["复选框组"]
+  },
+  "el-input": {
+    "prefix": ["el-input"],
+    "body": [
+      "<el-input v-model=\"input\" placeholder=\"请输入内容\" ${1|可清空,clearable|} ${2|密码框,show-password|} ${3|首尾显示图标,prefix-icon=\"el-icon-search\",suffix-icon=\"el-icon-date\"|}></el-input>"
+    ],
+    "description": ["el-input"]
+  },
+  "el-textarea": {
+    "prefix": ["el-textarea"],
+    "body": [
+      "<el-input",
+      "  type=\"textarea\"",
+      "  :rows=\"2\"",
+      "  $1{|根据文字内容自适应,autosize,:autosize=\"{ minRows: 2, maxRows: 4}\"|}",
+      "  placeholder=\"请输入内容\"",
+      "  v-model=\"textarea\">",
+      "</el-input>"
+    ],
+    "description": ["el-textarea"]
+  },
+  "el-input-number": {
+    "prefix": ["el-input-number"],
+    "body": [
+      "<template>",
+      "  <el-input-number v-model=\"num\"",
+      "                   @change=\"handleChange\"",
+      "                   size=\"${1|medium,small,mini|}\"",
+      "                   :min=\"1\"",
+      "                   :max=\"10\"",
+      "                   ${2|步长(number),:step=\"2\"|}",
+      "                   ${3|严格步数,step-strictly|}",
+      "                   ${4|数值精度,不能小于步长小数位数(小数几位),:precision=\"2\"|}",
+      "                   ${5|按钮位置,controls-position=\"right\"|}",
+      "                   label=\"描述文字\"></el-input-number>",
+      "</template>"
+    ],
+    "description": ["计数器"]
+  },
+  "el-select": {
+    "prefix": ["el-select"],
+    "body": [
+      "<template>",
+      "  <el-select v-model=\"${1:选中结果}\" placeholder=\"请选择\">",
+      "    <el-option",
+      "      v-for=\"item in ${2:option}\"",
+      "      :label=\"item.label\"",
+      "      :value=\"item.value\"",
+      "      ${3|禁用项(option中添加disabled: true),:disabled=\"item.disabled\"|}",
+      "      ${4|可清空单选,clearable|}",
+      "      :key=\"item.value\">",
+      "    </el-option>",
+      "  </el-select>",
+      "</template>"
+    ],
+    "description": ["Select 选择器"]
+  },
+  "el-select-multiple": {
+    "prefix": ["el-select-mutiple"],
+    "body": [
+      "<el-select v-model=\"value1\"",
+      "           multiple",
+      "           ${1|输入文字来创建新的条目,allow-create filterable|}",
+      "           ${2|回车选中当前选项,default-first-option|}",
+      "           placeholder=\"请选择\">",
+      "  <el-option v-for=\"item in options\"",
+      "             :key=\"item.value\"",
+      "             :label=\"item.label\"",
+      "             :value=\"item.value\">",
+      "  </el-option>",
+      "</el-select>"
+    ],
+    "description": ["el-select-multiple多选"]
+  },
+  "el-select-group": {
+    "prefix": ["el-select-group"],
+    "body": [
+      "<template>",
+      "  <el-select v-model=\"value\" placeholder=\"请选择\">",
+      "    <el-option-group",
+      "      v-for=\"group in options\"",
+      "      :key=\"group.label\"",
+      "      :label=\"${1|分组名,group.label|}\">",
+      "      <el-option",
+      "        v-for=\"item in group.options\"",
+      "        :key=\"item.value\"",
+      "        :label=\"${2|分组名,item.label|}\"",
+      "        :value=\"item.value\">",
+      "      </el-option>",
+      "    </el-option-group>",
+      "  </el-select>",
+      "</template>"
+    ],
+    "description": ["el-select-group分组"]
+  },
+  "el-cascader": {
+    "prefix": ["el-cascader"],
+    "body": [
+      "<el-cascader",
+      "  v-model=\"${1|绑定一个空数组,value|}\"",
+      "  :options=\"${2:渲染成级联的数据对象}\"",
+      "  ${3|可清空,clearable|}",
+      "  ${4|仅显示最后一级,show-all-levels=\"false\"|}",
+      "  ${5|hover 触发子菜单(默认点击选中),:props=\"{ expandTrigger: 'hover' }\"|}",
+      "  @change=\"handleChange\"></el-cascader>"
+    ],
+    "description": ["cascader级联选择器"]
+  },
+  "el-switch": {
+    "prefix": ["el-switch"],
+    "body": [
+      "<el-switch",
+      "  v-model=\"${1:boolen}\"",
+      "  ${2|禁用,disabled|}",
+      "  active-color=\"#13ce66\"",
+      "  inactive-color=\"#ff4949\">",
+      "</el-switch>"
+    ],
+    "description": ["el-switch开关"]
+  },
+  "el-slider": {
+    "prefix": ["el-slider"],
+    "body": [
+      "<el-slider v-model=\"value3\" ${1|禁用tooltip提示,:show-tooltip=\"false\"|} ${2|设置步长,:step=\"10\"|} ${3|显示步长断点,show-stops|} ${4|开启范围选择(v-model绑定的为数组),range :max=\"10\"|} ${5|竖向,vertical height=\"200px\"|} ${6|展示标记,:marks=\"marks\"|}></el-slider>"
+    ],
+    "description": ["el-slider滑块"]
+  }
+}
