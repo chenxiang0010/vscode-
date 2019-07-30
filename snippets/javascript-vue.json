@@ -933,7 +933,7 @@
   "getters": {
     "prefix": "getters",
     "body": ["getters"],
-    "description": "just a word"
+    "description": "just a word(计算store中的数据)"
   },
   "mutations": {
     "prefix": "mutations",
@@ -1209,5 +1209,44 @@
       "})"
     ],
     "description": ["axios设置响应拦截器"]
+  },
+  "vuex-computed-mapstate": {
+    "prefix": ["vuex-computed-mapstate"],
+    "body": ["computed: {", "    ...mapState(['$0'])", "},"],
+    "description": ["vuex通过计算属性调用全局变量"]
+  },
+  "vuex-this.$store.state.${1:全局变量}": {
+    "prefix": ["vuex-this.store.state"],
+    "body": ["this.$$store.state.${1:全局变量}"],
+    "description": ["vuex-this.$store.state调用全局变量"]
+  },
+  "vuex-this.$store.commit": {
+    "prefix": ["vuex-this.store.commit"],
+    "body": [
+      "this.$$store.commit('${1:需要触发的mutation}'${2:,需要传递的参数})"
+    ],
+    "description": ["vuex-this.$store.commit"]
+  },
+  "vuex-context.commit": {
+    "prefix": ["context.commit"],
+    "body": ["context.commit('${1:需要触发的Mutation函数}')"],
+    "description": ["vuex中处理异步(actions中的函数参数为context)"]
+  },
+  "vuex-commit": {
+    "prefix": ["commit"],
+    "body": ["commit('${1:需要触发的mutation}'${2:,需要传递的参数})"],
+    "description": ["commit触发mutation"]
+  },
+  "vuex-dispatch": {
+    "prefix": ["dispatch"],
+    "body": ["dispatch('${1:需要触发的action}'${2:,需要传递的参数})"],
+    "description": ["dispatch触发action"]
+  },
+  "vuex-this.$store.dispatch": {
+    "prefix": ["vue-this.stor.dispatch"],
+    "body": [
+      "this.$$store.dispatch('${1:需要触发的action函数}'${2:,需要传递的参数})"
+    ],
+    "description": ["vuex-this.$store.dispatch"]
   }
 }
