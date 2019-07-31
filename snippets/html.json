@@ -88,7 +88,7 @@
     "description": ["jQuery File Upload"]
   },
   "artTemplate引擎模板": {
-    "prefix": [ "zj-art-template"],
+    "prefix": ["zj-art-template"],
     "body": [
       "下载地址:https://github.com/qq34347476/artTemplate",
       "<!-- 模板引擎 -->",
@@ -107,57 +107,43 @@
   "输出<%  %>": {
     "prefix": ["<>"],
     "body": ["<% $0 %>"],
-    "description": ["输出<%  %>","执行语句"]
+    "description": ["输出<%  %>", "执行语句"]
   },
   "输出<%=  %>": {
     "prefix": ["<>"],
     "body": ["<%= $0 %>"],
-    "description": ["输出<%=  %>","输出内容"]
+    "description": ["输出<%=  %>", "输出内容"]
   },
   "输出<%- include() %>": {
     "prefix": ["<>"],
     "body": ["<%- include($0) %>"],
-    "description": ["输出<%-  %>","引入模板"]
+    "description": ["输出<%-  %>", "引入模板"]
   },
   "vue-resource(AJAX) CDN": {
     "prefix": ["cdn-vue-resource"],
-    "body": [
-    "https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"
-    ],
-    "description": [
-    "vue-resource(AJAX) CDN"
-    ]
+    "body": ["https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"],
+    "description": ["vue-resource(AJAX) CDN"]
   },
   "vue-router-CDN": {
     "prefix": ["cdn-vue-router"],
-    "body": [
-    "https://unpkg.com/vue-router/dist/vue-router.js"
-    ],
-    "description": [
-    "vue-router-CDN"
-    ]
+    "body": ["https://unpkg.com/vue-router/dist/vue-router.js"],
+    "description": ["vue-router-CDN"]
   },
   "animate.css(第三方动画) CDN": {
     "prefix": ["cdn-animate"],
     "body": [
-    "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
+      "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
     ],
-    "description": [
-    "animate.css(第三方动画) CDN"
-    ]
+    "description": ["animate.css(第三方动画) CDN"]
   },
   "jQuery百度 CDN": {
     "prefix": ["cdn-jquery"],
-    "body": [
-      "https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"
-    ],
+    "body": ["https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"],
     "description": ["jQuery百度 CDN"]
   },
   "jQuery又拍云 CDN": {
     "prefix": ["cdn-jquery"],
-    "body": [
-      "https://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.2.min.js"
-    ],
+    "body": ["https://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.2.min.js"],
     "description": ["jQuery又拍云 CDN"]
   },
   "快捷图标引入": {

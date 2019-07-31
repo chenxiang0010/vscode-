@@ -27,7 +27,7 @@
     "片段",
     "element-ui"
   ],
-  "version": "1.8.11",
+  "version": "1.8.12",
   "publisher": "xuedao",
   "engines": {
     "vscode": "^1.27.0"
@@ -126,10 +126,6 @@
         "path": "./snippets/html-bootstrap3.json"
       },
       {
-        "language": "html",
-        "path": "./snippets/html-element.json"
-      },
-      {
         "language": "css",
         "path": "./snippets/css.json"
       },
@@ -166,12 +162,16 @@
         "path": "./snippets/html-vue.json"
       },
       {
-        "language": "vue-html",
-        "path": "./snippets/html-vue.json"
+        "language": "html",
+        "path": "./snippets/html-element.json"
       },
       {
         "language": "html",
         "path": "./snippets/vue-vue.json"
+      },
+      {
+        "language": "vue",
+        "path": "./snippets/html-element.json"
       },
       {
         "language": "vue",

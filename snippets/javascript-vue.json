@@ -647,7 +647,7 @@
   "vm.$nextTick": {
     "prefix": ["vmNextTick", "this-nextTick"],
     "body": ["${1|this,vm|}.\\$nextTick(${2:callback})"],
-    "description": "vm.$nextTick( callback )"
+    "description": "dom重新渲染完毕执行回调"
   },
   "vm.$destroy": {
     "prefix": ["vmDestroy", "this-destroy"],
