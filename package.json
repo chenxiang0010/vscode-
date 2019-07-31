@@ -27,7 +27,7 @@
     "片段",
     "element-ui"
   ],
-  "version": "1.8.12",
+  "version": "1.8.13",
   "publisher": "xuedao",
   "engines": {
     "vscode": "^1.27.0"
@@ -94,10 +94,6 @@
     },
     "snippets": [
       {
-        "language": "vue",
-        "path": "./snippets/vue.json"
-      },
-      {
         "language": "javascript",
         "path": "./snippets/javascript.json"
       },
@@ -159,10 +155,6 @@
       },
       {
         "language": "html",
-        "path": "./snippets/html-vue.json"
-      },
-      {
-        "language": "html",
         "path": "./snippets/html-element.json"
       },
       {
@@ -170,8 +162,12 @@
         "path": "./snippets/vue-vue.json"
       },
       {
-        "language": "vue",
+        "language": "vue-html",
         "path": "./snippets/html-element.json"
+      },
+      {
+        "language": "vue-html",
+        "path": "./snippets/html-vue.json"
       },
       {
         "language": "vue",
@@ -183,7 +179,7 @@
       },
       {
         "language": "vue",
-        "path": "./snippets/vue-vue.json"
+        "path": "./snippets/vue.json"
       },
       {
         "language": "jade",
