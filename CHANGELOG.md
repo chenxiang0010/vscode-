@@ -4,6 +4,10 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+## [1.8.14] 2019-07-29
+
+- 更新部分语法片段
+
 ## [1.8.13] 2019-07-29
 
 - 修复bug

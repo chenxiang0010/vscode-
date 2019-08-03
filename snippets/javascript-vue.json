@@ -701,6 +701,13 @@
     "body": ["stopPropagation();", "$1"],
     "description": "stopPropagation()"
   },
+  "imp-router-lazy": {
+    "prefix": ["imp-router-lazy"],
+    "body": [
+      "const Foo = () => import(/* webpackChunkName: '${1:组名}' */ '${2:路径}')"
+    ],
+    "description": ["imp-router-lazy"]
+  },
   "newVueRouter": {
     "prefix": "new-VueRouter",
     "body": ["const ${1:router} = new VueRouter({", "\t$2", "})$0"],
@@ -710,6 +717,13 @@
     "prefix": ["routes-path-component"],
     "body": ["{path:'${1:/login}', component: ${2:login}}"],
     "description": ["routes配置", "{path:'/login', component: login}"]
+  },
+  "routes-path-lazy": {
+    "prefix": ["routes-path-lazy"],
+    "body": [
+      "{path:'${1:/home}', ${2:name: 'home',} component: () => import(/* webpackChunkName: '${3:懒加载分组名}' */ '${4:./views/Home.vue}')}"
+    ],
+    "description": ["routes配置", "vue-router懒加载配置"]
   },
   "routes-path-component-parmas": {
     "prefix": ["routes-path-component-parmas"],
@@ -728,6 +742,17 @@
       "routes配置嵌套路由",
       "{path:'/login', component: login, children: []}"
     ]
+  },
+  "routes-path-require": {
+    "prefix": ["routes-path-require"],
+    "body": [
+      "{",
+      "  path: '${1:/users}',",
+      "  component: resolve =>",
+      "    require(['${2:组件路劲}'], resolve)",
+      "},"
+    ],
+    "description": ["vue-router懒加载"]
   },
   "newVueRouter-temp": {
     "prefix": "new-VueRouter-temp",

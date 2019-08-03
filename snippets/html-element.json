@@ -302,6 +302,7 @@
       "  ${3|可清空,clearable|}",
       "  ${4|仅显示最后一级,:show-all-levels=\"false\"|}",
       "  ${5|配置级联选择框,:props=\"cascaderProps\"|}",
+      "  ${6|hover选中,expand-trigger=\"hover\"|}",
       "  @change=\"handleChange\"></el-cascader>"
     ],
     "description": ["cascader级联选择器"]

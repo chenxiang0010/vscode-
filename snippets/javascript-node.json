@@ -17,9 +17,7 @@
       "\tres.send('密码正确')",
       "})"
     ],
-    "description": [
-    "bcryptjs加密"
-    ]
+    "description": ["bcryptjs加密"]
   },
   "跨域包cors(允许所有人)": {
     "prefix": ["npm-cors-all"],
@@ -28,9 +26,7 @@
       "const cors = require('cors')",
       "app.use(cors())"
     ],
-    "description": [
-    "跨域包(允许所有人)"
-    ]
+    "description": ["跨域包(允许所有人)"]
   },
   "跨域cors(只准白名单通过)": {
     "prefix": ["npm-cors-whitelist"],
@@ -49,28 +45,20 @@
       "}",
       "app.use(cors(corsOptions))"
     ],
-    "description": [
-    "跨域cors(只准白名单通过)"
-    ]
+    "description": ["跨域cors(只准白名单通过)"]
   },
   "百本编译器": {
     "prefix": ["npm-ditor-UEditor"],
-    "body": [
-    "//使用说明:http://fex.baidu.com/ueditor/"
-    ],
-    "description": [
-    "百度富文本编译器"
-    ]
+    "body": ["//使用说明:http://fex.baidu.com/ueditor/"],
+    "description": ["百度富文本编译器"]
   },
   "富文本编译器": {
     "prefix": ["npm-ditor-mditor"],
     "body": [
-    "//下载npm i mditor -S",
-    "//使用说明:https://www.npmjs.com/package/mditor"
+      "//下载npm i mditor -S",
+      "//使用说明:https://www.npmjs.com/package/mditor"
     ],
-    "description": [
-    "富文本编译器"
-    ]
+    "description": ["富文本编译器"]
   },
   "markdown转html": {
     "prefix": ["npm-marked"],
@@ -80,9 +68,7 @@
       "// 调用",
       "let html = marked(要转换的语法)"
     ],
-    "description": [
-    "markdown转html"
-    ]
+    "description": ["markdown转html"]
   },
   "格式化当前时间": {
     "prefix": ["npm-time-moment"],
@@ -141,6 +127,17 @@
     ],
     "description": ["创建标准路由(单独js)"]
   },
+  "设置gzip压缩": {
+    "prefix": ["node-express-gzip"],
+    "body": [
+      "//下载express  npm i compression -S",
+      "const compression = require('compression')",
+      "const app = express();",
+      "//在其他中间件前使用compression",
+      "app.use(compression());"
+    ],
+    "description": ["设置gzip压缩"]
+  },
   "express快速配置允许所有跨域": {
     "prefix": ["node-express-cors"],
     "body": [
@@ -154,9 +151,7 @@
       "\tnext();",
       "});"
     ],
-    "description": [
-    "express快速配置允许所有跨域"
-    ]
+    "description": ["express快速配置允许所有跨域"]
   },
   "快速配置express-session": {
     "prefix": ["node-express-session"],
@@ -171,9 +166,7 @@
       "\tsaveUninitialized: false // 强制没有“初始化”的session保存到storage中",
       "}))"
     ],
-    "description": [
-    "express-session快速配置"
-    ]
+    "description": ["express-session快速配置"]
   },
   "将数据保存在session": {
     "prefix": ["node-express-session-save"],
@@ -181,9 +174,7 @@
       "// 将数据保存在session",
       "req.session.${1:islogin} = ${2:需要保存的数据true};"
     ],
-    "description": [
-    "将数据保存在session"
-    ]
+    "description": ["将数据保存在session"]
   },
   "清空session数据(常用登出)": {
     "prefix": ["node-express-session-destroy"],
@@ -195,9 +186,7 @@
       "\tres.redirect('/');",
       "});"
     ],
-    "description": [
-    "清空session数据(常用登出)"
-    ]
+    "description": ["清空session数据(常用登出)"]
   },
   "设置托管静态资源文件": {
     "prefix": ["node-express-static"],
@@ -208,7 +197,11 @@
   },
   "监听浏览器get请求(快速设置路由)": {
     "prefix": ["node-express-get"],
-    "body": ["${1|router,app|}.get('/', (req, res) => {", "  res.send('你好')", "})"],
+    "body": [
+      "${1|router,app|}.get('/', (req, res) => {",
+      "  res.send('你好')",
+      "})"
+    ],
     "description": "监听浏览器get请求(快速设置路由)"
   },
   "获取GET请求参数(params形式)": {
@@ -578,9 +571,7 @@
       "//const fs = require('fs')",
       "fs.readdir(${1:path}, (err,fileNames) => {\n\tif(err) return console.log('读取文件目录失败!')\n\tconsole.log(fileNames)\n})"
     ],
-    "description": [
-    "读取文件路径"
-    ]
+    "description": ["读取文件路径"]
   },
 
   "拼接路径": {
@@ -717,6 +708,11 @@
     "body": "import ${2:moduleName} from '${1:module}';$0",
     "description": "以ES6语法导入整个模块语句"
   },
+  "importrouter": {
+    "prefix": "imr",
+    "body": "() => import(/* webpackChunkName: '${1:自定义分组名}' */ '${2:路由地址}')",
+    "description": "vue-router懒加载"
+  },
   "importNoModuleName": {
     "prefix": "imn",
     "body": "import '${1:module}';$0",
@@ -747,5 +743,4 @@
     "body": "module.exports = {\n\t$0\n};\n",
     "description": "模块从Common JS导出，ES6的节点语法"
   }
-
 }
