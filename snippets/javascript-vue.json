@@ -1255,7 +1255,7 @@
   "vuex-context.commit": {
     "prefix": ["context.commit"],
     "body": ["context.commit('${1:需要触发的Mutation函数}')"],
-    "description": ["vuex中处理异步(actions中的函数参数为context)"]
+    "description": ["vuex中actions触发Mutation(actions中的函数参数为context)"]
   },
   "vuex-commit": {
     "prefix": ["commit"],
@@ -1268,7 +1268,7 @@
     "description": ["dispatch触发action"]
   },
   "vuex-this.$store.dispatch": {
-    "prefix": ["vue-this.stor.dispatch"],
+    "prefix": ["vuex-this.$stor.dispatch"],
     "body": [
       "this.$$store.dispatch('${1:需要触发的action函数}'${2:,需要传递的参数})"
     ],
