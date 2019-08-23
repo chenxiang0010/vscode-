@@ -2698,6 +2698,16 @@
     "body": ["location.replace(document.referrer); //返回上一页且刷新"],
     "description": ["返回前一页并且刷新"]
   },
+  "JSON转字符串(存)": {
+    "prefix": ["json"],
+    "body": ["JSON.stringify($1)"],
+    "description": ["转成JSON格式字符串(存)"]
+  },
+  "字符串转JSON(取)": {
+    "prefix": ["json"],
+    "body": ["JSON.parse($1)"],
+    "description": ["转成JSON格式字符串(存)"]
+  },
   "(es6)some循环,找对(找到返回true停止循环)": {
     "prefix": ["for-some"],
     "body": [
