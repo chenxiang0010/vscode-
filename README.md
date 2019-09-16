@@ -70,6 +70,7 @@ Snippets-for-mui: [Mui框架代码补全](https://marketplace.visualstudio.com/i
 | module.exports                       |         me |
 | 淘宝flexble.js自适应                 |        csh |
 | 清除h5 click300ms延时                |        csh |
+| 各种格式化                           |     format |
 | 笔记算法用法等                       |       help |
 | 获取类                               |        get |
 | 常用正则表达式                       |      zzbds |
