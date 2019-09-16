@@ -27,7 +27,7 @@
     "片段",
     "element-ui"
   ],
-  "version": "1.8.17",
+  "version": "1.8.18",
   "publisher": "xuedao",
   "engines": {
     "vscode": "^1.27.0"

@@ -4,6 +4,11 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+## [1.8.18] 2019-08-23
+
+- 添加css   省略（指定几行省略） `sl`
+- 添加时间格式化函数  `format-time`
+
 ## [1.8.17] 2019-08-23
 
 - 添加常用语法
