@@ -1,7 +1,7 @@
 {
   "name": "super-comprehensive",
   "displayName": "A-super-comprehensive",
-  "description": "代码补全合集(vue-webpack-bootstrap-node-mui-html-js-jquery-php-css)",
+  "description": "代码补全合集(vue-webpack-bootstrap-node-mui-html-js-jquery-php-css-react)",
   "keywords": [
     "vscode",
     "snippets",
@@ -25,9 +25,11 @@
     "webpack",
     "webpack4",
     "片段",
-    "element-ui"
+    "element-ui",
+    "react",
+    "git"
   ],
-  "version": "1.8.19",
+  "version": "1.8.21",
   "publisher": "xuedao",
   "engines": {
     "vscode": "^1.27.0"
@@ -61,7 +63,7 @@
       },
       {
         "command": "extension.demo.showWelcome",
-        "title": "查询web笔记"
+        "title": "偷窥葵花宝典"
       }
     ],
     "keybindings": [
@@ -184,6 +186,10 @@
       {
         "language": "jade",
         "path": "./snippets/pug-vue.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./snippets/react.json"
       }
     ],
     "iconThemes": []

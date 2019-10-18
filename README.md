@@ -430,6 +430,15 @@ npm 常用资源包 键入`npm`
 
 </details>
 
+<details>
+  <summary style="font-size:30px;font-weight: bold;">React指南</summary>
+
+| 内容         |  快捷键 |
+| :----------- | ------: |
+| 一键创建模板 | !-react |
+
+</details>
+
 ## Known Issues
 
 由于自启插件设置为全局，开启 VScode 加载会较慢（0.3-1S）
