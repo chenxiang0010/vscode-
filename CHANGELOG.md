@@ -4,7 +4,7 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
-## [1.8.21] 2019-10-18
+## [1.8.22] 2019-10-18
 
 - 新增git常用命令  右键 葵花宝典
 
