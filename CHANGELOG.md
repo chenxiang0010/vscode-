@@ -4,6 +4,10 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+## [1.8.26] 2019-11-13
+
+- 新增 element 常用javascript代码  （提示框，通知框等） `el-message`
+
 ## [1.8.25] 2019-11-13
 
 - 语法更新，贴合eslint
