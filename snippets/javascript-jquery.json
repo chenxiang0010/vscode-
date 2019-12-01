@@ -71,17 +71,17 @@
       "\t},",
       "\terror: function (e) {  //请求超时回调",
       "\t\tif(e.statusText == \"timeout\"){",
-      "\t\t\talert(\"请求超时\");",
+      "\t\t\talert(\"请求超时\")",
       "\t\t}",
       "\t},",
       "\tcomplete: function () {}, //无论请求是成功还是失败都会执行的回调，常用全局成员的释放，或者页面状态的重置",
-      "});"
+      "})"
     ],
     "description": "执行异步HTTP（Ajax）请求。"
   },
   "jqAfter": {
     "prefix": "jqAfter",
-    "body": ["$(${1:selector}).after(${2:插入的内容});"],
+    "body": ["$(${1:selector}).after(${2:插入的内容})"],
     "description": "在匹配元素集中的每个元素之后插入由参数指定的内容。"
   },
   "jQuery内部 添加 元素": {
@@ -91,27 +91,27 @@
   },
   "jqAppend": {
     "prefix": "jqAppend",
-    "body": ["$(${1:selector}).append(${2:插入的内容});"],
+    "body": ["$(${1:selector}).append(${2:插入的内容})"],
     "description": "将参数指定的内容插入到匹配元素集中每个元素的末尾。"
   },
   "jqAppendTo": {
     "prefix": "jqAppendTo",
-    "body": ["$(${1:插入的内容}).appendTo(${2:插到哪});"],
+    "body": ["$(${1:插入的内容}).appendTo(${2:插到哪})"],
     "description": "将匹配元素集中的每个元素插入到目标的末尾。"
   },
   "jqAttrGet": {
     "prefix": "jq-Attr",
-    "body": ["$(${1:selector}).attr(${2:属性名});"],
+    "body": ["$(${1:selector}).attr(${2:属性名})"],
     "description": "获取匹配元素集中第一个元素的属性值。"
   },
   "jqAttrRemove": {
     "prefix": "jq-Attr-Remove",
-    "body": ["$(${1:selector}).removeAttr(${2:属性名});"],
+    "body": ["$(${1:selector}).removeAttr(${2:属性名})"],
     "description": "从匹配元素集中的每个元素中删除属性。"
   },
   "jqAttrSet": {
     "prefix": "jq-Attr-Set",
-    "body": ["$(${selector}).attr(${attributeName}, ${value});"],
+    "body": ["$(${selector}).attr(${attributeName}, ${value})"],
     "description": "为匹配元素集设置一个或多个属性。"
   },
   "jqAttrSetFn": {
@@ -119,25 +119,25 @@
     "body": [
       "$(${selector}).attr(${attributeName}, function (index, attr) { ",
       "\t$0 ",
-      "});"
+      "})"
     ],
     "description": "为匹配元素集设置一个或多个属性。"
   },
   "jqAttrSetObj": {
     "prefix": "jq-Attr-SetObj",
-    "body": ["$(${selector}).attr({", "\t${name}: ${value}", "\t$0", "});"],
+    "body": ["$(${selector}).attr({", "\t${name}: ${value}", "\t$0", "})"],
     "description": "为匹配元素集设置一个或多个属性。"
   },
   "jqBefore": {
     "prefix": "jqBefore",
-    "body": ["$(${selector}).before(${content});"],
+    "body": ["$(${selector}).before(${content})"],
     "description": "在匹配元素集中的每个元素之前插入由参数指定的内容。"
   },
   "jqBind": {
     "prefix": "jqBind",
     "body": [
         "$(${selector}).bind(${eventType}, function (e) {", 
-        "\t$0", "});"
+        "\t$0", "})"
     ],
     "description": "将处理程序附加到元素的事件。"
   },
@@ -146,7 +146,7 @@
     "body": [
       "$(${selector}).bind(${eventType}, ${eventData}, function (e) {",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "将处理程序附加到元素的事件。"
   },
@@ -154,9 +154,9 @@
     "prefix": "jqBlur",
     "body": [
       "$(${selector}).blur(function (e) { ",
-      "\te.preventDefault();",
+      "\te.preventDefault()",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "注册失去焦点事件"
   },
@@ -173,9 +173,9 @@
     "prefix": "jqChange",
     "body": [
       "$(${selector}).change(function (e) { ",
-      "\te.preventDefault();",
+      "\te.preventDefault()",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "注册change事件"
   },
@@ -203,37 +203,37 @@
   },
   "jqClassToggleSwitch": {
     "prefix": "jq-Toggle-Class-Switch",
-    "body": ["$(${selector}).toggleClass(${className}, ${switch});"],
+    "body": ["$(${selector}).toggleClass(${className}, ${switch})"],
     "description": "根据switch(true添加/false删除)，从匹配元素集中的每个元素添加或删除一个或多个类。"
   },
   "jqClick": {
     "prefix": "jqClick",
     "body": [
       "$(${selector}).click(function (e) { ",
-      "\te.preventDefault();",
+      "\te.preventDefault()",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "注册点击事件。"
   },
   "jqClone": {
     "prefix": "jqClone",
-    "body": ["$(${selector}).clone();"],
+    "body": ["$(${selector}).clone()"],
     "description": "克隆元素。"
   },
   "jqCloneWithEvents": {
     "prefix": "jqClone-WithEvents",
-    "body": ["$(${selector}).clone(true);"],
+    "body": ["$(${selector}).clone(true)"],
     "description": "深度克隆元素"
   },
   "jqCssGet": {
     "prefix": "jq-Css",
-    "body": ["$(${selector}).css(${propertyName});"],
+    "body": ["$(${selector}).css(${propertyName})"],
     "description": "获取匹配元素集中的CSS属性值。"
   },
   "jqCssSet": {
     "prefix": "jq-Css-Set",
-    "body": ["$(${selector}).css(${propertyName}, ${value});"],
+    "body": ["$(${selector}).css(${propertyName}, ${value})"],
     "description": "为匹配元素集设置一个CSS属性。"
   },
   "jqCssSetObj": {
@@ -242,7 +242,7 @@
       "$(${selector}).css({",
       "\t${propertyName}: ${value}",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "为匹配元素集设置多个CSS属性。"
   },
@@ -256,47 +256,47 @@
   },
   "jqDataGet": {
     "prefix": "jq-Data",
-    "body": ["$(${selector}).data(${key});"],
+    "body": ["$(${selector}).data(${key})"],
     "description": "返回指定数据存储中jQuery集合中元素的值，由Data (name, value)或HTML5 data- *属性设置。"
   },
   "jqDataRemove": {
     "prefix": "jq-Data-Remove",
-    "body": ["$(${selector}).removeData(${element});"],
+    "body": ["$(${selector}).removeData(${element})"],
     "description": "删除以前存储的数据。"
   },
   "jqDataSet": {
     "prefix": "jq-Data-Set",
-    "body": ["$(${selector}).data(${key}, ${value});"],
+    "body": ["$(${selector}).data(${key}, ${value})"],
     "description": "存储与匹配元素关联的一个数据。"
   },
   "jqDataSetObj": {
     "prefix": "jq-Data-Set-Obj",
-    "body": ["$(${selector}).data({", "\t${key}: ${value}", "\t$0", "});"],
+    "body": ["$(${selector}).data({", "\t${key}: ${value}", "\t$0", "})"],
     "description": "存储与匹配元素关联的多个数据。"
   },
   "jqDie": {
     "prefix": "jq-Die",
-    "body": ["$(${selector}).die(${eventType});"],
+    "body": ["$(${selector}).die(${eventType})"],
     "description": "die() 方法移除所有通过 live() 方法向指定元素添加的一个事件处理程序。"
   },
   "jqDieAll": {
     "prefix": "jq-Die-All",
-    "body": ["$(${selector}).die();"],
+    "body": ["$(${selector}).die()"],
     "description": "die() 方法移除所有通过 live() 方法向指定元素添加的多个事件处理程序。"
   },
   "jqDieFn": {
     "prefix": "jq-Die-Fn",
-    "body": ["$(${selector}).die(${eventType}, ${handler});"],
+    "body": ["$(${selector}).die(${eventType}, ${handler})"],
     "description": "从元素中删除之前使用.live（）添加的事件。"
   },
   "jqDocReady": {
     "prefix": "jq-DocReady",
-    "body": ["$(document).ready(function () {", "\t$0", "});"],
+    "body": ["$(document).ready(function () {", "\t$0", "})"],
     "description": "DOM完全加载时执行的函数。"
   },
   "jqDocReadyShort": {
     "prefix": "jq-DocReady-Short",
-    "body": ["$(function () {", "\t$0", "});"],
+    "body": ["$(function () {", "\t$0", "})"],
     "description": "DOM完全加载时执行的函数。"
   },
   "jQuery遍历元素(DOM处理)": {
@@ -316,17 +316,17 @@
   },
   "jqFadeIn": {
     "prefix": "jq-FadeIn",
-    "body": ["$(${selector}).fadeIn();"],
+    "body": ["$(${selector}).fadeIn()"],
     "description": "通过将匹配的元素淡化为不透明来显示它们。"
   },
   "jqFadeInFull": {
     "prefix": "jq-FadeIn-Full",
-    "body": ["$(${selector}).fadeIn(${duration}, function () {", "\t$0", "});"],
+    "body": ["$(${selector}).fadeIn(${duration}, function () {", "\t$0", "})"],
     "description": "通过将匹配的元素淡化为不透明来显示它们。(动画结束执行函数)"
   },
   "jqFadeOut": {
     "prefix": "jq-FadeOut",
-    "body": ["$(${selector}).fadeOut();"],
+    "body": ["$(${selector}).fadeOut()"],
     "description": "隐藏匹配的元素，将它们淡化为透明。"
   },
   "jqFadeOutFull": {
@@ -334,13 +334,13 @@
     "body": [
       "$(${selector}).fadeOut(${duration}, function () {",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "隐藏匹配的元素，将它们淡化为透明。(动画结束执行函数)"
   },
   "jqFadeTo": {
     "prefix": "jq-FadeTo",
-    "body": ["$(${selector}).fadeTo(${duration}, ${opacity});"],
+    "body": ["$(${selector}).fadeTo(${duration}, ${opacity})"],
     "description": "调整匹配元素的不透明度。"
   },
   "jqFadeToFull": {
@@ -348,22 +348,22 @@
     "body": [
       "$(${selector}).fadeTo(${duration}, ${opacity}, function () {",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "调整匹配元素的不透明度。(动画结束执行函数)"
   },
   "jqFind": {
     "prefix": "jq-Find",
-    "body": ["$(${selector}).find(${selector2});"],
+    "body": ["$(${selector}).find(${selector2})"],
     "description": "获取当前匹配元素集中每个元素的后代。"
   },
   "jqFocus": {
     "prefix": "jq-Focus",
     "body": [
       "$(${selector}).focus(function (e) { ",
-      "\te.preventDefault();",
+      "\te.preventDefault()",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "注册获得焦点事件"
   },
@@ -375,7 +375,7 @@
       "\t\t$0",
       "\t},",
       "\t\"${dataType}\"",
-      ");"
+      ")"
     ],
     "description": "使用HTTP GET请求从服务器加载数据。"
   },
@@ -386,7 +386,7 @@
       "\tfunction (data, textStatus, jqXHR) {",
       "\t\t$0",
       "\t}",
-      ");"
+      ")"
     ],
     "description": "使用GET HTTP请求从服务器加载JSON编码的数据。"
   },
@@ -400,23 +400,23 @@
     "body": [
       "$.getScript(\"${url}\", function (script, textStatus, jqXHR) {",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "使用GET HTTP请求从服务器加载JavaScript文件，然后执行它。"
   },
   "jqHasClass": {
     "prefix": "jqHasClass",
-    "body": ["$(${selector}).hasClass(${className});"],
+    "body": ["$(${selector}).hasClass(${className})"],
     "description": "判断元素是否包含某个类名"
   },
   "jqHide": {
     "prefix": "jqHide",
-    "body": ["$(${selector}).hide();"],
+    "body": ["$(${selector}).hide()"],
     "description": "隐藏匹配的元素。"
   },
   "jqHideFull": {
     "prefix": "jqHideFull",
-    "body": ["$(${selector}).hide(${duration}, function () {", "\t$0", "});"],
+    "body": ["$(${selector}).hide(${duration}, function () {", "\t$0", "})"],
     "description": "隐藏匹配的元素。(动画结束执行函数)"
   },
   "jqHover": {
@@ -428,52 +428,52 @@
       "\t}, function () {",
       "\t\t// out",
       "\t}",
-      ");"
+      ")"
     ],
     "description": "在鼠标指针进入和离开元素时执行函数。"
   },
   "jqHtmlGet": {
     "prefix": "jqHtmlGet",
-    "body": ["$(${selector}).html();"],
+    "body": ["$(${selector}).html()"],
     "description": "获取匹配元素集中第一个元素的HTML内容。(会解析HTML格式)"
   },
   "jqHtmlSet": {
     "prefix": "jqHtmlSet",
-    "body": ["$(${selector}).html(${htmlString});"],
+    "body": ["$(${selector}).html(${htmlString})"],
     "description": "设置匹配元素集中每个元素的HTML内容。"
   },
   "jqInsertAfter": {
     "prefix": "jq-Insert-After",
-    "body": ["$(${target}).insertAfter(${selector});"],
+    "body": ["$(${target}).insertAfter(${selector})"],
     "description": "在目标之后插入匹配元素集中的每个元素。"
   },
   "jqInsertBefore": {
     "prefix": "jq-Insert-Before",
-    "body": ["$(${target}).insertBefore(${selector});"],
+    "body": ["$(${target}).insertBefore(${selector})"],
     "description": "在目标之前插入匹配元素集中的每个元素。"
   },
   "jqKeyDown": {
     "prefix": "jq-Key-Down",
-    "body": ["$(${selector}).keydown(function (e) { ", "\t$0", "});"],
+    "body": ["$(${selector}).keydown(function (e) { ", "\t$0", "})"],
     "description": "注册键盘按下事件"
   },
   "jqKeyPress": {
     "prefix": "jq-Key-Press",
-    "body": ["$(${selector}).keypress(function (e) { ", "\t$0", "});"],
+    "body": ["$(${selector}).keypress(function (e) { ", "\t$0", "})"],
     "description": "注册键盘按住事件"
   },
   "jqKeyUp": {
     "prefix": "jq-Key-Up",
-    "body": ["$(${selector}).keyup(function (e) { ", "\t$0", "});"],
+    "body": ["$(${selector}).keyup(function (e) { ", "\t$0", "})"],
     "description": "注册键盘弹起事件"
   },
   "jqLoadGet": {
     "prefix": "jq-Load-Get",
     "body": [
       "$(${selector}).load(\"${url}\", \"${data}\", function (response, status, request) {",
-      "\tthis; // dom element",
+      "\tthis // dom element",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "从服务器加载数据并将返回的HTML放入匹配的元素中。"
   },
@@ -481,9 +481,9 @@
     "prefix": "jq-Load-Post",
     "body": [
       "$(${selector}).load(\"${url}\", \"${data}\", function (response, status, request) {",
-      "\tthis; // dom element",
+      "\tthis // dom element",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "从服务器加载数据并将返回的HTML放入匹配的元素中。"
   },
@@ -492,23 +492,23 @@
     "body": [
       "$.map(${arrayOrObject}, function (elementOrValue, indexOrKey) {",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "将数组或对象中的所有项目转换为新的项目数组。"
   },
   "jqMouseDown": {
     "prefix": "jq-mouse-down",
-    "body": ["$(${selector}).mousedown(function () { ", "\t$0", "});"],
+    "body": ["$(${selector}).mousedown(function () { ", "\t$0", "})"],
     "description": "将事件处理程序绑定到\"mousedown\"事件，或在元素上触发该事件。"
   },
   "jqMouseEnter": {
     "prefix": "jq-mouse-enter",
-    "body": ["$(${selector}).mouseenter(function () { ", "\t$0", "});"],
+    "body": ["$(${selector}).mouseenter(function () { ", "\t$0", "})"],
     "description": "鼠标移入元素事件。(不会触发冒泡)"
   },
   "jqMouseLeave": {
     "prefix": "jq-mouse-leave",
-    "body": ["$(${selector}).mouseleave(function () { ", "\t$0", "});"],
+    "body": ["$(${selector}).mouseleave(function () { ", "\t$0", "})"],
     "description": "鼠标移出元素事件。(不会触发冒泡)"
   },
   "jqMouseMove": {
@@ -517,23 +517,23 @@
       "$(${selector}).mousemove(function (e) { ",
       "\t// values: e.clientX, e.clientY, e.pageX, e.pageY",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "将事件处理程序绑定到\"mousemove\"事件。"
   },
   "jqMouseOut": {
     "prefix": "jq-mouse-out",
-    "body": ["$(${selector}).mouseout(function () { ", "\t$0", "});"],
+    "body": ["$(${selector}).mouseout(function () { ", "\t$0", "})"],
     "description": "将事件处理程序绑定到\"mouseout\"事件。"
   },
   "jqMouseOver": {
     "prefix": "jq-mouse-over",
-    "body": ["$(${selector}).mouseover(function () { ", "\t$0", "});"],
+    "body": ["$(${selector}).mouseover(function () { ", "\t$0", "})"],
     "description": "将事件处理程序绑定到\"mouseover\"事件。"
   },
   "jqMouseUp": {
     "prefix": "jq-mouse-up",
-    "body": ["$(${selector}).mouseup(function () { ", "\t$0", "});"],
+    "body": ["$(${selector}).mouseup(function () { ", "\t$0", "})"],
     "description": "将事件处理程序绑定到\"mouseup\"事件。"
   },
   "jqnext()": {
@@ -546,10 +546,10 @@
     "body": [
       "(function ( ${name}, $, undefined ) {",
       "\t// Private Property",
-      "\tmyPrivateProperty = \"Private Property\";",
+      "\tmyPrivateProperty = \"Private Property\"",
       "\t\t",
       "\t// Public Property",
-      "\t${name}.myPublicProperty = \"Publically Accessible Property\";",
+      "\t${name}.myPublicProperty = \"Publically Accessible Property\"",
       "\t\t",
       "\t// Private Method",
       "\tfunction myPrivateMethod () {",
@@ -559,17 +559,17 @@
       "\t// Public Method",
       "\t${name}.myPublicMethod = function () {",
       "\t\t",
-      "\t};  ",
-      "}(window.${name} = window.${name} || {}, jQuery ));"
+      "\t}  ",
+      "}(window.${name} = window.${name} || {}, jQuery ))"
     ],
     "description": "命名空间模板. ref: https://enterprisejquery.com/2010/10/how-good-c-habits-can-encourage-bad-javascript-habits-part-1/"
   },
   "jqOffsetGet": {
     "prefix": "jq-offset",
     "body": [
-      "var offset = $(${selector}).offset();",
-      "var top = offset.top;",
-      "var left = offset.left;",
+      "var offset = $(${selector}).offset()",
+      "var top = offset.top",
+      "var left = offset.left",
       "$0"
     ],
     "description": "获取第一个元素的当前坐标。"
@@ -577,21 +577,21 @@
   "jqOffsetParent": {
     "prefix": "jq-offset-parent",
     "body": [
-      "var offset = $(${selector}).offsetParent();",
-      "var top = offset.top;",
-      "var left = offset.left;",
+      "var offset = $(${selector}).offsetParent()",
+      "var top = offset.top",
+      "var left = offset.left",
       "$0"
     ],
     "description": "获取最接近的祖先元素坐标。"
   },
   "jqOn": {
     "prefix": "jqOn",
-    "body": ["$(${selector}).on(${events}, function () {", "\t$0", "});"],
+    "body": ["$(${selector}).on(${events}, function () {", "\t$0", "})"],
     "description": "创建一个或多个事件处理函数。"
   },
   "jqOne": {
     "prefix": "jqOne",
-    "body": ["$(${selector}).one(${events}, function (e) {", "\t$0", "});"],
+    "body": ["$(${selector}).one(${events}, function (e) {", "\t$0", "})"],
     "description": "创建一个只执行一次的事件处理函数"
   },
   "jqOneWithData": {
@@ -599,7 +599,7 @@
     "body": [
       "$(${selector}).one(${events}, ${data}, function (e) {",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "创建一个只执行一次的事件处理函数"
   },
@@ -618,27 +618,27 @@
     "body": [
       "(function ($) {",
       "\tjQuery.fn.${pluginName} = function (settings) {",
-      "\t\tvar config = {\u0027foo\u0027: \u0027bar\u0027};",
+      "\t\tvar config = {\u0027foo\u0027: \u0027bar\u0027}",
       " ",
-      "\t\tif (settings) jQuery.extend(config, settings);",
+      "\t\tif (settings) jQuery.extend(config, settings)",
       " ",
       "\t\tthis.each(function () {",
       "\t\t\t// element-specific code here",
       "\t\t\t$0",
-      "\t\t});",
+      "\t\t})",
       " ",
-      "\t\treturn this;",
-      "\t};",
-      "})(jQuery);"
+      "\t\treturn this",
+      "\t}",
+      "})(jQuery)"
     ],
     "description": "插件模板。"
   },
   "jqPosition": {
     "prefix": "jq-position",
     "body": [
-      "var position = $(${selector}).position();",
-      "var top = position.top;",
-      "var left = position.left;",
+      "var position = $(${selector}).position()",
+      "var top = position.top",
+      "var left = position.left",
       "$0"
     ],
     "description": "获取带有定位的父元素到自身的偏移。"
@@ -651,18 +651,18 @@
       "\t\t$0",
       "\t},",
       "\t\"${dataType}\"",
-      ");"
+      ")"
     ],
     "description": "使用HTTP POST请求从服务器加载数据。"
   },
   "jqPrepend": {
     "prefix": "jq-prepend",
-    "body": ["$(${selector}).prepend(${content});"],
+    "body": ["$(${selector}).prepend(${content})"],
     "description": "将元素插入目标元素内部的前面"
   },
   "jqPrependTo": {
     "prefix": "jq-prepend-to",
-    "body": ["$(${content}).prependTo(${selector});"],
+    "body": ["$(${content}).prependTo(${selector})"],
     "description": "将元素插入目标元素内部的前面"
   },
   "jqprev()": {
@@ -713,22 +713,22 @@
   },
   "jqRemoveExp": {
     "prefix": "jq-remove-exp",
-    "body": ["$(${selector}).remove(${expression});"],
+    "body": ["$(${selector}).remove(${expression})"],
     "description": "从DOM中删除匹配元素集。"
   },
   "jqReplaceAll": {
     "prefix": "jq-replace-all",
-    "body": ["$(${selector}).replaceAll(${target});"],
+    "body": ["$(${selector}).replaceAll(${target})"],
     "description": "用匹配元素集替换每个目标元素。"
   },
   "jqReplaceWith": {
     "prefix": "jq-replace-with",
-    "body": ["$(${selector}).replaceWith(${newContent});"],
+    "body": ["$(${selector}).replaceWith(${newContent})"],
     "description": "使用提供的新内容替换匹配元素集中的每个元素，并返回已删除的元素集。"
   },
   "jqResize": {
     "prefix": "jq-resize",
-    "body": ["$(${selector}).resize(function () { ", "\t$0", "});"],
+    "body": ["$(${selector}).resize(function () { ", "\t$0", "})"],
     "description": "将事件处理程序绑定到\"resize\"事件(浏览器发生大小变化)。"
   },
   "jqsiblings": {
@@ -738,57 +738,57 @@
   },
   "jqScroll": {
     "prefix": "jq-scroll",
-    "body": ["$(${selector}).scroll(function () { ", "\t$0", "});"],
+    "body": ["$(${selector}).scroll(function () { ", "\t$0", "})"],
     "description": "将事件处理程序绑定到\"scroll\"事件(浏览器发生大小变化)。"
   },
   "jqScrollLeftGet": {
     "prefix": "jq-scroll-left-get",
-    "body": ["$(${selector}).scrollLeft();"],
+    "body": ["$(${selector}).scrollLeft()"],
     "description": "获取匹配元素集中第一个元素的滚动条的当前水平横向位置。"
   },
   "jqScrollLeftSet": {
     "prefix": "jq-scroll-left-set",
-    "body": ["$(${selector}).scrollLeft(${value});"],
+    "body": ["$(${selector}).scrollLeft(${value})"],
     "description": "为匹配元素设置滚动条的当前水平横向位置。"
   },
   "jqScrollTopGet": {
     "prefix": "jq-scroll-top-get",
-    "body": ["$(${selector}).scrollTop();"],
+    "body": ["$(${selector}).scrollTop()"],
     "description": "获取匹配元素集中第一个元素的滚动条的当前垂直位置，或为每个匹配元素设置滚动条的垂直位置。"
   },
   "jqScrollTopSet": {
     "prefix": "jq-scroll-top-set",
-    "body": ["$(${selector}).scrollTop(${value});"],
+    "body": ["$(${selector}).scrollTop(${value})"],
     "description": "获取匹配元素集中第一个元素的滚动条的当前垂直位置，或为每个匹配元素设置滚动条的垂直位置。"
   },
   "jqSelect": {
     "prefix": "jq-select",
-    "body": ["$(${selector}).select(function () { ", "\t$0", "});"],
+    "body": ["$(${selector}).select(function () { ", "\t$0", "})"],
     "description": "将事件处理程序绑定到\"select\"(被选择[标记]）时)JavaScript事件，或在元素上触发该事件。"
   },
   "jqSelectTrigger": {
     "prefix": "jq-select-trigger",
-    "body": ["$(${selector}).select();"],
+    "body": ["$(${selector}).select()"],
     "description": "触发被选元素的 select 事件"
   },
   "jqserialize搜集表单数据": {
     "prefix": ["jq-get-serialize"],
-    "body": ["$(${selector}).serialize();"],
+    "body": ["$(${selector}).serialize()"],
     "description": ["jq搜集表单数据"]
   },
   "jqShow": {
     "prefix": "jq-show",
-    "body": ["$(${selector}).show();"],
+    "body": ["$(${selector}).show()"],
     "description": "显示匹配的元素。"
   },
   "jqShowFull": {
     "prefix": "jq-show-full",
-    "body": ["$(${selector}).show(${duration}, function () {", "\t$0", "});"],
+    "body": ["$(${selector}).show(${duration}, function () {", "\t$0", "})"],
     "description": "显示匹配的元素。(动画结束执行函数)"
   },
   "jqSlideDown": {
     "prefix": "jq-slide-down",
-    "body": ["$(${selector}).slideDown();"],
+    "body": ["$(${selector}).slideDown()"],
     "description": "显示元素下拉动画"
   },
   "jqSlideDownFull": {
@@ -796,13 +796,13 @@
     "body": [
       "$(${selector}).slideDown(${duration}, function () {",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "显示元素下拉动画(动画结束后再执行回调函数)"
   },
   "jqSlideToggle": {
     "prefix": "jq-slide-toggle",
-    "body": ["$(${selector}).slideToggle();"],
+    "body": ["$(${selector}).slideToggle()"],
     "description": "通过滑动切换匹配的元素下拉动画显示隐藏。"
   },
   "jqSlideToggleFull": {
@@ -810,13 +810,13 @@
     "body": [
       "$(${selector}).slideToggle(${duration}, function () {",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "通过滑动切换匹配的元素下拉动画显示隐藏。(动画结束执行函数)"
   },
   "jqSlideUp": {
     "prefix": "jq-slide-up",
-    "body": ["$(${selector}).slideUp();"],
+    "body": ["$(${selector}).slideUp()"],
     "description": "上拉隐藏元素。"
   },
   "jqSlideUpFull": {
@@ -824,7 +824,7 @@
     "body": [
       "$(${selector}).slideUp(${duration}, function () {",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "上拉隐藏元素。(动画结束执行函数)"
   },
@@ -832,25 +832,25 @@
     "prefix": "jq-submit",
     "body": [
       "$(${selector}).submit(function (e) { ",
-      "\te.preventDefault();",
+      "\te.preventDefault()",
       "\t$0",
-      "});"
+      "})"
     ],
     "description": "将事件处理程序绑定到\"submit\"事件(提交)，或在元素上触发该事件。"
   },
   "jqSubmitTrigger": {
     "prefix": "jq-submit-trigger",
-    "body": ["$(${selector}).submit();"],
+    "body": ["$(${selector}).submit()"],
     "description": "绑定提交事件."
   },
   "jqTextGet": {
     "prefix": "jq-text-get",
-    "body": ["$(${selector}).text();"],
+    "body": ["$(${selector}).text()"],
     "description": "获取元素内的文本内容"
   },
   "jqTextSet": {
     "prefix": "jq-text-set",
-    "body": ["$(${selector}).text(${textString});"],
+    "body": ["$(${selector}).text(${textString})"],
     "description": "更改元素的文本内容"
   },
   "jQuery切换 显示隐藏效果": {
@@ -865,12 +865,12 @@
   },
   "jqToggleFull": {
     "prefix": "jq-toggle-full",
-    "body": ["$(${selector}).toggle(${duration}, function () {", "\t$0", "});"],
+    "body": ["$(${selector}).toggle(${duration}, function () {", "\t$0", "})"],
     "description": "切换显示隐藏元素(动画结束执行函数)"
   },
   "jqToggleSwitch": {
     "prefix": "jq-toggle-switch",
-    "body": ["$(${selector}).toggle(${showOrHide});"],
+    "body": ["$(${selector}).toggle(${showOrHide})"],
     "description": "切换显示隐藏元素"
   },
   "jQuery自动触发事件(会触发元素默认事件)": {
@@ -886,58 +886,58 @@
   "jqTriggerHandlerWithData": {
     "prefix": "jq-trigger-handler-with-data",
     "body": [
-      "$(${selector}).triggerHandler(${eventType}, { ${name}: ${value} });"
+      "$(${selector}).triggerHandler(${eventType}, { ${name}: ${value} })"
     ],
     "description": "自动触发被选元素上指定的事件(不包括事件的默认行为)"
   },
   "jqTriggerWithData": {
     "prefix": "jq-trigger-with-data",
-    "body": ["$(${selector}).trigger(${eventType}, { ${name}: ${value} });"],
+    "body": ["$(${selector}).trigger(${eventType}, { ${name}: ${value} })"],
     "description": "自动触发被选元素上指定的事件以及事件的默认行为"
   },
   "jqUnbind": {
     "prefix": "jq-unbind",
-    "body": ["$(${selector}).unbind(${eventType});"],
+    "body": ["$(${selector}).unbind(${eventType})"],
     "description": "删除解绑指定事件"
   },
   "jqUnbindAll": {
     "prefix": "jq-unbind-all",
-    "body": ["$(${selector}).unbind();"],
+    "body": ["$(${selector}).unbind()"],
     "description": "删除解绑所有事件"
   },
   "jqUnload": {
     "prefix": "jq-unload",
-    "body": ["$(${selector}).unload(function () { ", "\t$0", "});"],
+    "body": ["$(${selector}).unload(function () { ", "\t$0", "})"],
     "description": "绑定\"离开页面时\"的事件"
   },
   "jqValGet": {
     "prefix": "jq-val-get",
-    "body": ["$(${selector}).val();"],
+    "body": ["$(${selector}).val()"],
     "description": "获取匹配元素集中第一个元素的当前值。"
   },
   "jqValSet": {
     "prefix": "jq-val-set",
-    "body": ["$(${selector}).val(${value});"],
+    "body": ["$(${selector}).val(${value})"],
     "description": "设置匹配元素集中每个元素的值。"
   },
   "jqWrap": {
     "prefix": "jq-wrap",
     "body": [
-      "$(${selector}).wrap(\"\u003c${wrappingElement}\u003e\u003c/${wrappingElement}\u003e\");"
+      "$(${selector}).wrap(\"\u003c${wrappingElement}\u003e\u003c/${wrappingElement}\u003e\")"
     ],
     "description": "使用指定的 HTML 元素来分别包裹被选元素"
   },
   "jqWrapAll": {
     "prefix": "jq-wrap-all",
     "body": [
-      "$(${selector}).wrapAll(\"\u003c${wrappingElement}\u003e\u003c/${wrappingElement}\u003e\");"
+      "$(${selector}).wrapAll(\"\u003c${wrappingElement}\u003e\u003c/${wrappingElement}\u003e\")"
     ],
     "description": "使用指定的 HTML 元素来包裹所有被选元素"
   },
   "jqWrapInner": {
     "prefix": "jq-wrap-inner",
     "body": [
-      "$(${selector}).wrapInner(\"\u003c${wrappingElement}\u003e\u003c/${wrappingElement}\u003e\");"
+      "$(${selector}).wrapInner(\"\u003c${wrappingElement}\u003e\u003c/${wrappingElement}\u003e\")"
     ],
     "description": "使用指定的 HTML 元素来包裹每个被选元素中的所有内容（innerHTML）"
   }

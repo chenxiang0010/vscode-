@@ -104,9 +104,8 @@
   "template作用域插槽": {
     "prefix": "template",
     "body": [
-      "<template  slot-scope=\"scope\">",
+      "<template slot-scope=\"scope\">",
       "\t<${1:div}$2>",
-      "\t\t<!-- 获取一行数据 -->",
       "\t\t{{ scope.row }}",
       "\t</${1:div}>",
       "</template>"
@@ -566,7 +565,7 @@
     ],
     "description": ["input:radio"]
   },
-  "v-select下拉框": {
+  "v-select": {
     "prefix": ["v-select"],
     "body": [
       "<select name=\"$1\" id=\"$2\" v-model=\"$3\">",
@@ -579,5 +578,31 @@
     "prefix": "mode",
     "body": ["mode=\"${0:out-in}\""],
     "description": "transition属性"
-  }
+  },
+  "el-tooltip(table)": {
+      "prefix": ["el-tooltip"],
+      "body": [
+        "<template slot-scope=\"scope\">",
+        "    <div>",
+        "    <el-tooltip :content=\"我是悬浮提示\" placement=\"top\">",
+        "        <div class=\"omitted-two-lines\">{{ scope.row }}</div>",
+        "    </el-tooltip>",
+        "    </div>",
+        "</template>"
+      ],
+      "description": [
+      "el-tooltip(table行内多行省略)"
+      ]
+  },
+  "el-tooltip": {
+    "prefix": ["el-tooltip"],
+    "body": [
+      "<el-tooltip :content=\"我是悬浮提示\" placement=\"top\">",
+      "    <div>哈哈哈</div>",
+      "</el-tooltip>"
+    ],
+    "description": [
+    "el-tooltip"
+    ]
+}
 }

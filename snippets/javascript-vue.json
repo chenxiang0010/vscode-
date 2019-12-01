@@ -693,12 +693,12 @@
   },
   "preventDefault": {
     "prefix": "preventDefault",
-    "body": ["preventDefault();", "$1"],
+    "body": ["preventDefault()", "$1"],
     "description": "preventDefault()"
   },
   "stopPropagation": {
     "prefix": "stopPropagation",
-    "body": ["stopPropagation();", "$1"],
+    "body": ["stopPropagation()", "$1"],
     "description": "stopPropagation()"
   },
   "imp-router-lazy": {
@@ -1054,7 +1054,7 @@
       "\tconsole.log(response.body)",
       "},  response => {",
       "\t// error callback",
-      "});"
+      "})"
     ],
     "description": ["vue-resource发送ajax(GET)[全局]"]
   },
@@ -1093,7 +1093,7 @@
       "\tconsole.log(response.body)",
       "},  response => {",
       "\t// error callback",
-      "});"
+      "})"
     ],
     "description": ["vue-resource发送ajax(POST)[全局]"]
   },
@@ -1114,9 +1114,9 @@
     "prefix": ["vue-resource-config"],
     "body": [
       "// 设置全局根路径,单独发送请求时不能带 / 例：this.$http.get('getprodlist').then((res)=>{})",
-      "Vue.http.options.root = 'http://vue.studyit.io/';",
+      "Vue.http.options.root = 'http://vue.studyit.io/'",
       "// 全局启用 emulateJSON 选项",
-      "Vue.http.options.emulateJSON = true;"
+      "Vue.http.options.emulateJSON = true"
     ],
     "description": ["vue-resource全局配置"]
   },
@@ -1126,7 +1126,7 @@
       "axios.${1|get,delete|}('${2:axios}', {",
       "  params: {$0}",
       "}).then((ret) => {",
-      "  console.log(ret.data);",
+      "  console.log(ret.data)",
       "})"
     ],
     "description": ["axios发送get/delete请求"]
@@ -1165,7 +1165,7 @@
     "prefix": ["axios-post/put"],
     "body": [
       "axios.${1|post,put|}(`${2:axios}`,{$0}).then((ret) => {",
-      "  console.log(ret.data);",
+      "  console.log(ret.data)",
       "})"
     ],
     "description": ["axios发送post/put"]
@@ -1198,7 +1198,7 @@
     "prefix": ["axios-config-baseURL"],
     "body": [
       "// 配置请求的基准URL地址",
-      "axios.defaults.baseURL = '${1:http://localhost:3000/}';"
+      "axios.defaults.baseURL = '${1:http://localhost:3000/}'"
     ],
     "description": ["axios配置请求的基准URL地址"]
   },
@@ -1206,7 +1206,7 @@
     "prefix": ["axios-config-headers"],
     "body": [
       "// 配置请求头信息",
-      "axios.defaults.headers['${1:token}'] = '${2:key}';"
+      "axios.defaults.headers['${1:token}'] = '${2:key}'"
     ],
     "description": ["axios-config-headers"]
   },
@@ -1215,8 +1215,8 @@
     "body": [
       "//axios设置请求拦截器",
       "axios.interceptors.request.use(config => {",
-      "  config.headers.${1:mytoken} = 'nihao'; //设置响应头",
-      "  return config;",
+      "  config.headers.${1:mytoken} = 'nihao' //设置响应头",
+      "  return config",
       "}, err => {",
       "  console.log(err)",
       "})"

@@ -349,7 +349,7 @@
     "description": "文本超出省略"
   },
   "文本超出省略(固定几行超出后省略)": {
-    "prefix": ["sl"],
+    "prefix": ["sl","omitted-two-lines"],
     "body": [
       ".ellipsis {",
       "    width: 100%;",

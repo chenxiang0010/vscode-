@@ -7,13 +7,13 @@
       "const mi = 10",
       "//加密",
       "bcrypt.hash('要加密的内容', mi, (err,pwd)=>{",
-      "\tif(err) return res.send('加密失败');",
-      "\tres.send('加密成功' + pwd);",
+      "\tif(err) return res.send('加密失败')",
+      "\tres.send('加密成功' + pwd)",
       "})",
       "// 比对",
       "bcrypt.compare('要比对的密码','加密后的密码',(err, flag)=>{",
-      "\tif (err) return res.send('比对失败' + err);",
-      "\tif (!flag) return res.send('密码不正确');",
+      "\tif (err) return res.send('比对失败' + err)",
+      "\tif (!flag) return res.send('密码不正确')",
       "\tres.send('密码正确')",
       "})"
     ],
@@ -82,14 +82,14 @@
   "时间格式化": {
     "prefix": ["npm-time"],
     "body": [
-      "// 下载  npm i silly-datetime -S\nconst sd = require('silly-datetime');\nlet time = sd.format(new Date(),'YYYY-MM-DD HH:mm');"
+      "// 下载  npm i silly-datetime -S\nconst sd = require('silly-datetime')\nlet time = sd.format(new Date(),'YYYY-MM-DD HH:mm')"
     ],
     "description": ["时间格式化"]
   },
   "body-parser": {
     "prefix": ["npm-post-bodyparser"],
     "body": [
-      "// 下载 npm i body-parser -S\nconst bodyParser = require('body-parser');\nconst app = express();\napp.use(bodyParser.urlencoded({ extended: false }));"
+      "// 下载 npm i body-parser -S\nconst bodyParser = require('body-parser')\nconst app = express()\napp.use(bodyParser.urlencoded({ extended: false }))"
     ],
     "description": ["body-parser"]
   },
@@ -104,7 +104,7 @@
   },
   "调用ejs模板": {
     "prefix": ["node-ejs-render"],
-    "body": ["res.render('${1:index.ejs}',${2:导入模板的数据(对象)});"],
+    "body": ["res.render('${1:index.ejs}',${2:导入模板的数据(对象)})"],
     "description": ["调用ejs模板"]
   },
   "创建一个快速服务器": {
@@ -123,7 +123,7 @@
   "创建标准路由(单独js)": {
     "prefix": ["node-express-router"],
     "body": [
-      "const express = require('express');\nconst router = express.Router();\n\nrouter.get('/', (req, res) => {\n\tres.send('你好!');\n});\n\nmodule.exports = router;"
+      "const express = require('express')\nconst router = express.Router()\n\nrouter.get('/', (req, res) => {\n\tres.send('你好!')\n})\n\nmodule.exports = router"
     ],
     "description": ["创建标准路由(单独js)"]
   },
@@ -132,9 +132,9 @@
     "body": [
       "//下载express  npm i compression -S",
       "const compression = require('compression')",
-      "const app = express();",
+      "const app = express()",
       "//在其他中间件前使用compression",
-      "app.use(compression());"
+      "app.use(compression())"
     ],
     "description": ["设置gzip压缩"]
   },
@@ -143,13 +143,13 @@
     "body": [
       "//设置允许跨域访问该服务.",
       "app.all('*', function (req, res, next) {",
-      "\tres.header('Access-Control-Allow-Origin', '*');",
+      "\tres.header('Access-Control-Allow-Origin', '*')",
       "\t//Access-Control-Allow-Headers ,可根据浏览器的F12查看,把对应的粘贴在这里就行",
-      "\tres.header('Access-Control-Allow-Headers', 'Content-Type');",
-      "\tres.header('Access-Control-Allow-Methods', '*');",
-      "\tres.header('Content-Type', 'application/json;charset=utf-8');",
-      "\tnext();",
-      "});"
+      "\tres.header('Access-Control-Allow-Headers', 'Content-Type')",
+      "\tres.header('Access-Control-Allow-Methods', '*')",
+      "\tres.header('Content-Type', 'application/json;charset=utf-8')",
+      "\tnext()",
+      "})"
     ],
     "description": ["express快速配置允许所有跨域"]
   },
@@ -172,7 +172,7 @@
     "prefix": ["node-express-session-save"],
     "body": [
       "// 将数据保存在session",
-      "req.session.${1:islogin} = ${2:需要保存的数据true};"
+      "req.session.${1:islogin} = ${2:需要保存的数据true}"
     ],
     "description": ["将数据保存在session"]
   },
@@ -180,18 +180,18 @@
     "prefix": ["node-express-session-destroy"],
     "body": [
       "req.session.destroy(function (err) {",
-      "\tif (err) throw err;",
-      "\tconsole.log('用户退出成功！');",
+      "\tif (err) throw err",
+      "\tconsole.log('用户退出成功！')",
       "\t// 实现服务器端的跳转，这个对比于 客户端跳转",
-      "\tres.redirect('/');",
-      "});"
+      "\tres.redirect('/')",
+      "})"
     ],
     "description": ["清空session数据(常用登出)"]
   },
   "设置托管静态资源文件": {
     "prefix": ["node-express-static"],
     "body": [
-      "app.use(${1:'中间件(默认\"/\")', }express.static('./${2:目录}')); //设置托管静态资源文件"
+      "app.use(${1:'中间件(默认\"/\")', }express.static('./${2:目录}')) //设置托管静态资源文件"
     ],
     "description": ["设置托管静态资源文件"]
   },
@@ -235,14 +235,14 @@
     "prefix": ["node-express-post-params"],
     "body": [
       "// 下载 npm i body-parser -S",
-      "const bodyParser = require('body-parser');",
-      "${1|router,app|}.use(bodyParser.urlencoded({ extended: false }));",
+      "const bodyParser = require('body-parser')",
+      "${1|router,app|}.use(bodyParser.urlencoded({ extended: false }))",
       "",
       "${1|router,app|}.post('/update', function(req, res) {",
       "  //解构参数 req.body 并发送",
-      "  const { name, description } = req.body; ",
-      "  res.send(`Name ${2${name}}, desc ${3${description}}`);",
-      "});"
+      "  const { name, description } = req.body ",
+      "  res.send(`Name ${2${name}}, desc ${3${description}}`)",
+      "})"
     ],
     "description": "获取POST请求参数(需要下载引入body-parser包)"
   },
@@ -254,7 +254,7 @@
       "",
       "app.post('/test', (req, res) => {",
       "  res.json({ body: req.body })",
-      "});"
+      "})"
     ],
     "description": "Creates a POST route that can read from the body, works for 4.16 version of express and above"
   },
@@ -280,19 +280,19 @@
       "app.use(function (err, req, res, next) {",
       "  console.error(err.stack)",
       "  res.status(500).send('Something broke!')",
-      "});"
+      "})"
     ],
     "description": "创建一个中间件(原生,带错误处理)"
   },
   "创建一个http服务器(完整)": {
     "prefix": ["node-http"],
     "body": [
-      "const http = require('http');",
+      "const http = require('http')",
       "http.createServer('request',function (request, response) {",
-      "\tresponse.writeHead(200, {'Content-Type': '${1|text/html;charset=utf-8,text/plain;charset=utf-8|}'});",
-      "\tresponse.end('Hello World');",
+      "\tresponse.writeHead(200, {'Content-Type': '${1|text/html;charset=utf-8,text/plain;charset=utf-8|}'})",
+      "\tresponse.end('Hello World')",
       "}).listen(3000,'localhost',function(){",
-      "\tconsole.log('Server running at http://127.0.0.1:3000/');",
+      "\tconsole.log('Server running at http://127.0.0.1:3000/')",
       "})"
     ],
     "description": "创建一个http服务器"
@@ -302,9 +302,9 @@
     "body": [
       "createServer('request',function (request, response) {",
       "\tresponse.writeHead(200, {'Content-Type': '${1|text/html;charset=utf-8,text/plain;charset=utf-8|}'});",
-      "\tresponse.end('Hello World');",
+      "\tresponse.end('Hello World')",
       "}).listen(3000,'localhost',function(){",
-      "\tconsole.log('Server running at http://127.0.0.1:3000/');",
+      "\tconsole.log('Server running at http://127.0.0.1:3000/')",
       "})"
     ],
     "description": "创建一个http服务器"
@@ -319,28 +319,28 @@
   "创建查询sql": {
     "prefix": ["node-mysql-select"],
     "body": [
-      "//创建查询sql语句\nlet sqlStr = 'select * from users where id=?';\nlet insertDate = {${1:id: 1}};\n//执行sql语句\nconn.query(sqlStr, insertDate, (err, result) => {\n\tif (err) return console.log('查询sql失败' + err.message);\n\tconsole.log(result);\n})"
+      "//创建查询sql语句\nlet sqlStr = 'select * from users where id=?';\nlet insertDate = {${1:id: 1}};\n//执行sql语句\nconn.query(sqlStr, insertDate, (err, result) => {\n\tif (err) return console.log('查询sql失败' + err.message);\n\tconsole.log(result)\n})"
     ],
     "description": ["创建查询sql"]
   },
   "创建新增sql": {
     "prefix": ["node-mysql-insert"],
     "body": [
-      "//创建新增(插入)sql语句\nlet sqlStr = 'insert into users set ?';\nlet insertDate = {${1:uname: '小花花'}} //传入数据\n//执行sql语句\nconn.query(sqlStr, insertDate, (err, result) => {\n\tif (err) return console.log('新增数据失败' + err);\n\tconsole.log(result);\n})"
+      "//创建新增(插入)sql语句\nlet sqlStr = 'insert into users set ?';\nlet insertDate = {${1:uname: '小花花'}} //传入数据\n//执行sql语句\nconn.query(sqlStr, insertDate, (err, result) => {\n\tif (err) return console.log('新增数据失败' + err)\n\tconsole.log(result)\n})"
     ],
     "description": ["创建新增sql"]
   },
   "创建修改sql": {
     "prefix": ["node-mysql-update"],
     "body": [
-      "//创建更新(修改)sql语句\nlet sqlStr = 'update users set ? where id=?'\nlet insertDate = {id: 5, uname: 'newUname'}\n//执行sql语句\nconn.query(sqlStr,[insertDate, insertData.id], (err, result) => {\n\tif (err) return console.log('更新失败' + err.message);\n\tconsole.log(result);\n})"
+      "//创建更新(修改)sql语句\nlet sqlStr = 'update users set ? where id=?'\nlet insertDate = {id: 5, uname: 'newUname'}\n//执行sql语句\nconn.query(sqlStr,[insertDate, insertData.id], (err, result) => {\n\tif (err) return console.log('更新失败' + err.message)\n\tconsole.log(result)\n})"
     ],
     "description": ["创建修改sql"]
   },
   "创建删除sql": {
     "prefix": ["node-mysql-delete"],
     "body": [
-      "//创建删除sql语句\nlet sqlStr = 'delete from users where id=?';\nlet insertDate = 4\n//执行sql语句\nconn.query(sqlStr,insertDate, (err, result) => {\n\tif (err) return console.log('删除数据失败' + err.message);\n\tconsole.log(result);\n})"
+      "//创建删除sql语句\nlet sqlStr = 'delete from users where id=?';\nlet insertDate = 4\n//执行sql语句\nconn.query(sqlStr,insertDate, (err, result) => {\n\tif (err) return console.log('删除数据失败' + err.message)\n\tconsole.log(result)\n})"
     ],
     "description": ["创建删除sql"]
   },
@@ -361,8 +361,8 @@
       "const sqlStr1 = '${5:select * from users}'",
       "//执行sql语句",
       "conn.query(sqlStr1, (err, result) => {",
-      "\tif (err) return console.log('获取数据失败' + err.message);",
-      "\tconsole.log(result);",
+      "\tif (err) return console.log('获取数据失败' + err.message)",
+      "\tconsole.log(result)",
       "})"
     ],
     "description": ["快速操作链接数据库"]
@@ -373,7 +373,7 @@
       "readFile(path.join(__dirname,'${1:源文件}'), 'utf-8', function (err, data) {",
       "\tif (err) return console.log('读取文件失败：' + err.message)",
       "\tconsole.log('读取文件成功，内容是' + data)",
-      "});"
+      "})"
     ],
     "description": ["文件读取"]
   },
@@ -385,7 +385,7 @@
       "fs.readFile(path.join(__dirname,'${1:源文件}'), 'utf-8', function (err, data) {",
       "\tif (err) return console.log('读取文件失败：' + err.message)",
       "\tconsole.log('读取文件成功，内容是' + data)",
-      "});"
+      "})"
     ],
     "description": [
       "fs.readFile 有三个参数：",
@@ -482,8 +482,8 @@
     "prefix": ["copyFile"],
     "body": [
       "copyFile(path.join(__dirname,'${1:旧文件}'),path.join(__dirname,'${1:新文件}'), (err) => {",
-      "\tif (err) throw err;",
-      "\tconsole.log('重命名完成');",
+      "\tif (err) throw err",
+      "\tconsole.log('重命名完成')",
       "})"
     ],
     "description": ["文件重命名(移动)"]
@@ -494,8 +494,8 @@
       "const fs = require('fs')",
       "const path = require('path')",
       "fs.copyFile(path.join(__dirname,'${1:旧文件}'),path.join(__dirname,'${1:新文件}'), (err) => {",
-      "\tif (err) throw err;",
-      "\tconsole.log('重命名完成');",
+      "\tif (err) throw err",
+      "\tconsole.log('重命名完成')",
       "})"
     ],
     "description": ["文件重命名[剪切文件(移动)]"]
@@ -504,8 +504,8 @@
     "prefix": ["mkdir"],
     "body": [
       "mkdir('{1:创建的目录(文件夹)}', { recursive: true }, (err) => {",
-      "\tif (err) throw err;",
-      "});"
+      "\tif (err) throw err",
+      "})"
     ],
     "description": ["创建路径"]
   },
@@ -515,8 +515,8 @@
       "const fs = require('fs')",
       "// 创建 /tmp/a/apple 目录，无论是否存在 /tmp 和 /tmp/a 目录。",
       "fs.mkdir('{1:创建的目录(文件夹)}', { recursive: true }, (err) => {",
-      "\tif (err) throw err;",
-      "});"
+      "\tif (err) throw err",
+      "})"
     ],
     "description": ["创建路径(文件夹)"]
   },
@@ -525,8 +525,8 @@
     "prefix": ["rmdir"],
     "body": [
       "mkdir('{1:删除的目录(文件夹)}',(err) => {",
-      "\tif (err) throw err;",
-      "});"
+      "\tif (err) throw err",
+      "})"
     ],
     "description": ["删除路径"]
   },
@@ -537,8 +537,8 @@
       "const fs = require('fs')",
       "// 创建 /tmp/a/apple 目录，无论是否存在 /tmp 和 /tmp/a 目录。",
       "fs.mkdir('{1:删除的目录(文件夹)}',(err) => {",
-      "\tif (err) throw err;",
-      "});"
+      "\tif (err) throw err",
+      "})"
     ],
     "description": ["删除路径(文件夹)"]
   },
@@ -547,9 +547,9 @@
     "prefix": ["unlink"],
     "body": [
       "unlink(path.join(__dirname,'${1:文件}'), (err) => {",
-      "\tif (err) throw err;",
-      "\tconsole.log('文件已删除');",
-      "});"
+      "\tif (err) throw err",
+      "\tconsole.log('文件已删除')",
+      "})"
     ],
     "description": ["删除文件"]
   },
@@ -558,9 +558,9 @@
     "prefix": ["node-file-unlink"],
     "body": [
       "fs.unlink(path.join(__dirname,'${1:文件}'), (err) => {",
-      "\tif (err) throw err;",
-      "\tconsole.log('文件已删除');",
-      "});"
+      "\tif (err) throw err",
+      "\tconsole.log('文件已删除')",
+      "})"
     ],
     "description": ["删除文件"]
   },
@@ -582,7 +582,7 @@
 
   "返回path最后一部分": {
     "prefix": ["node-path-basename"],
-    "body": ["basename(${1:目录}${2:'后缀名(填上将不返回后缀)'});"],
+    "body": ["basename(${1:目录}${2:'后缀名(填上将不返回后缀)'})"],
     "description": ["返回path最后一部分"]
   },
 
@@ -594,19 +594,19 @@
 
   "返回平台的路径分隔符": {
     "prefix": ["node-path-sep"],
-    "body": ["sep()", "//常用于 'foo/bar/baz'.split(path.sep);"],
+    "body": ["sep()", "//常用于 'foo/bar/baz'.split(path.sep)"],
     "description": ["返回平台的路径分隔符"]
   },
 
   "event emitter": {
     "prefix": ["node-event-emitter"],
     "body": [
-      "var events = require('events');",
-      "var eventEmitter = new events.EventEmitter();",
-      "eventEmitter.emit('my_event');",
+      "var events = require('events')",
+      "var eventEmitter = new events.EventEmitter()",
+      "eventEmitter.emit('my_event')",
       "eventEmitter.on('my_event', () => {",
-      "  console.log('data received succesfully.');",
-      "});"
+      "  console.log('data received succesfully.')",
+      "})"
     ],
     "description": "Event emitter, shows emitting event and subscribing to it"
   },
@@ -614,7 +614,7 @@
     "prefix": ["node-promise-create"],
     "body": [
       "new Promise((resolve, reject) => {",
-      "  let condition = false;",
+      "  let condition = false",
       "  if(condition) {",
       "    resolve('data')",
       "  } else {",
@@ -627,22 +627,22 @@
   "Promise shorthand": {
     "prefix": ["node-promise-shorthand"],
     "body": [
-      "const promiseThatWillResolve = Promise.resolve('data');",
-      "const promiseThatWillReject = Promise.reject('error');"
+      "const promiseThatWillResolve = Promise.resolve('data')",
+      "const promiseThatWillReject = Promise.reject('error')"
     ],
     "description": "uses the static resolve/reject, good for unit tests"
   },
   "Promise all": {
     "prefix": ["node-promise-all"],
     "body": [
-      "const getData = () => Promise.resolve('data');",
-      "const getMoreData = () => Promise.resolve('more data');",
+      "const getData = () => Promise.resolve('data')",
+      "const getMoreData = () => Promise.resolve('more data')",
       "",
       "Promise.all(",
       "  getData(),",
       "  getMoreData()",
       ").then(result => {",
-      "  const [data, moreData] = result;",
+      "  const [data, moreData] = result",
       "})"
     ],
     "description": "uses the static all(), allows us to have a list of Promises finish at the same time"
@@ -651,17 +651,17 @@
     "prefix": ["node-async-await"],
     "body": [
       "async function getData() {",
-      "  return Promise.resolve('data');",
+      "  return Promise.resolve('data')",
       "}",
       "",
       "async function getMoreData(data) {",
-      "  return Promise.resolve(data + 'more data');",
+      "  return Promise.resolve(data + 'more data')",
       "}",
       "",
       "function getAll() {",
-      "  const data = await getData();",
-      "  const moreData = await getMoreData(data);",
-      "  return `All the data: ${data}, ${moreData}`;",
+      "  const data = await getData()",
+      "  const moreData = await getMoreData(data)",
+      "  return `All the data: ${data}, ${moreData}`",
       "}",
       "",
       "getAll().then((all) => {",
@@ -673,28 +673,28 @@
   "Joi schema validation": {
     "prefix": ["node-express-schema-validation"],
     "body": [
-      "const Joi = require('joi');",
+      "const Joi = require('joi')",
       "const loginSchema = Joi.object().keys({",
       "  username: Joi.string()",
       "    .min(3),",
       "    .max(10),",
       "    .required(),",
       "  password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/)",
-      "});",
+      "})",
       "",
       "app.post('/login', function(req, res) {",
-      "  const valid = Joi.validate(req.body, loginSchema).error === null;",
+      "  const valid = Joi.validate(req.body, loginSchema).error === null",
       "  if (!valid) {",
       "    res.status(422).json({",
       "      status: 'error'",
       "      message: 'Invalid request data'",
       "      data: req.body",
-      "    });",
+      "    })",
       "  } else {",
       "    // happy days - login user",
-      "    res.send(`ok`);",
+      "    res.send(`ok`)",
       "  }",
-      "});"
+      "})"
     ],
     "description": "showcases the lib Joi and how you can use it to validate incoming requests"
   },
@@ -705,7 +705,7 @@
   },
   "import": {
     "prefix": "imp",
-    "body": "import ${2:moduleName} from '${1:module}';$0",
+    "body": "import ${2:moduleName} from '${1:module}'$0",
     "description": "以ES6语法导入整个模块语句"
   },
   "importrouter": {
@@ -715,32 +715,32 @@
   },
   "importNoModuleName": {
     "prefix": "imn",
-    "body": "import '${1:module}';$0",
+    "body": "import '${1:module}'$0",
     "description": "使用ES6语法导入整个模块而不使用模块名称"
   },
   "importDestructing": {
     "prefix": "imd",
-    "body": "import { $2 } from '${1:module}';$0",
+    "body": "import { $2 } from '${1:module}'$0",
     "description": "在ES6语法中仅导入模块的一部分"
   },
   "importEverything": {
     "prefix": "ime",
-    "body": "import * as ${2:alias} from '${1:module}';$0",
+    "body": "import * as ${2:alias} from '${1:module}'$0",
     "description": "在ES6语法中将所有内容作为别名从模块导入"
   },
   "importAs": {
     "prefix": "ima",
-    "body": "import { ${2:originalName} as ${3:alias} } from '${1:module}';$0",
+    "body": "import { ${2:originalName} as ${3:alias} } from '${1:module}'$0",
     "description": "通过在ES6语法中分配本地别名来导入模块的特定部分"
   },
   "require": {
     "prefix": "rqr",
-    "body": "require('${1:package}');",
+    "body": "require('${1:package}')",
     "description": "引入一个包"
   },
   "moduleExports": {
     "prefix": "mde",
-    "body": "module.exports = {\n\t$0\n};\n",
+    "body": "module.exports = {\n\t$0\n}\n",
     "description": "模块从Common JS导出，ES6的节点语法"
   }
 }

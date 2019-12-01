@@ -119,7 +119,7 @@
       "npm install vue-loader vue-template-compiler -D",
       "// ================================",
       "新建根目录文件postcss.config.js，将下列代码复制进去",
-      "const autoprefixer = require('autoprefixer');",
+      "const autoprefixer = require('autoprefixer')",
       "module.exports = {",
       "  plugins:[ autoprefixer ]",
       "}"
@@ -180,11 +180,11 @@
   },
   "requireHTMLPlugin": {
     "prefix": "wp4-Plugin-requireHTML",
-    "body": ["const HTMLWebpackPlugin = require(\"html-webpack-plugin\");"]
+    "body": ["const HTMLWebpackPlugin = require(\"html-webpack-plugin\")"]
   },
   "requireCleanPlugin": {
     "prefix": "wp4-Plugin-requireClean",
-    "body": ["const CleanWebpackPlugin = require(\"clean-webpack-plugin\");"]
+    "body": ["const CleanWebpackPlugin = require(\"clean-webpack-plugin\")"]
   },
   "cleanPlugin": {
     "prefix": "wp4-plugin-clean",
@@ -201,8 +201,8 @@
   "VuePlugin": {
     "prefix": "wp4-plugin-vue",
     "body": [
-      "const VueLoaderPlugin = require('vue-loader/lib/plugin'); //Vue",
-      "const vuePlugin = new VueLoaderPlugin();  //需要挂载到plugins中"
+      "const VueLoaderPlugin = require('vue-loader/lib/plugin') //Vue",
+      "const vuePlugin = new VueLoaderPlugin()  //需要挂载到plugins中"
     ],
     "description": ["配置 vue (vuePlugin需要挂载到plugins中)"]
   },
@@ -233,7 +233,7 @@
       "//npm install postcss-loader autoprefixer -D",
       "{ test: /\\.css$/, use: ['style-loader', 'css-loader', 'postcss-loader'] }",
       "新建根目录文件postcss.config.js，将下列代码复制进去",
-      "const autoprefixer = require('autoprefixer');",
+      "const autoprefixer = require('autoprefixer')",
       "module.exports = {",
       "  plugins:[ autoprefixer ]",
       "}"
