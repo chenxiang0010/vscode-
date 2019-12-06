@@ -370,5 +370,17 @@
       "</el-table>"
     ],
     "description": ["el-table"]
+  },
+  "el-scrollbar": {
+      "prefix": ["el-scrollbar"],
+      "body": [
+        "<el-scrollbar wrap-class=\"scrollbar-wrapper\" style=\"height:100%\">",
+        "<!-- 滚动条包裹部分 -->",
+        "\n$0",
+        "</el-scrollbar>"
+      ],
+      "description": [
+      "el-scrollbar滚动条"
+      ]
   }
 }

@@ -29,7 +29,7 @@
     "react",
     "git"
   ],
-  "version": "1.8.27",
+  "version": "1.8.28",
   "publisher": "xuedao",
   "engines": {
     "vscode": "^1.27.0"
