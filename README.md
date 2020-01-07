@@ -431,11 +431,39 @@ npm 常用资源包 键入`npm`
 </details>
 
 <details>
-  <summary style="font-size:30px;font-weight: bold;">React指南</summary>
+  <summary style="font-size:30px;font-weight: bold;">React/React-native指南(jsx)</summary>
 
-| 内容         |  快捷键 |
-| :----------- | ------: |
-| 一键创建模板 | !-react |
+| 内容                 |                             快捷键 |
+| :------------------- | ---------------------------------: |
+| 一键创建模板         |                            !-react |
+| 基础组件模板         |                     !-react-native |
+| 顶部导航(注释版)     |                        rn-help-bar |
+| 顶部导航             |     rn-bar,rn-createStackNavigator |
+| 底部导航卡(注释版)   |                        rn-help-bar |
+| 底部导航卡           | rn-createBottomTabNavigator,rn-bar |
+| StyleSheet(样式表)   |                      rn-stylesheet |
+| 获取自适应屏幕宽度   |                      rn-dimensions |
+| 轮播图(注释版)       |                        rn-help-lbt |
+| 轮播图               |                        rn-carousel |
+| 跳转tabBar           |                         rn-onpress |
+| 顶部导航动态         |               rn-navigationOptions |
+| ActivityIndicator    |               rn-ActivityIndicator |
+| Button               |                          rn-Button |
+| TouchableOpacity     |                rn-TouchableOpacity |
+| DatePickerIOS        |                   rn-DatePickerIOS |
+| DrawerLayoutAndroid  |             rn-DrawerLayoutAndroid |
+| Image                |                           rn-Image |
+| KeyboardAvoidingView |            rn-KeyboardAvoidingView |
+| Modal                |                           rn-Modal |
+| Picker               |                          rn-Picker |
+| PickerIOS            |                       rn-PickerIOS |
+| ProgressBarAndroid   |              rn-ProgressBarAndroid |
+| ProgressViewIOS      |                 rn-ProgressViewIOS |
+| ScrollView           |                      rn-ScrollView |
+| ScrollView(详细)     |                      rn-ScrollView |
+| SegmentedControlIOS  |             rn-SegmentedControlIOS |
+| StatusBar            |                       rn-StatusBar |
+
 
 </details>
 
@@ -445,7 +473,7 @@ npm 常用资源包 键入`npm`
 
 ## Release Notes
 
-> Tip: 超过 `500` 种常用快捷补全及注释用法 `自启笔记页`
+> Tip: 超过 `2000` 种常用快捷补全及注释用法 `自启笔记页`
 
 ## 全局设置
 

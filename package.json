@@ -1,7 +1,7 @@
 {
   "name": "super-comprehensive",
   "displayName": "A-super-comprehensive",
-  "description": "代码补全合集(vue-webpack-bootstrap-node-mui-html-js-jquery-php-css-react)",
+  "description": "代码补全合集(vue-webpack-bootstrap-node-mui-html-js-jquery-php-css-react-native)",
   "keywords": [
     "vscode",
     "snippets",
@@ -27,9 +27,10 @@
     "片段",
     "element-ui",
     "react",
-    "git"
+    "git",
+    "react-native"
   ],
-  "version": "1.8.28",
+  "version": "1.9.1",
   "publisher": "xuedao",
   "engines": {
     "vscode": "^1.27.0"

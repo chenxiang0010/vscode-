@@ -4,6 +4,10 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+## [1.9.1] 2020-01-08
+
+- 新增react-native原生语法, 键入 `rn-`
+
 ## [1.8.27] 2019-12-6
 
 - 新增 element 官方没有写明的隐藏组件 `el-scrollbar`

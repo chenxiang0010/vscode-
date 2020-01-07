@@ -1,64 +1,603 @@
 {
-    "react模板": {
-        "prefix": ["!-react"],
-        "body": [
-            "import React from 'react' // 在 React V15.5 版本之前，类型校验的能力，和 react 是在一起；",
-            "import Types from 'prop-types' // 导入类型校验的包",
-            "",
-            "export default class Counter extends React.Component {",
-            "  // 为外界传递过来的 props 属性值，做类型校验",
-            "  static propTypes = {",
-            "    // 如果，外界在使用组件的时候，某个 props 属性是必须要被传递的，则 可以是用 isRequired 来进行标记；",
-            "    data: Types.number.isRequired // 规定， 外界传递过来的 data 必须是 number，否则，就报错；",
-            "  }",
-            "",
-            "  // 如果外界在使用组件的时候，没有传递规定的属性值，则 组件内，需要有一个默认的属性值；",
-            "  static defaultProps = {",
-            "    data: 0",
-            "  }",
-            "",
-            "  // 初始化私有的数据",
-            "  constructor(props) {",
-            "    super()",
-            "    this.state = {}",
-            "  }",
-            "",
-            "  // 相当于 Vue 中的 created 函数；组件的 props 和 state 数据，都已经可以被访问了；",
-            "  componentWillMount() {}",
-            "",
-            "  // 虚拟DOM正在被创建；当 render 执行完， 虚拟DOM才创建到内存中；",
-            "  render() {",
-            "    return (<div>123</div>)",
-            "  }",
-            "",
-            "  // 已经第一次被渲染到页面上；相当于 Vue 中的 mounted 函数；用于初始化第三方插件",
-            "  componentDidMount() {}",
-            "",
-            "  // 运行阶段的第一个生命周期函数",
-            "  // 使用这个 函数，可以按需更新页面；减少不必要的 DOM 渲染；",
-            "  shouldComponentUpdate(nextProps, nextState) {",
-            "    // 注意： 在 shouldComponentUpdate 方法中，如果想获取 最新的 state 值，千万不要使用 this.state.***  会比 nextProps,nextState晚一步",
-            "    return true //更新",
-            "    // return false 不更新",
-            "  }",
-            "",
-            "  // 运行阶段 第二个生命周期函数 【组件将要被更新】",
-            "  componentWillUpdate() {",
-            "    // console.log(document.getElementById('myh3').innerHTML)",
-            "  }",
-            "",
-            "  componentDidUpdate() {}",
-            "",
-            "  // 组件的 porps 被改变，会重新触发 componentWillRevceiveProps",
-            "  componentWillReceiveProps(nextProps) { // 组件将要接收新属性",
-            "    this.setState({",
-            "      data: nextProps.data",
-            "    })",
-            "  }",
-            "}"
-        ],
-        "description": [
-        "react模板"
-        ]
-    }
+  "react模板": {
+    "prefix": ["!-react"],
+    "body": [
+      "import React from 'react' // 在 React V15.5 版本之前，类型校验的能力，和 react 是在一起；",
+      "import Types from 'prop-types' // 导入类型校验的包",
+      "",
+      "export default class Counter extends React.Component {",
+      "  // 为外界传递过来的 props 属性值，做类型校验",
+      "  static propTypes = {",
+      "    // 如果，外界在使用组件的时候，某个 props 属性是必须要被传递的，则 可以是用 isRequired 来进行标记；",
+      "    data: Types.number.isRequired // 规定， 外界传递过来的 data 必须是 number，否则，就报错；",
+      "  }",
+      "",
+      "  // 如果外界在使用组件的时候，没有传递规定的属性值，则 组件内，需要有一个默认的属性值；",
+      "  static defaultProps = {",
+      "    data: 0",
+      "  }",
+      "",
+      "  // 初始化私有的数据",
+      "  constructor(props) {",
+      "    super()",
+      "    this.state = {}",
+      "  }",
+      "",
+      "  // 相当于 Vue 中的 created 函数；组件的 props 和 state 数据，都已经可以被访问了；",
+      "  componentWillMount() {}",
+      "",
+      "  // 虚拟DOM正在被创建；当 render 执行完， 虚拟DOM才创建到内存中；",
+      "  render() {",
+      "    return (<div>123</div>)",
+      "  }",
+      "",
+      "  // 已经第一次被渲染到页面上；相当于 Vue 中的 mounted 函数；用于初始化第三方插件",
+      "  componentDidMount() {}",
+      "",
+      "  // 运行阶段的第一个生命周期函数",
+      "  // 使用这个 函数，可以按需更新页面；减少不必要的 DOM 渲染；",
+      "  shouldComponentUpdate(nextProps, nextState) {",
+      "    // 注意： 在 shouldComponentUpdate 方法中，如果想获取 最新的 state 值，千万不要使用 this.state.***  会比 nextProps,nextState晚一步",
+      "    return true //更新",
+      "    // return false 不更新",
+      "  }",
+      "",
+      "  // 运行阶段 第二个生命周期函数 【组件将要被更新】",
+      "  componentWillUpdate() {",
+      "    // console.log(document.getElementById('myh3').innerHTML)",
+      "  }",
+      "",
+      "  componentDidUpdate() {}",
+      "",
+      "  // 组件的 porps 被改变，会重新触发 componentWillRevceiveProps",
+      "  componentWillReceiveProps(nextProps) { // 组件将要接收新属性",
+      "    this.setState({",
+      "      data: nextProps.data",
+      "    })",
+      "  }",
+      "}"
+    ],
+    "description": ["react模板"]
+  },
+  "基础组件模板": {
+    "prefix": ["!-react-native"],
+    "body": [
+      "import React,{Component} from 'react'",
+      "import {View,Text} from 'react-native'",
+      "",
+      "export default class Home extends Component{",
+      "    render(){",
+      "        return <View>",
+      "            <Text>Home...</Text>",
+      "        </View>",
+      "    }",
+      "}"
+    ],
+    "description": ["基础组件模板"]
+  },
+  "无状态组件模板": {
+    "prefix": ["!-react-native"],
+    "body": [
+      "import React from 'react'",
+      "import { View, Text } from 'react-native'",
+      "",
+      "export default (props) => {",
+      "    return (<View>",
+      "        <Text>我是无状态组件</Text>",
+      "    </View>)",
+      "}"
+    ],
+    "description": ["无状态组件"]
+  },
+  "顶部导航(注释版)": {
+    "prefix": ["rn-help-bar"],
+    "body": [
+      "import { createStackNavigator } from 'react-navigation'",
+      "// https://reactnavigation.org/docs/zh-Hans/navigating.html",
+      "const HomeStack = createStackNavigator({ // HomeStack放到底部导航 screen",
+      "  Home: {",
+      "    screen: HomeScreen, // HomeScreen为相应组件",
+      "    // 如果是静态的，就可以写死在这里，如果是动态的，不要在这里写，应该在每个组件中进行设置",
+      "    navigationOptions:{",
+      "      headerTitle:'首 页',",
+      "      headerTintColor:'#ff0000',",
+      "      headerTitleStyle :{ // 顶部导航样式",
+      "        flex:1,",
+      "        textAlign:'center'",
+      "      }",
+      "    }",
+      "  }, // 若含有多个screen此处 接着写，逗号分割",
+      "  HomeList: {",
+      "    screen: HomeListScreen,",
+      "    navigationOptions: {",
+      "      headerTitle:'首页列表',",
+      "      headerTintColor:'#ff0000',",
+      "      headerTitleStyle : {",
+      "        flex:1,",
+      "        textAlign:'center'",
+      "      }",
+      "    }",
+      "  }",
+      "})"
+    ],
+    "description": ["顶部导航(注释版)"]
+  },
+  "顶部导航": {
+    "prefix": ["rn-createStackNavigator", "rn-bar"],
+    "body": [
+      "const HomeStack = createStackNavigator({",
+      "    Home: {",
+      "      screen: HomeScreen,",
+      "      navigationOptions:{",
+      "        headerTitle:'首 页',",
+      "        // headerTintColor:'#ff0000',",
+      "        headerTitleStyle :{",
+      "          flex:1,",
+      "          textAlign:'center'",
+      "        }",
+      "      }",
+      "    }",
+      "})"
+    ],
+    "description": ["顶部导航"]
+  },
+  "底部导航卡(注释版)": {
+    "prefix": ["rn-help-bar"],
+    "body": [
+      "import { Image } from 'react-native'",
+      "import { createBottomTabNavigator } from 'react-navigation'",
+      "// 设置底部TabBar",
+      "const TabBar = createBottomTabNavigator({",
+      "    Home: {",
+      "      screen:HomeStack,",
+      "      navigationOptions: {",
+      "        tabBarLabel: '首页',",
+      "        // focused代表你当前的TabBar是否选中,tintColor就是设置的前景色",
+      "        tabBarIcon: ({ focused, tintColor }) => {",
+      "          return (",
+      "            <Image",
+      "              source={",
+      "                focused",
+      "                  ? require('./src/statics/images/tarBar/home_selected.png')",
+      "                  : require('./src/statics/images/tarBar/home_normal.png')",
+      "              }",
+      "              style={{ tintColor: tintColor, width: 25, height: 25 }}",
+      "            />",
+      "          );",
+      "        }",
+      "      }",
+      "    },",
+      "    Movie:{",
+      "      screen:MovieStack,",
+      "      navigationOptions: {",
+      "        tabBarLabel: '电影',",
+      "        // focused代表你当前的TabBar是否选中,tintColor就是设置的前景色",
+      "        tabBarIcon: ({ focused, tintColor }) => {",
+      "          return (",
+      "            <Image",
+      "              source={",
+      "                focused",
+      "                  ? require('./src/statics/images/tarBar/movie_selected.png')",
+      "                  : require('./src/statics/images/tarBar/movie_normal.png')",
+      "              }",
+      "              style={{ tintColor: tintColor, width: 25, height: 25 }}",
+      "            />",
+      "          );",
+      "        }",
+      "      }",
+      "    },",
+      "    Mine:{",
+      "      screen:MineStack,",
+      "      navigationOptions: {",
+      "        tabBarLabel: '我的',",
+      "        //focused代表你当前的TabBar是否选中,tintColor就是设置的前景色",
+      "        tabBarIcon: ({ focused, tintColor }) => {",
+      "          return (",
+      "            <Image",
+      "              source={",
+      "                focused",
+      "                  ? require('./src/statics/images/tarBar/mine_selected.png')",
+      "                  : require('./src/statics/images/tarBar/mine_normal.png')",
+      "              }",
+      "              style={{ tintColor: tintColor, width: 25, height: 25 }}",
+      "            />",
+      "          );",
+      "        }",
+      "      }",
+      "    }",
+      "  },",
+      "  {",
+      "    tabBarOptions:{ // 选中色设置",
+      "      activeTintColor: 'black',",
+      "      inactiveTintColor: 'gray',",
+      "    }",
+      "  })",
+      "",
+      "type Props = {}",
+      "export default class App extends Component<Props> {",
+      "  render() {",
+      "    return <TabBar />",
+      "  }",
+      "}"
+    ],
+    "description": ["底部导航卡(注释版)"]
+  },
+  "底部导航卡": {
+    "prefix": ["rn-createBottomTabNavigator", "rn-bar"],
+    "body": [
+      "const TabBar = createBottomTabNavigator({",
+      "    Home: {",
+      "      screen:HomeStack,",
+      "      navigationOptions: {",
+      "        tabBarLabel: '首页',",
+      "        // focused代表你当前的TabBar是否选中,tintColor就是设置的前景色",
+      "        tabBarIcon: ({ focused, tintColor }) => {",
+      "          return (",
+      "            <Image",
+      "              source={",
+      "                focused",
+      "                  ? require('./src/statics/images/tarBar/home_selected.png')",
+      "                  : require('./src/statics/images/tarBar/home_normal.png')",
+      "              }",
+      "              style={{ tintColor: tintColor, width: 25, height: 25 }}",
+      "            />",
+      "          );",
+      "        }",
+      "      }",
+      "    },",
+      "  },",
+      "  {",
+      "    tabBarOptions:{ // 选中色设置",
+      "      activeTintColor: 'black',",
+      "      inactiveTintColor: 'gray',",
+      "    }",
+      "})"
+    ],
+    "description": ["底部导航卡"]
+  },
+  "StyleSheet(样式表)": {
+    "prefix": ["rn-stylesheet"],
+    "body": [
+      "// import { StyleSheet } from 'react-native'",
+      "const styles = StyleSheet.create({",
+      "    images:{",
+      "        width:'100%',",
+      "        height:'100%'",
+      "    }",
+      "})"
+    ],
+    "description": ["StyleSheet(样式表)"]
+  },
+  "获取自适应屏幕宽度": {
+    "prefix": ["rn-dimensions"],
+    "body": [
+      "// import { Dimensions } from 'react-native'",
+      "const { width } = Dimensions.get('window')"
+    ],
+    "description": ["获取自适应屏幕宽度"]
+  },
+  "轮播图(注释版)": {
+    "prefix": ["rn-help-lbt"],
+    "body": [
+      "import Carousel from 'react-native-looped-carousel'",
+      "<Carousel",
+      "delay={3000}",
+      "autoplay",
+      "bullets",
+      "arrows",
+      "leftArrowText={'<'}",
+      "leftArrowStyle={{ color: 'white', fontSize: 30, margin: 20 }}",
+      "rightArrowText={'>'}",
+      "rightArrowStyle={{ color: 'white', fontSize: 30, margin: 20 }}",
+      ">",
+      "<View style={this.state.size}>",
+      "  <Image",
+      "    style={styles.images}",
+      "    resizeMode='stretch'",
+      "    source={{",
+      "      uri:",
+      "        'http://g.hiphotos.baidu.com/zhidao/pic/item/ac6eddc451da81cb2f68749d5366d016082431d7.jpg'",
+      "    }}",
+      "  />",
+      "</View>",
+      "<View style={this.state.size}>",
+      "  <Image",
+      "    style={styles.images}",
+      "    resizeMode='stretch'",
+      "    source={{",
+      "      uri:",
+      "        'http://g.hiphotos.baidu.com/zhidao/pic/item/ac6eddc451da81cb2f68749d5366d016082431d7.jpg'",
+      "    }}",
+      "  />",
+      "</View>",
+      "<View style={this.state.size}>",
+      "  <Image",
+      "    style={styles.images}",
+      "    resizeMode='stretch'",
+      "    source={{",
+      "      uri:",
+      "        'http://g.hiphotos.baidu.com/zhidao/pic/item/ac6eddc451da81cb2f68749d5366d016082431d7.jpg'",
+      "    }}",
+      "  />",
+      "</View>",
+      "</Carousel>"
+    ],
+    "description": ["轮播图(注释版)"]
+  },
+  "轮播图": {
+    "prefix": ["rn-carousel"],
+    "body": [
+      "{/* import Carousel from 'react-native-looped-carousel' */}",
+      "<Carousel",
+      "delay={3000}",
+      "autoplay",
+      "bullets",
+      "arrows",
+      "leftArrowText={'<'}",
+      "leftArrowStyle={{ color: 'white', fontSize: 30, margin: 20 }}",
+      "rightArrowText={'>'}",
+      "rightArrowStyle={{ color: 'white', fontSize: 30, margin: 20 }}",
+      ">",
+      "<View>",
+      "{/* rn-stylesheet */}",
+      "  <Image",
+      "    style={styles.images}",
+      "    resizeMode='stretch'",
+      "    source={{",
+      "      uri:",
+      "        'http://dmimg.5054399.com/allimg/pkm/pk/22.jpg'",
+      "    }}",
+      "  />",
+      "</View>",
+      "<View>",
+      "  <Image",
+      "    style={styles.images}",
+      "    resizeMode='stretch'",
+      "    source={{",
+      "      uri:",
+      "        'http://i1.sinaimg.cn/ent/d/2008-06-04/U105P28T3D2048907F326DT20080604225106.jpg'",
+      "    }}",
+      "  />",
+      "</View>",
+      "<View>",
+      "  <Image",
+      "    style={styles.images}",
+      "    resizeMode='stretch'",
+      "    source={{",
+      "      uri:",
+      "        'http://g.hiphotos.baidu.com/zhidao/pic/item/ac6eddc451da81cb2f68749d5366d016082431d7.jpg'",
+      "    }}",
+      "  />",
+      "</View>",
+      "</Carousel>"
+    ],
+    "description": ["轮播图"]
+  },
+  "跳转tabBar": {
+    "prefix": ["rn-onpress"],
+    "body": [
+      "onPress={()=>{this.props.navigation.navigate('${0:跳转的tabBar组件名}')}}"
+    ],
+    "description": ["跳转tabBar"]
+  },
+  "顶部导航动态": {
+    "prefix": ["rn-navigationOptions"],
+    "body": [
+      "static navigationOptions = ({ navigation }) => {",
+      "    return {",
+      "        title: navigation.getParam('title') ? navigation.getParam('title') : '正在加载中...',",
+      "        headerRight: <View />",
+      "    }",
+      "}"
+    ],
+    "description": ["顶部导航动态"]
+  },
+  "ActivityIndicator": {
+    "prefix": ["rn-ActivityIndicator"],
+    "body": [
+      "<ActivityIndicator size=\"${1|small,large|}\" color=\"${2:默认为灰色}\" />"
+    ],
+    "description": ["显示一个圆形的loading", "从react-native引入"]
+  },
+  "Button": {
+    "prefix": ["rn-Button"],
+    "body": [
+      "<Button",
+      "  title=\"${1:Learn More}\"",
+      "  color=\"${2:#841584}\"",
+      "  onPress={${3:onPressLearnMore}}",
+      "  accessibilityLabel=\"${4:读屏器软件可能会读取的文本}\"",
+      "/>"
+    ],
+    "description": ["Button", "从react-native引入"]
+  },
+  "TouchableOpacity": {
+    "prefix": ["rn-TouchableOpacity"],
+    "body": ["<TouchableOpacity activeOpacity={0.8}>${0}</TouchableOpacity>"],
+    "description": ["触摸操作", "从react-native引入"]
+  },
+  "DatePickerIOS": {
+    "prefix": ["rn-DatePickerIOS"],
+    "body": [
+      "<DatePickerIOS",
+      "    date={${1|当前被选中的日期,this.state.date|}}",
+      "    mode=\"${2|date,time,datetime|}\"",
+      "    maximumDate=\"{${3:可选最大日期}}\"",
+      "    minimumDate=\"{${4:可选最小日期}}\"",
+      "    minuteInterval=\"${5:可选最小分钟单位}\"",
+      "    timeZoneOffsetInMinutes={${6:时区差(单位是分钟)}}",
+      "    onDateChange={this.onDateChange}",
+      "/>"
+    ],
+    "description": ["时间选择器IOS", "从react-native引入"]
+  },
+  "DrawerLayoutAndroid": {
+    "prefix": ["rn-DrawerLayoutAndroid"],
+    "body": [
+      "render: function() {",
+      "   {/* 抽屉内容 */}",
+      "    const navigationView = (",
+      "      <View style={{flex: 1, backgroundColor: '#fff'}}>",
+      "        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>I'm in the Drawer!</Text>",
+      "      </View>",
+      "    )",
+      "    return (",
+      "      <DrawerLayoutAndroid",
+      "        drawerLockMode=\"${1|锁定模式,可以响应打开和关闭的手势操作,unlocked,保持关闭，不可用手势打开,locked-closed,保持打开，不可用手势关闭,locked-open|}\"",
+      "        drawerWidth={300}",
+      "        drawerPosition={${2|指定抽屉可以从屏幕的哪一边滑入,DrawerConsts.DrawerPosition.Left,DrawerConsts.DrawerPosition.Right|}}",
+      "        keyboardDismissMode=\"${3|拖拽的过程中是否要隐藏软键盘,(默认)不隐藏软键盘,none,隐藏软键盘,on-drag|}\"",
+      "        renderNavigationView={() => navigationView}",
+      "        onDrawerClose ={()=>{${4:关闭之后回调}}}",
+      "        onDrawerOpen={()=>{${5:打开之后回调}}}",
+      "        onDrawerSlide={()=>{${6:产生交互回调}}}",
+      "        onDrawerStateChanged={()=>{${7:当抽屉的状态变化时回调(idle:空闲,dragging:拖拽中,settling:停靠中)}}}>",
+      "        <View style={{flex: 1, alignItems: 'center'}}>",
+      "          <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>Hello</Text>",
+      "          <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>World!</Text>",
+      "        </View>",
+      "      </DrawerLayoutAndroid>",
+      "    )",
+      "}"
+    ],
+    "description": [
+      "抽屉（通常用于导航切换）",
+      "仅限安卓",
+      "从react-native引入"
+    ]
+  },
+  "Image": {
+    "prefix": ["rn-Image"],
+    "body": [
+      "<Image",
+      "    resizeMode=\"${1|图片完全覆盖甚至超出容器(不留空白),cover,图片完全被包裹在容器中(可能留有空白),contain,拉伸图片宽高都刚好填满容器,stretch,重复平铺图片直到填满容器(ios),repeat,居中不拉伸,center|}\"",
+      "    source={${2|绝对路劲,{uri: 'http://facebook.github.io/react/img/logo_og.png'},相对路径,require('./icon.png')|}}",
+      "    androidresizeMethod=\"${3|当图片实际尺寸和容器样式尺寸不一致时,使用启发式算法(默认),auto,当图片尺寸比容器尺寸大得多时,resize,对图片进行缩放,在图片尺寸比容器尺寸小或者只是稍大一点时,scale|}\"",
+      "    iosaccessible=\"${4|启用了无障碍功能,true,false|}\"",
+      "    iosaccessibilityLabel=\"${4:读屏器（无障碍功能）会朗读的文字}\"",
+      "    iosblurRadius=\"${4:模糊滤镜}\"",
+      "/>"
+    ],
+    "description": [
+      "Image",
+      "从react-native引入",
+      "在Android上支持GIF和WebP格式图片:",
+      "https://reactnative.cn/docs/0.40/image/"
+    ]
+  },
+  "KeyboardAvoidingView": {
+    "prefix": ["rn-KeyboardAvoidingView"],
+    "body": [
+      "<KeyboardAvoidingView behavior={1|'height','position','padding'|} keyboardVerticalOffset={${2:修正应用离屏幕顶部距离(Number)}}>${0}</KeyboardAvoidingView>"
+    ],
+    "description": [
+      "KeyboardAvoidingView",
+      "从react-native引入",
+      "自适应键盘的位置,以避免被遮挡"
+    ]
+  },
+  "Modal": {
+    "prefix": ["rn-Modal"],
+    "body": [
+      "this.state = {",
+      "    ModalIntroToggle: false,   // 模态框  默认false不显示",
+      "}",
+      "<Modal isVisible={this.state.ModalIntroToggle} style={{margin:0}} animationIn={${1|模态框进入的方向,'slideInUp'|}} animationOut={${2|模态框离开的方向,'slideOutDown'|}} animationInTiming={${3|进入动画时长,300|}} animationOutTiming={${4|离开动画时长,300|}} backdropColor={${5|背景颜色,black|}} backdropOpacity={${6|透明度,0.70|}} onBackButtonPress={${7|Android后退,() => null|}} onBackdropPress={${8|按下背景时调用,() => null|}} onModalHide={${9|完全隐藏时调用,() => null|}} onModalShow={${10|完全可见时调用,() => null|}}>$0</Modal>"
+    ],
+    "description": [
+      "react-native-modal",
+      "import Modal from 'react-native-modal'",
+      "模态框(弹出层)",
+      "Modal 下的第一个 View不要写flex：1",
+      "否则onBackdropPress无效"
+    ]
+  },
+  "Picker": {
+    "prefix": ["rn-Picker"],
+    "body": [
+      "<Picker",
+      "    androidmode=\"${1|dropdown,dialog|}\"",
+      "    androidprompt=\"${2:Android的对话框标题}\"",
+      "    selectedValue={this.state.language}",
+      "    onValueChange={(lang) => this.setState({language: lang})}>",
+      "    <Picker.Item label=\"Java\" value=\"java\" />",
+      "    <Picker.Item label=\"JavaScript\" value=\"js\" />",
+      "</Picker>"
+    ],
+    "description": ["Picker", "从react-native引入"]
+  },
+  "PickerIOS": {
+    "prefix": ["rn-PickerIOS"],
+    "body": [
+      "<PickerIOS",
+      "    selectedValue={this.state.language}",
+      "    onValueChange={(lang) => this.setState({language: lang})}>",
+      "    <PickerItemIOS label=\"Java\" value=\"java\" />",
+      "    <PickerItemIOS label=\"JavaScript\" value=\"js\" />",
+      "</PickerIOS>"
+    ],
+    "description": ["PickerIOS", "从react-native引入"]
+  },
+  "ProgressBarAndroid": {
+    "prefix": ["rn-ProgressBarAndroid"],
+    "body": [
+      "<MyLoadingComponent",
+      "    color=\"green\"",
+      "    styleAttr=\"${2|进度条的样式,Horizontal,Small,Large,Inverse,SmallInverse,LargeInverse|}\"",
+      "    indeterminate={${3|进度条是否要显示一个不确定的进度,styleAttr是Horizontal时必须false|}}",
+      "    progress={${1:当前的进度值（在0到1之间）}}",
+      "    componentView={componentView}",
+      "    loadingView={progressBar}",
+      "    style={styles.loadingComponent}",
+      "/>"
+    ],
+    "description": ["ProgressBarAndroid", "从react-native引入", "安卓进度条"]
+  },
+  "ProgressViewIOS": {
+    "prefix": ["rn-ProgressViewIOS"],
+    "body": [
+      "<ProgressViewIOS progress={${1:当前的进度值（在0到1之间）}} progressTintColor=\"purple\" />"
+    ],
+    "description": ["ProgressViewIOS", "从react-native引入", "IOS进度条"]
+  },
+  "ScrollView(详细)": {
+    "prefix": ["rn-ScrollView"],
+    "body": [
+      "<ScrollView contentContainerStyle={styles.contentContainer} horizontal={${1|true横向滚动，默认false垂直滚动,true,false|}} keyboardDismissMode={${2|拖拽隐藏软键盘,none,on-drag,interactive|}} keyboardShouldPersistTaps={${3|点击scrollview后是否收起键盘,点击TextInput以外的子组件收起软键盘,'never',键盘不会自动收起,'always',切换TextInput时保持键盘状态,'handled'|}} showsHorizontalScrollIndicator={${4|显示一个水平方向的滚动条,true,false|}} showsVerticalScrollIndicator={${5|显示一个垂直方向的滚动条,true,false|}} iosalwaysBounceHorizontal={${6|水平弹性拉动(内容不满),true,false|}} iosalwaysBounceVertical={${7|垂直弹性拉动(内容不满),true,false|}} iosautomaticallyAdjustContentInsets={${8:如果你的ScrollView或ListView的头部出现莫名其妙的空白，尝试将此属性置为false}} iosbounces={${9|内容大于滚动范围弹性拉动,true,false|}} iosbouncesZoom={${10|手势缩放内容可以超过min/max的限制,true,false|}} ioscenterContent={${11|滚动视图的内容比视图本身小，则会自动把内容居中放置,true,false|}} ioscanCancelContentTouches={${12|当值为false时，一旦有子节点响应触摸操作，即使手指开始移动也不会拖动滚动视图,false,true|}} iosdecelerationRate={${13|松手滚动视图减速率(浮点数),0.998,0.9|}} iosdirectionalLockEnabled={${14|拖拽的时候会锁定只有垂直或水平方向可以滚动,true,false|}} iosmaximumZoomScale={${15:允许的最大缩放比例。默认值为1.0}} iosminimumZoomScale={${16:允许的最小缩放比例。默认值为1.0}} iosonScrollAnimationEnd={${17:滚动动画结束之后调用此回调}} pagingEnabled={${18|滚动条会停在滚动视图的尺寸的整数倍位置。这个可以用在水平分页上,true,false|}} scrollEnabled={${19|当值为false的时候，内容不能滚动,true,false|}} iosscrollsToTop={${20|点击状态栏的时候视图会滚动到顶部,true,false|}} ioszoomScale={${21|滚动视图内容初始的缩放比例,1.0|}}    >",
+      "</ScrollView>"
+    ],
+    "description": [
+      "ScrollView",
+      "从react-native引入",
+      "滚动视图",
+      "必须有高度"
+    ]
+  },
+  "ScrollView": {
+    "prefix": ["rn-ScrollView"],
+    "body": ["<ScrollView>${0}</ScrollView>"],
+    "description": ["ScrollView", "从react-native引入"]
+  },
+  "SegmentedControlIOS": {
+    "prefix": ["rn-SegmentedControlIOS"],
+    "body": [
+      "<SegmentedControlIOS onValueChange={()=>{}} selectedIndex={${1:默认选中的下标}} tintColor=\"#00ff00\" values={['One', 'Two']}>${0}</SegmentedControlIOS>"
+    ],
+    "description": [
+      "SegmentedControlIOS",
+      "从react-native引入",
+      "分段显示多个选项"
+    ]
+  },
+  "StatusBar": {
+    "prefix": ["rn-StatusBar"],
+    "body": [
+      "<StatusBar hidden={true,false} iosshowHideTransition={${1|通过hidden属性来显示或隐藏动画,'fade','slide'|}} androidbackgroundColor={${2:安卓背景色}} androidtranslucent=${3|安卓是否透明,true|} iosbarStyle={${4|ios文本色,default,'light-content'|}} iosnetworkActivityIndicatorVisible={${5|是否显示网络活动,true,false|}} />"
+    ],
+    "description": [
+      "StatusBar",
+      "从react-native引入",
+      "控制应用状态栏的组件(日期,wifi...)"
+    ]
+  }
 }

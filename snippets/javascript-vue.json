@@ -1268,7 +1268,7 @@
     "description": ["dispatch触发action"]
   },
   "vuex-this.$store.dispatch": {
-    "prefix": ["vuex-this.$stor.dispatch"],
+    "prefix": ["vuex-this.$store.dispatch"],
     "body": [
       "this.$$store.dispatch('${1:需要触发的action函数}'${2:,需要传递的参数})"
     ],
