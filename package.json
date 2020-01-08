@@ -30,7 +30,7 @@
     "git",
     "react-native"
   ],
-  "version": "1.9.1",
+  "version": "1.9.2",
   "publisher": "xuedao",
   "engines": {
     "vscode": "^1.27.0"
@@ -191,6 +191,10 @@
       {
         "language": "javascriptreact",
         "path": "./snippets/react.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./snippets/react-native-api.json"
       }
     ],
     "iconThemes": []

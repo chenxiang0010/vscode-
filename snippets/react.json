@@ -59,6 +59,16 @@
     ],
     "description": ["react模板"]
   },
+  "View": {
+    "prefix": ["rn-View"],
+    "body": ["<View>${0}</View>"],
+    "description": ["View", "从react-native引入"]
+  },
+  "Text": {
+    "prefix": ["rn-Text"],
+    "body": ["<Text numberOfLines={${1:文本过长裁剪行数}}>${0}</Text>"],
+    "description": ["Text", "从react-native引入"]
+  },
   "基础组件模板": {
     "prefix": ["!-react-native"],
     "body": [
@@ -599,5 +609,72 @@
       "从react-native引入",
       "控制应用状态栏的组件(日期,wifi...)"
     ]
+  },
+  "Switch": {
+    "prefix": ["rn-Switch"],
+    "body": [
+      "<Switch",
+      "    // disabled={true}//是否可以响应,默认为false,true是无法点击",
+      "    onTintColor='blue'  //开关打开时的背景颜色",
+      "    thumbTintColor='yellow' //开关上原形按钮的颜色",
+      "    tintColor='black' //关闭时背景颜色",
+      "    onValueChange={() => this.setState({isOn: !this.state.isOn})} //当状态值发生变化值回调",
+      "    value={this.state.isOn == true}//默认状态",
+      "    onValueChange={e => this.switchValue(e)} 当状态值发生变化值回调",
+      "/>"
+    ],
+    "description": ["Switch", "从react-native引入"]
+  },
+  "TextInput(详细)": {
+    "prefix": ["rn-TextInput"],
+    "body": [
+      "<TextInput style={{height:44}}",
+      "    autoCapitalize={${1|自动将特定字符切换为大写,所有的字符,'characters',每个单词的第一个字符,'words',每句话的第一个字符(默认),'sentences',不自动切换任何字符,'none'|}}",
+      "    autoFocus={${2|自动获得焦点,true,false|}}",
+      "    caretHidden={${3|是否隐藏光标,false,true|}}",
+      "    editable={${4|是否可编辑,true,false|}}",
+      "    keyboardType={${5|软键盘类型,'default','numeric','email-address'|}}",
+      "    maxLength={${6:限制文本框中最多的字符数}}",
+      "    multiline={${7|文本框中可以输入多行文字,false,true|}}",
+      "    placeholder=\"${8:大家好我是渣渣辉}\"",
+      "    placeholderTextColor=\"${9:提示字符颜色}\"",
+      "    ${10|“确定”按钮显示的内容(ios/andriod),returnKeyType,returnKeyLabel|}={${11|done,go,next,search,send|}} // Android ：none、previous  iOS：default、emergency-call、google、join、route、yahoo",
+      "    //onFocus={()=>{this.setState({text: 'onFocus'});}}",
+      "    //onBlur={()=>{this.setState({text: 'onBlur'});}}",
+      "    onChangeText={(txt)=>{this.setState({text: txt});}} // 内容变化时调用",
+      "    onEndEditing={()=>{this.setState({text: 'onEndEditing'});}} // 当文本输入结束后调用",
+      "    onSubmitEditing={()=>{this.setState({text: 'onSubmitEditing'});}} // 当'确定'按下后调用,如果multiline={true}，此属性不可用",
+      "    secureTextEntry={${12|密码框,true,false|}}",
+      "    selectTextOnFocus={${13|获得焦点的时候，所有的文字都会被选中,true,false|}}",
+      "    selection={{start:0,end:3}}",
+      "    selectionColor=${14|输入框高亮时的颜色（在iOS上还包括光标）,'red'|}",
+      "    value={this.state.text}",
+      "    iosclearButtonMode={${15|是否要在文本框右侧显示“清除”按钮,'never','while-editing','unless-editing','always'|}}",
+      "    iosclearTextOnFocus={${16|每次开始输入的时候都会清除文本框的内容,true,false|}}",
+      "    iosenablesReturnKeyAutomatically={${17|文本框内没有文字的时候禁用确认按钮,false,true|}}",
+      "    androidunderlineColorAndroid=${18|文本框的下划线颜色,'green'|} // 如果要去掉文本框的边框，请将此属性设为透明transparent",
+      "    ioskeyboardAppearance={${19|键盘的颜色,'default','light','dark'|}} />"
+    ],
+    "description": ["TextInput", "从react-native引入", "软键盘"]
+  },
+  "TextInput": {
+    "prefix": ["rn-TextInput"],
+    "body": ["<TextInput>${0}</TextInput>"],
+    "description": ["TextInput", "从react-native引入", "软键盘"]
+  },
+  "ToolbarAndroid": {
+    "prefix": ["rn-ToolbarAndroid"],
+    "body": [
+      "<ToolbarAndroid",
+      "    actions={toolbarActions}",
+      "    navIcon={require('./image/menu_icon.png')}",
+      "    logo={require('./image/logo.png')}",
+      "    style={styles.toolbar}",
+      "    subtitle=\"再敲代码不怕秃头吗\"",
+      "    subtitleColor=\"#ffffff\"",
+      "    titleColor=\"#ffffff\"",
+      "    title=\"老板们\"/>"
+    ],
+    "description": ["ToolbarAndroid", "从react-native引入", "安卓顶部导航"]
   }
 }

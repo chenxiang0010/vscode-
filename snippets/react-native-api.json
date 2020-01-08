@@ -1,0 +1,57 @@
+{
+  "api-ActionSheetIOS(弹出操作表)": {
+    "prefix": ["rn-api-ActionSheetIOS"],
+    "body": [
+      "ActionSheetIOS.showActionSheetWithOptions({",
+      "    options: ${1:（字符串数组）标题},",
+      "    cancelButtonIndex: ${2:选项中取消按钮所在的位置（索引）},",
+      "    destructiveButtonIndex: ${3:选项中删除按钮所在的位置（索引）},",
+      "    title: ${4:标题},",
+      "    message: ${5:标题下方的信息},",
+      "    tintColor: 'green'",
+      "},(index) => {",
+      "    alert('您点击的索引是：' + index)",
+      "})"
+    ],
+    "description": [
+      "api-ActionSheetIOS(弹出操作表)",
+      "从react-native引入",
+      "在iOS设备上显示一个ActionSheet弹出框"
+    ]
+  },
+  "api-ActionSheetIOS(弹出分享框)": {
+    "prefix": ["rn-api-ActionSheetIOS"],
+    "body": [
+      "ActionSheetIOS.showShareActionSheetWithOptions({",
+      "    url: ${1:要分享的 URL 地址},",
+      "    message: ${2:要分享的信息},",
+      "    subject: ${3:要分享的信息主题}",
+      "},(error) => {",
+      "    alert(error)",
+      "},(e) => {",
+      "    alert(e)",
+      "})"
+    ],
+    "description": [
+      "api-ActionSheetIOS(弹出分享框)",
+      "从react-native引入",
+      "在iOS设备上显示一个ActionSheet弹出框"
+    ]
+  },
+  "api-Alert": {
+    "prefix": ["rn-api-Alert"],
+    "body": [
+      "Alert.alert(",
+      "    '温馨提示',",
+      "    '再不休息秃头啦',",
+      "    [",
+      "        {text: '确定', onPress: () => console.log('Ask me later pressed')},",
+      "        {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},",
+      "        {text: '其他', onPress: () => console.log('OK Pressed')},",
+      "    ],",
+      "    { cancelable: false }",
+      ")"
+    ],
+    "description": ["api-Alert", "从react-native引入", "提示框"]
+  }
+}

@@ -433,6 +433,8 @@ npm 常用资源包 键入`npm`
 <details>
   <summary style="font-size:30px;font-weight: bold;">React/React-native指南(jsx)</summary>
 
+> 组件
+
 | 内容                 |                             快捷键 |
 | :------------------- | ---------------------------------: |
 | 一键创建模板         |                            !-react |
@@ -463,7 +465,20 @@ npm 常用资源包 键入`npm`
 | ScrollView(详细)     |                      rn-ScrollView |
 | SegmentedControlIOS  |             rn-SegmentedControlIOS |
 | StatusBar            |                       rn-StatusBar |
+| Switch               |                          rn-Switch |
+| Text                 |                            rn-Text |
+| View                 |                            rn-View |
+| TextInput(详细)      |                       rn-TextInput |
+| TextInput            |                       rn-TextInput |
+| ToolbarAndroid       |                  rn-ToolbarAndroid |
 
+> api代码段
+
+| 内容                       |                快捷键 |
+| :------------------------- | --------------------: |
+| ActionSheetIOS(弹出操作表) | rn-api-ActionSheetIOS |
+| ActionSheetIOS(弹出分享框) | rn-api-ActionSheetIOS |
+| Alert                      |          rn-api-Alert |
 
 </details>
 

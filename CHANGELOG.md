@@ -4,6 +4,12 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+## [1.9.2] 2020-01-08
+
+- react-native 原生组件 完善
+- react-native 部分api
+- 详细看react-native 使用说明
+
 ## [1.9.1] 2020-01-08
 
 - 新增react-native原生语法, 键入 `rn-`
