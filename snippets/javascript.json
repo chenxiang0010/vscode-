@@ -1,107 +1,107 @@
 {
   "计算两个日期之间的工作日(可自定义调休假期)": {
-      "prefix": ["hs-computed"],
-      "body": [
-        "//  假日",
-        "let Holiday = ['2020-01-01','2020-01-24', '2020-01-25', '2020-01-26', '2020-01-27', '2020-01-28', '2020-01-29', '2020-01-30', '2020-04-04', '2020-04-05', ",       "'2020-04-06', '2020-05-01', '2020-05-02', '2020-05-03', '2020-06-25', '2020-06-26', '2020-06-27', '2020-10-01', '2020-10-02', '2020-10-03', '2020-10-04', ",   "'2020-10-05', '2020-10-06', '2020-10-07']",
-        "// 调休加班补班",
-        "let WeekendsOff = []",
-        "/**",
-        " * 计算当前时间（或指定时间），向前推算周数(weekcount)，得到结果周的第一天的时期值；",
-        " * @param {String} mode 推算模式（'cn'表示国人习惯【周一至周日】；'en'表示国际习惯【周日至周一】）",
-        " * @param {Number} weekcount 表示周数（0-表示本周， 1-前一周，2-前两周，以此推算）；",
-        " * @param {String} end 指定时间的字符串（未指定则取当前时间）",
-        " */",
-        "function nearlyWeeks(mode = 'cn', weekcount = 0, end = new Date()) {",
-        "    end = new Date(new Date(end).toDateString())",
-        "    let days = 0",
-        "    if (mode === 'cn') //中国时间模式",
-        "        days = (new Date(end).getDay() == 0 ? 7 : new Date(end).getDay()) - 1",
-        "    else //歪果仁时间模式",
-        "        days = new Date(end).getDay()",
-        "    return new Date(new Date(end).getTime() - (days + weekcount * 7) * 24 * 60 * 60 * 1000)",
-        "}",
-        "/**",
-        " * 计算一段时间内工作的天数。不包括周末和法定节假日，法定调休日为工作日，周末为周六、周日两天",
-        " * @param {String} beginDay 时间段开始日期",
-        " * @param {String} endDay 时间段结束日期",
-        " * @param {String} mode 推算模式（'cn'表示国人习惯【周一至周日】；'en'表示国际习惯【周日至周一】）",
-        " */",
-        "function getWorkDayCount(beginDay, endDay, mode = 'cn') {",
-        "    let begin = new Date(new Date(beginDay).toDateString())",
-        "    let end = new Date(new Date(endDay).toDateString())",
-        "    //每天的毫秒总数，用于以下换算",
-        "    const daytime = 24 * 60 * 60 * 1000",
-        "    //两个时间段相隔的总天数",
-        "    const days = (end - begin) / daytime + 1",
-        "    //时间段起始时间所在周的第一天",
-        "    const beginWeekFirstDay = nearlyWeeks(mode, 0, new Date(beginDay).getTime()).getTime()",
-        "    //时间段结束时间所在周的最后天",
-        "    const endWeekOverDay = nearlyWeeks(mode, 0, new Date(endDay).getTime()).getTime() + 6 * daytime",
-        "    //由beginWeekFirstDay和endWeekOverDay换算出，周末的天数",
-        "    let weekEndCount = ((endWeekOverDay - beginWeekFirstDay) / daytime + 1) / 7 * 2",
-        "    //根据参数mode，调整周末天数的值",
-        "    if (mode == 'cn') { //中国",
-        "        //周一到周五  结束",
-        "        if (new Date(endDay).getDay() > 0 && new Date(endDay).getDay() < 6)  weekEndCount -= 2",
-        "        //周6  结束",
-        "        if (new Date(endDay).getDay() == 6) weekEndCount -= 1",
-        "        //周日  开始",
-        "        if (new Date(beginDay).getDay() == 0) weekEndCount -= 1 ",
-        "    } else { //歪果仁",
-        "        if (new Date(beginDay).getDay() < 6) weekEndCount -= 1",
-        "        if (new Date(beginDay).getDay() > 0) weekEndCount -= 1",
-        "    }",
-        "    //根据调休设置，调整周末天数（排除调休日）",
-        "    WeekendsOff.forEach(offitem => {",
-        "        let itemDay = new Date(offitem.split('-')[0] + '/' + offitem.split('-')[1] + '/' + offitem.split('-')[2])",
-        "        //如果调休日在时间段区间内，且为周末时间（周六或周日），周末天数值-1",
-        "        if (itemDay.getTime() >= begin.getTime() && itemDay.getTime() <= end.getTime() && (itemDay.getDay() == 0 || itemDay.getDay() == 6)) weekEndCount -= 1",
-        "    })",
-        "    //根据法定假日设置，计算时间段内周末的天数（包含法定假日）",
-        "    Holiday.forEach(itemHoliday => {",
-        "        let itemDay = new Date(itemHoliday.split('-')[0] + '/' + itemHoliday.split('-')[1] + '/' + itemHoliday.split('-')[2])",
-        "        //如果法定假日在时间段区间内，且为工作日时间（周一至周五），周末天数值+1",
-        "        if (itemDay.getTime() >= begin.getTime() && itemDay.getTime() <= end.getTime() && itemDay.getDay() > 0 && itemDay.getDay() < 6) weekEndCount += 1",
-        "    })",
-        "    //工作日 = 总天数 - 周末天数（包含法定假日并排除调休日）",
-        "    return parseInt(days - weekEndCount)",
-        "}",
-        "/**",
-        " * 计算工期结束日期",
-        " * @param {Number} howLong 工期多少天",
-        " * @param {Boolean} mode 周末是否加班[默认false,周末不算工期]",
-        " * @param {String} beginDay 开始日期",
-        " */",
-        "function getEndConstructionTime(howLong = 1, mode = false, beginDay = new Date()){",
-        "    let count = howLong //工作日",
-        "    //每天的毫秒总数，用于以下换算",
-        "    const daytime = 24 * 60 * 60 * 1000",
-        "    let res = 0",
-        "    function constructionPeriodIsOver(howLong = 1, mode = false, beginDay = new Date()){",
-        "        //结束日期",
-        "        let end = (howLong - 1) * daytime + new Date(beginDay).getTime()",
-        "        //周末节假日不算工期",
-        "        if(mode) {",
-        "            workDay = getWorkDayCount(new Date(beginDay),new Date(end))",
-        "            if(workDay >= count){ //工期结束[实际工作天数 >= 工期天数]",
-        "                return ",
-        "            }else{ //没结束",
-        "                res = (count + (howLong - workDay))",
-        "                constructionPeriodIsOver(res,true)",
-        "            }",
-        "        }else{",
-        "            return new Date(end)",
-        "        }",
-        "    }",
-        "    constructionPeriodIsOver(count, mode, beginDay)",
-        "    return new Date((res - 1) * daytime + new Date(beginDay).getTime())",
-        "}",
-        "console.log(getEndConstructionTime(10,true))"
-      ],
-      "description": [
-      "计算两个日期之间的工作日(可自定义调休假期)"
-      ]
+    "prefix": ["hs-computed"],
+    "body": [
+      "//  假日",
+      "let Holiday = ['2020-01-01','2020-01-24', '2020-01-25', '2020-01-26', '2020-01-27', '2020-01-28', '2020-01-29', '2020-01-30', '2020-04-04', '2020-04-05', ",
+      "'2020-04-06', '2020-05-01', '2020-05-02', '2020-05-03', '2020-06-25', '2020-06-26', '2020-06-27', '2020-10-01', '2020-10-02', '2020-10-03', '2020-10-04', ",
+      "'2020-10-05', '2020-10-06', '2020-10-07']",
+      "// 调休加班补班",
+      "let WeekendsOff = []",
+      "/**",
+      " * 计算当前时间（或指定时间），向前推算周数(weekcount)，得到结果周的第一天的时期值；",
+      " * @param {String} mode 推算模式（'cn'表示国人习惯【周一至周日】；'en'表示国际习惯【周日至周一】）",
+      " * @param {Number} weekcount 表示周数（0-表示本周， 1-前一周，2-前两周，以此推算）；",
+      " * @param {String} end 指定时间的字符串（未指定则取当前时间）",
+      " */",
+      "function nearlyWeeks(mode = 'cn', weekcount = 0, end = new Date()) {",
+      "    end = new Date(new Date(end).toDateString())",
+      "    let days = 0",
+      "    if (mode === 'cn') //中国时间模式",
+      "        days = (new Date(end).getDay() == 0 ? 7 : new Date(end).getDay()) - 1",
+      "    else //歪果仁时间模式",
+      "        days = new Date(end).getDay()",
+      "    return new Date(new Date(end).getTime() - (days + weekcount * 7) * 24 * 60 * 60 * 1000)",
+      "}",
+      "/**",
+      " * 计算一段时间内工作的天数。不包括周末和法定节假日，法定调休日为工作日，周末为周六、周日两天",
+      " * @param {String} beginDay 时间段开始日期",
+      " * @param {String} endDay 时间段结束日期",
+      " * @param {String} mode 推算模式（'cn'表示国人习惯【周一至周日】；'en'表示国际习惯【周日至周一】）",
+      " */",
+      "function getWorkDayCount(beginDay, endDay, mode = 'cn') {",
+      "    let begin = new Date(new Date(beginDay).toDateString())",
+      "    let end = new Date(new Date(endDay).toDateString())",
+      "    //每天的毫秒总数，用于以下换算",
+      "    const daytime = 24 * 60 * 60 * 1000",
+      "    //两个时间段相隔的总天数",
+      "    const days = (end - begin) / daytime + 1",
+      "    //时间段起始时间所在周的第一天",
+      "    const beginWeekFirstDay = nearlyWeeks(mode, 0, new Date(beginDay).getTime()).getTime()",
+      "    //时间段结束时间所在周的最后天",
+      "    const endWeekOverDay = nearlyWeeks(mode, 0, new Date(endDay).getTime()).getTime() + 6 * daytime",
+      "    //由beginWeekFirstDay和endWeekOverDay换算出，周末的天数",
+      "    let weekEndCount = ((endWeekOverDay - beginWeekFirstDay) / daytime + 1) / 7 * 2",
+      "    //根据参数mode，调整周末天数的值",
+      "    if (mode == 'cn') { //中国",
+      "        //周一到周五  结束",
+      "        if (new Date(endDay).getDay() > 0 && new Date(endDay).getDay() < 6)  weekEndCount -= 2",
+      "        //周6  结束",
+      "        if (new Date(endDay).getDay() == 6) weekEndCount -= 1",
+      "        //周日  开始",
+      "        if (new Date(beginDay).getDay() == 0) weekEndCount -= 1 ",
+      "    } else { //歪果仁",
+      "        if (new Date(beginDay).getDay() < 6) weekEndCount -= 1",
+      "        if (new Date(beginDay).getDay() > 0) weekEndCount -= 1",
+      "    }",
+      "    //根据调休设置，调整周末天数（排除调休日）",
+      "    WeekendsOff.forEach(offitem => {",
+      "        let itemDay = new Date(offitem.split('-')[0] + '/' + offitem.split('-')[1] + '/' + offitem.split('-')[2])",
+      "        //如果调休日在时间段区间内，且为周末时间（周六或周日），周末天数值-1",
+      "        if (itemDay.getTime() >= begin.getTime() && itemDay.getTime() <= end.getTime() && (itemDay.getDay() == 0 || itemDay.getDay() == 6)) weekEndCount -= 1",
+      "    })",
+      "    //根据法定假日设置，计算时间段内周末的天数（包含法定假日）",
+      "    Holiday.forEach(itemHoliday => {",
+      "        let itemDay = new Date(itemHoliday.split('-')[0] + '/' + itemHoliday.split('-')[1] + '/' + itemHoliday.split('-')[2])",
+      "        //如果法定假日在时间段区间内，且为工作日时间（周一至周五），周末天数值+1",
+      "        if (itemDay.getTime() >= begin.getTime() && itemDay.getTime() <= end.getTime() && itemDay.getDay() > 0 && itemDay.getDay() < 6) weekEndCount += 1",
+      "    })",
+      "    //工作日 = 总天数 - 周末天数（包含法定假日并排除调休日）",
+      "    return parseInt(days - weekEndCount)",
+      "}",
+      "/**",
+      " * 计算工期结束日期",
+      " * @param {Number} howLong 工期多少天",
+      " * @param {Boolean} mode 周末是否加班[默认false,周末不算工期]",
+      " * @param {String} beginDay 开始日期",
+      " */",
+      "function getEndConstructionTime(howLong = 1, mode = false, beginDay = new Date()){",
+      "    let count = howLong //工作日",
+      "    //每天的毫秒总数，用于以下换算",
+      "    const daytime = 24 * 60 * 60 * 1000",
+      "    let res = 0",
+      "    function constructionPeriodIsOver(howLong = 1, mode = false, beginDay = new Date()){",
+      "        //结束日期",
+      "        let end = (howLong - 1) * daytime + new Date(beginDay).getTime()",
+      "        //周末节假日不算工期",
+      "        if(mode) {",
+      "            workDay = getWorkDayCount(new Date(beginDay),new Date(end))",
+      "            if(workDay >= count){ //工期结束[实际工作天数 >= 工期天数]",
+      "                return ",
+      "            }else{ //没结束",
+      "                res = (count + (howLong - workDay))",
+      "                constructionPeriodIsOver(res,true)",
+      "            }",
+      "        }else{",
+      "            return new Date(end)",
+      "        }",
+      "    }",
+      "    constructionPeriodIsOver(count, mode, beginDay)",
+      "    return new Date((res - 1) * daytime + new Date(beginDay).getTime())",
+      "}",
+      "console.log(getEndConstructionTime(10,true))"
+    ],
+    "description": ["计算两个日期之间的工作日(可自定义调休假期)"]
   },
   "时间格式化(N天前)": {
     "prefix": ["format-time"],
@@ -543,16 +543,659 @@
     "description": ["分组提取"]
   },
 
-  "汉字": {
+  "火车车次": {
     "prefix": ["zzbds"],
-    "body": ["// 汉字", "^[\\u4e00-\\u9fa5]{0,}$"],
-    "description": ["汉字"]
+    "body": [
+      "// 火车车次",
+      "/^[GCDZTSPKXLY1-9]\\d{1,4}$/",
+      "// 例子",
+      "G1868",
+      "D102",
+      "D9",
+      "Z5",
+      "Z24",
+      "Z17"
+    ],
+    "description": ["火车车次"]
   },
-
-  "英文和数字": {
+  "手机机身码(IMEI)": {
     "prefix": ["zzbds"],
-    "body": ["//英文和数字", "^[A-Za-z0-9]+$"],
-    "description": ["英文和数字"]
+    "body": [
+      "// 手机机身码(IMEI)",
+      "/^\\d{15,17}$/",
+      "// 例子",
+      "123456789012345",
+      "1234567890123456",
+      "12345678901234567"
+    ],
+    "description": ["手机机身码(IMEI)"]
+  },
+  "必须带端口号的网址(或ip)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 必须带端口号的网址(或ip)",
+      "/^((ht|f)tps?:\\/\\/)?[\\w-]+(\\.[\\w-]+)+:\\d{1,5}\\/?$/",
+      "// 例子",
+      "https://www.qq.com:8080",
+      "127.0.0.1:5050",
+      "baidu.com:8001",
+      "http://192.168.1.1:9090"
+    ],
+    "description": ["必须带端口号的网址(或ip)"]
+  },
+  "网址(支持端口和\"?+参数\"和\"#+参数)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 网址(支持端口和\"?+参数\"和\"#+参数)",
+      "/^(((ht|f)tps?):\\/\\/)?[\\w-]+(\\.[\\w-]+)+([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?$/",
+      "// 例子",
+      "www.qq.com",
+      "https://baidu.com",
+      "360.com:8080/vue/#/a=1&b=2"
+    ],
+    "description": ["网址(支持端口和\"?+参数\"和\"#+参数)"]
+  },
+  "统一社会信用代码": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 统一社会信用代码",
+      "/^[0-9A-HJ-NPQRTUWXY]{2}\\d{6}[0-9A-HJ-NPQRTUWXY]{10}$/",
+      "// 例子",
+      "91230184MA1BUFLT44",
+      "92371000MA3MXH0E3W"
+    ],
+    "description": ["统一社会信用代码"]
+  },
+  "迅雷链接": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 迅雷链接",
+      "/^thunderx?:\\/\\/[a-zA-Z\\d]+=$/",
+      "// 例子",
+      "thunder://QUEsICdtYWduZXQ6P3h0PXVybjpidGloOjBCQTE0RTUxRkUwNjU1RjE0Qzc4NjE4RjY4NDY0QjZFNTEyNjcyOUMnWlo="
+    ],
+    "description": ["迅雷链接"]
+  },
+  "ed2k链接(宽松匹配)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// ed2k链接(宽松匹配)",
+      "/^ed2k:\\/\\/\\|file\\|.+\\|\\/$/",
+      "// 例子",
+      "ed2k://|file|%E5%AF%84%E7%94%9F%E8%99%AB.PARASITE.2019.HD-1080p.X264.AAC-UUMp4(ED2000.COM).mp4|2501554832|C0B93E0879C6071CBED732C20CE577A3|h=5HTKZPQFYRKORN52I3M7GQ4QQCIHFIBV|/"
+    ],
+    "description": ["ed2k链接(宽松匹配)"]
+  },
+  "磁力链接(宽松匹配)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 磁力链接(宽松匹配)",
+      "/^magnet:\\?xt=urn:btih:[0-9a-fA-F]{40,}.*$/",
+      "// 例子",
+      "magnet:?xt=urn:btih:40A89A6F4FB1498A98087109D012A9A851FBE0FC"
+    ],
+    "description": ["磁力链接(宽松匹配)"]
+  },
+  "子网掩码": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 子网掩码",
+      "/^(?:\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5])(?:\\.(?:\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5])){3}$/",
+      "// 例子",
+      "255.255.255.0",
+      "255.224.0.0"
+    ],
+    "description": ["子网掩码"]
+  },
+  "linux\"文件夹\"路径": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// linux\"文件夹\"路径",
+      "/^\\/(\\w+\\/?)+$/",
+      "// 例子",
+      "/usr/ad/dd",
+      "/root/"
+    ],
+    "description": ["linux\"文件夹\"路径"]
+  },
+  "linux\"文件\"路径": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// linux\"文件\"路径",
+      "/^\\/(\\w+\\/)+\\w+\\.\\w+$/",
+      "// 例子",
+      "/usr/ad/dd/a.js",
+      "/root/b.ts"
+    ],
+    "description": ["linux\"文件\"路径"]
+  },
+  "window下\"文件夹\"路径": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// window下\"文件夹\"路径",
+      "/^[a-zA-Z]:\\\\(?:\\w+\\\\?)*$/",
+      "// 例子",
+      "C:\\Users\\Administrator\\Desktop",
+      "e:\\m\\"
+    ],
+    "description": ["window下\"文件夹\"路径"]
+  },
+  "window下\"文件\"路径": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// window下\"文件\"路径",
+      "/^[a-zA-Z]:\\\\(?:\\w+\\\\)*\\w+\\.\\w+$/",
+      "// 例子",
+      "C:\\Users\\Administrator\\Desktop\\qq.link",
+      "e:\\m\\vscode.exe"
+    ],
+    "description": ["window下\"文件\"路径"]
+  },
+  "A股代码": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// A股代码",
+      "/^(s[hz]|S[HZ])(000[\\d]{3}|002[\\d]{3}|300[\\d]{3}|600[\\d]{3}|60[\\d]{4})$/",
+      "// 例子",
+      "sz000858",
+      "SZ002136",
+      "sz300675",
+      "SH600600",
+      "sh601155"
+    ],
+    "description": ["A股代码"]
+  },
+  "大于等于0, 小于等于150, 支持小数位出现5, 如145.5, 用于判断考卷分数": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 大于等于0, 小于等于150, 支持小数位出现5, 如145.5, 用于判断考卷分数",
+      "/^150$|^(?:\\d|[1-9]\\d|1[0-4]\\d)(?:.5)?$/",
+      "// 例子",
+      150,
+      100.5
+    ],
+    "description": [
+      "大于等于0, 小于等于150, 支持小数位出现5, 如145.5, 用于判断考卷分数"
+    ]
+  },
+  "html注释": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// html注释",
+      "/<!--[\\s\\S]*?-->/",
+      "// 例子",
+      "<!--<div class=\"_bubble\"></div>-->"
+    ],
+    "description": ["html注释"]
+  },
+  "md5格式(32位)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// md5格式(32位)",
+      "/^([a-f\\d]{32}|[A-F\\d]{32})$/",
+      "// 例子",
+      "21fe181c5bfc16306a6828c1f7b762e8"
+    ],
+    "description": ["md5格式(32位)"]
+  },
+  "版本号格式必须为X.Y.Z": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 版本号格式必须为X.Y.Z",
+      "/^\\d+(?:\\.\\d+){2}$/",
+      "// 例子",
+      "16.3.10"
+    ],
+    "description": ["版本号格式必须为X.Y.Z"]
+  },
+  "视频链接地址（视频格式可按需增删）": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 视频链接地址（视频格式可按需增删）",
+      "/^https?:\\/\\/(.+\\/)+.+(\\.(swf|avi|flv|mpg|rm|mov|wav|asf|3gp|mkv|rmvb|mp4))$/i",
+      "// 例子",
+      "http://www.abc.com/video/wc.avi"
+    ],
+    "description": ["视频链接地址（视频格式可按需增删）"]
+  },
+  "图片链接地址（图片格式可按需增删）": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 图片链接地址（图片格式可按需增删）",
+      "/^https?:\\/\\/(.+\\/)+.+(\\.(gif|png|jpg|jpeg|webp|svg|psd|bmp|tif))$/i",
+      "// 例子",
+      "https://www.abc.com/logo.png"
+    ],
+    "description": ["图片链接地址（图片格式可按需增删）"]
+  },
+  "24小时制时间（HH:mm:ss）": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 24小时制时间（HH:mm:ss）",
+      "/^(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$/",
+      "// 例子",
+      "23:34:55"
+    ],
+    "description": ["24小时制时间（HH:mm:ss）"]
+  },
+  "12小时制时间（hh:mm:ss）": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 12小时制时间（hh:mm:ss）",
+      "/^(?:1[0-2]|0?[1-9]):[0-5]\\d:[0-5]\\d$/",
+      "// 例子",
+      "11:34:55"
+    ],
+    "description": ["12小时制时间（hh:mm:ss）"]
+  },
+  "base64格式": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// base64格式",
+      "/^\\s*data:(?:[a-z]+\\/[a-z0-9-+.]+(?:;[a-z-]+=[a-z0-9-]+)?)?(?:;base64)?,([a-z0-9!$&',()*+;=\\-._~:@/?%\\s]*?)\\s*$/i",
+      "// 例子",
+      "data:image/gif;base64,xxxx=="
+    ],
+    "description": ["base64格式"]
+  },
+  "数字/货币金额（支持负数、千分位分隔符）": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 数字/货币金额（支持负数、千分位分隔符）",
+      "/^-?\\d+(,\\d{3})*(\\.\\d{1,2})?$/",
+      "// 例子",
+      100,
+      -0.99,
+      3,
+      234.32,
+      -1,
+      900,
+      235.09,
+      "12,345,678.90"
+    ],
+    "description": ["数字/货币金额（支持负数、千分位分隔符）"]
+  },
+  "数字/货币金额 (只支持正数、不支持校验千分位分隔符)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 数字/货币金额 (只支持正数、不支持校验千分位分隔符)",
+      "/(?:^[1-9]([0-9]+)?(?:\\.[0-9]{1,2})?$)|(?:^(?:0){1}$)|(?:^[0-9]\\.[0-9](?:[0-9])?$)/",
+      "// 例子",
+      0.99,
+      8.99,
+      666
+    ],
+    "description": ["数字/货币金额 (只支持正数、不支持校验千分位分隔符)"]
+  },
+  "银行卡号（10到30位, 覆盖对公/私账户, 参考[微信支付](https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=22_1)）": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 银行卡号（10到30位, 覆盖对公/私账户, 参考[微信支付](https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=22_1)）",
+      "/^[1-9]\\d{9,29}$/",
+      "// 例子",
+      6234567890,
+      6222026006705354000
+    ],
+    "description": [
+      "银行卡号（10到30位, 覆盖对公/私账户, 参考[微信支付](https://pay.weixin.qq.com/wiki/doc/api/xiaowei.php?chapter=22_1)）"
+    ]
+  },
+  "中文姓名": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 中文姓名",
+      "/^(?:[\\u4e00-\\u9fa5·]{2,16})$/",
+      "// 例子",
+      "葛二蛋",
+      "凯文·杜兰特",
+      "德克·维尔纳·诺维茨基"
+    ],
+    "description": ["中文姓名"]
+  },
+  "英文姓名": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 英文姓名",
+      "/(^[a-zA-Z]{1}[a-zA-Z\\s]{0,20}[a-zA-Z]{1}$)/",
+      "// 例子",
+      "James",
+      "Kevin Wayne Durant",
+      "Dirk Nowitzki"
+    ],
+    "description": ["英文姓名"]
+  },
+  "新能源车牌号": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 新能源车牌号",
+      "/[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领 A-Z]{1}[A-HJ-NP-Z]{1}(([0-9]{5}[DF])|([DF][A-HJ-NP-Z0-9][0-9]{4}))$/",
+      "// 例子",
+      "京AD92035",
+      "甘G23459F"
+    ],
+    "description": ["新能源车牌号"]
+  },
+  "非新能源车牌号": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 非新能源车牌号",
+      "/^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领 A-Z]{1}[A-HJ-NP-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/",
+      "// 例子",
+      "京A00599",
+      "黑D23908"
+    ],
+    "description": ["非新能源车牌号"]
+  },
+  "车牌号(新能源+非新能源)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 车牌号(新能源+非新能源)",
+      "/^(?:[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领 A-Z]{1}[A-HJ-NP-Z]{1}(?:(?:[0-9]{5}[DF])|(?:[DF](?:[A-HJ-NP-Z0-9])[0-9]{4})))|(?:[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领 A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9 挂学警港澳]{1})$/",
+      "// 例子",
+      "京A12345D",
+      "京A00599"
+    ],
+    "description": ["车牌号(新能源+非新能源)"]
+  },
+  "中国手机号(严谨), 根据工信部2019年最新公布的手机号段": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 中国手机号(严谨), 根据工信部2019年最新公布的手机号段",
+      "/^(?:(?:\\+|00)86)?1(?:(?:3[\\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\\d])|(?:9[1|8|9]))\\d{8}$/",
+      "// 例子",
+      "008618311006933",
+      "+8617888829981",
+      "19119255642"
+    ],
+    "description": ["中国手机号(严谨), 根据工信部2019年最新公布的手机号段"]
+  },
+  "中国手机号(宽松), 只要是13,14,15,16,17,18,19开头即可": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 中国手机号(宽松), 只要是13,14,15,16,17,18,19开头即可",
+      "/^(?:(?:\\+|00)86)?1[3-9]\\d{9}$/",
+      "// 例子",
+      "008618311006933",
+      "+8617888829981",
+      "19119255642"
+    ],
+    "description": ["中国手机号(宽松), 只要是13,14,15,16,17,18,19开头即可"]
+  },
+  "中国手机号(最宽松), 只要是1开头即可, 如果你的手机号是用来接收短信, 优先建议选择这一条": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 中国手机号(最宽松), 只要是1开头即可, 如果你的手机号是用来接收短信, 优先建议选择这一条",
+      "/^(?:(?:\\+|00)86)?1\\d{10}$/",
+      "// 例子",
+      "008618311006933",
+      "+8617888829981",
+      "19119255642"
+    ],
+    "description": [
+      "中国手机号(最宽松), 只要是1开头即可, 如果你的手机号是用来接收短信, 优先建议选择这一条"
+    ]
+  },
+  "日期": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 日期",
+      "/^\\d{4}(-)(1[0-2]|0?\\d)\\1([0-2]\\d|\\d|30|31)$/",
+      "// 例子",
+      "1990-12-12",
+      "2020-1-1"
+    ],
+    "description": ["日期"]
+  },
+  "邮箱地址(email)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 邮箱地址(email)",
+      "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/",
+      "// 例子",
+      "90203918@qq.com",
+      "nbilly@126.com"
+    ],
+    "description": ["邮箱地址(email)"]
+  },
+  "国内座机电话,如: 0341-86091234": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 国内座机电话,如: 0341-86091234",
+      "/\\d{3}-\\d{8}|\\d{4}-\\d{7}/",
+      "// 例子",
+      "0936-4211235"
+    ],
+    "description": ["国内座机电话,如: 0341-86091234"]
+  },
+  "一代身份证号(15位数字)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 一代身份证号(15位数字)",
+      "/^\\d{8}(0\\d|10|11|12)([0-2]\\d|30|31)\\d{3}$/",
+      "// 例子",
+      "622001790131123"
+    ],
+    "description": ["一代身份证号(15位数字)"]
+  },
+  "二代身份证号(18位数字),最后一位是校验位,可能为数字或字符X": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 二代身份证号(18位数字),最后一位是校验位,可能为数字或字符X",
+      "/^\\d{6}(18|19|20)\\d{2}(0\\d|10|11|12)([0-2]\\d|30|31)\\d{3}[\\dXx]$/",
+      "// 例子",
+      "62222319991205131x"
+    ],
+    "description": ["二代身份证号(18位数字),最后一位是校验位,可能为数字或字符X"]
+  },
+  "身份证号, 支持1/2代(15位/18位数字)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 身份证号, 支持1/2代(15位/18位数字)",
+      "/(^\\d{8}(0\\d|10|11|12)([0-2]\\d|30|31)\\d{3}$)|(^\\d{6}(18|19|20)\\d{2}(0\\d|10|11|12)([0-2]\\d|30|31)\\d{3}(\\d|X|x)$)/",
+      "// 例子",
+      "62222319991205131x",
+      "622223199912051311",
+      "622001790131123"
+    ],
+    "description": ["身份证号, 支持1/2代(15位/18位数字)"]
+  },
+  "护照（包含香港、澳门）": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 护照（包含香港、澳门）",
+      "/(^[EeKkGgDdSsPpHh]\\d{8}$)|(^(([Ee][a-fA-F])|([DdSsPp][Ee])|([Kk][Jj])|([Mm][Aa])|(1[45]))\\d{7}$)/",
+      "// 例子",
+      "s28233515",
+      "141234567",
+      "159203084",
+      "MA1234567",
+      "K25345719"
+    ],
+    "description": ["护照（包含香港、澳门）"]
+  },
+  "帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线组合": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线组合",
+      "/^[a-zA-Z]\\w{4,15}$/",
+      "// 例子",
+      "justin",
+      "justin1989",
+      "justin_666"
+    ],
+    "description": [
+      "帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线组合"
+    ]
+  },
+  "纯中文/汉字": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 纯中文/汉字",
+      "/^(?:[\\u3400-\\u4DB5\\u4E00-\\u9FEA\\uFA0E\\uFA0F\\uFA11\\uFA13\\uFA14\\uFA1F\\uFA21\\uFA23\\uFA24\\uFA27-\\uFA29]|[\\uD840-\\uD868\\uD86A-\\uD86C\\uD86F-\\uD872\\uD874-\\uD879][\\uDC00-\\uDFFF]|\\uD869[\\uDC00-\\uDED6\\uDF00-\\uDFFF]|\\uD86D[\\uDC00-\\uDF34\\uDF40-\\uDFFF]|\\uD86E[\\uDC00-\\uDC1D\\uDC20-\\uDFFF]|\\uD873[\\uDC00-\\uDEA1\\uDEB0-\\uDFFF]|\\uD87A[\\uDC00-\\uDFE0])+$/",
+      "// 例子",
+      "正则",
+      "代码敲到秃头了"
+    ],
+    "description": ["纯中文/汉字"]
+  },
+  "是否小数": {
+    "prefix": ["zzbds"],
+    "body": ["// 是否小数", "/^\\d+\\.\\d+$/", "// 例子", "0.0", "0.09"],
+    "description": ["是否小数"]
+  },
+  "纯数字": {
+    "prefix": ["zzbds"],
+    "body": ["// 纯数字", "/^\\d{1,}$/", "// 例子", 12345678],
+    "description": ["纯数字"]
+  },
+  "是否html标签(宽松匹配)": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 是否html标签(宽松匹配)",
+      "/<(\\w+)[^>]*>(.*?<\\/\\1>)?/",
+      "// 例子",
+      "<div id=\"app\"> 2333 </div>",
+      "<input type=\"text\">",
+      "<br>"
+    ],
+    "description": ["是否html标签(宽松匹配)"]
+  },
+  "是否qq号格式正确": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 是否qq号格式正确",
+      "/^[1-9][0-9]{4,10}$/",
+      "// 例子",
+      903013545,
+      9020304
+    ],
+    "description": ["是否qq号格式正确"]
+  },
+  "是否由数字和字母组成": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 是否由数字和字母组成",
+      "/^[A-Za-z0-9]+$/",
+      "// 例子",
+      "james666",
+      "haha233hi"
+    ],
+    "description": ["是否由数字和字母组成"]
+  },
+  "纯英文字母": {
+    "prefix": ["zzbds"],
+    "body": ["// 纯英文字母", "/^[a-zA-Z]+$/", "// 例子", "Russel"],
+    "description": ["纯英文字母"]
+  },
+  "纯小写英文字母组成": {
+    "prefix": ["zzbds"],
+    "body": ["// 纯小写英文字母组成", "/^[a-z]+$/", "// 例子", "russel"],
+    "description": ["纯小写英文字母组成"]
+  },
+  "纯大写英文字母": {
+    "prefix": ["zzbds"],
+    "body": ["// 纯大写英文字母", "/^[A-Z]+$/", "// 例子", "ABC", "KD"],
+    "description": ["纯大写英文字母"]
+  },
+  "密码强度校验，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 密码强度校验，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符",
+      "/^.*(?=.{6,})(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/",
+      "// 例子",
+      "Kd@curry666"
+    ],
+    "description": [
+      "密码强度校验，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符"
+    ]
+  },
+  "用户名校验，4到16位（字母，数字，下划线，减号）": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 用户名校验，4到16位（字母，数字，下划线，减号）",
+      "/^[a-zA-Z0-9_-]{4,16}$/",
+      "// 例子",
+      "xiaohua_qq"
+    ],
+    "description": ["用户名校验，4到16位（字母，数字，下划线，减号）"]
+  },
+  "ip-v4": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// ip-v4",
+      "/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/",
+      "// 例子",
+      "172.16.0.0",
+      "127.0.0.0"
+    ],
+    "description": ["ip-v4"]
+  },
+  "ip-v6": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// ip-v6",
+      "/^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$/i",
+      "// 例子",
+      "2031:0000:130f:0000:0000:09c0:876a:130b"
+    ],
+    "description": ["ip-v6"]
+  },
+  "16进制颜色": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 16进制颜色",
+      "/^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/",
+      "// 例子",
+      "#f00",
+      "#F90",
+      "#000",
+      "#fe9de8"
+    ],
+    "description": ["16进制颜色"]
+  },
+  "微信号，6至20位，以字母开头，字母，数字，减号，下划线": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 微信号，6至20位，以字母开头，字母，数字，减号，下划线",
+      "/^[a-zA-Z][-_a-zA-Z0-9]{5,19}$/",
+      "// 例子",
+      "github666",
+      "kd_-666"
+    ],
+    "description": ["微信号，6至20位，以字母开头，字母，数字，减号，下划线"]
+  },
+  "中国邮政编码": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 中国邮政编码",
+      "/^(0[1-7]|1[0-356]|2[0-7]|3[0-6]|4[0-7]|5[1-7]|6[1-7]|7[0-5]|8[013-6])\\d{4}$/",
+      "// 例子",
+      "734500",
+      "100101"
+    ],
+    "description": ["中国邮政编码"]
+  },
+  "只包含中文和数字": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 只包含中文和数字",
+      "/^((?:[\\u3400-\\u4DB5\\u4E00-\\u9FEA\\uFA0E\\uFA0F\\uFA11\\uFA13\\uFA14\\uFA1F\\uFA21\\uFA23\\uFA24\\uFA27-\\uFA29]|[\\uD840-\\uD868\\uD86A-\\uD86C\\uD86F-\\uD872\\uD874-\\uD879][\\uDC00-\\uDFFF]|\\uD869[\\uDC00-\\uDED6\\uDF00-\\uDFFF]|\\uD86D[\\uDC00-\\uDF34\\uDF40-\\uDFFF]|\\uD86E[\\uDC00-\\uDC1D\\uDC20-\\uDFFF]|\\uD873[\\uDC00-\\uDEA1\\uDEB0-\\uDFFF]|\\uD87A[\\uDC00-\\uDFE0])|(\\d))+$/",
+      "// 例子",
+      "哈哈哈",
+      "你好6啊"
+    ],
+    "description": ["只包含中文和数字"]
+  },
+  "不能包含字母": {
+    "prefix": ["zzbds"],
+    "body": [
+      "// 不能包含字母",
+      "/^[^A-Za-z]*$/",
+      "// 例子",
+      "你好6啊",
+      "@¥()！"
+    ],
+    "description": ["不能包含字母"]
   },
 
   "长度为3-20的所有字符": {
@@ -560,43 +1203,6 @@
     "body": ["//长度为3-20的所有字符", "^.{3,20}$"],
     "description": ["长度为3-20的所有字符"]
   },
-
-  "由26个英文字母组成的字符串": {
-    "prefix": ["zzbds"],
-    "body": ["//由26个英文字母组成的字符串", "^[A-Za-z]+$"],
-    "description": ["由26个英文字母组成的字符串"]
-  },
-
-  "由26个大写英文字母组成的字符串": {
-    "prefix": ["zzbds"],
-    "body": ["//由26个大写英文字母组成的字符串", "^[A-Z]+$"],
-    "description": ["由26个大写英文字母组成的字符串"]
-  },
-
-  "由26个小写英文字母组成的字符串": {
-    "prefix": ["zzbds"],
-    "body": ["//由26个小写英文字母组成的字符串", "^[a-z]+$"],
-    "description": ["由26个小写英文字母组成的字符串"]
-  },
-
-  "由数字和26个英文字母组成的字符串": {
-    "prefix": ["zzbds"],
-    "body": ["//由数字和26个英文字母组成的字符串", "^[A-Za-z0-9]+$"],
-    "description": ["由数字和26个英文字母组成的字符串"]
-  },
-
-  "由数字、26个英文字母或者下划线组成的字符串": {
-    "prefix": ["zzbds"],
-    "body": ["//由数字、26个英文字母或者下划线组成的字符串", "^\\w+$"],
-    "description": ["由数字、26个英文字母或者下划线组成的字符串"]
-  },
-
-  "中文、英文、数字包括下划线": {
-    "prefix": ["zzbds"],
-    "body": ["//中文、英文、数字包括下划线", "^[\\u4E00-\\u9FA5A-Za-z0-9_]+$"],
-    "description": ["中文、英文、数字包括下划线"]
-  },
-
   "中文、英文、数字但不包括下划线等符号": {
     "prefix": ["zzbds"],
     "body": [
@@ -605,144 +1211,21 @@
     ],
     "description": ["中文、英文、数字但不包括下划线等符号"]
   },
-
   "含有^%&',;=?$\\\"等字符": {
     "prefix": ["zzbds"],
     "body": ["// 含有^%&',;=?$\\\"等字符", "[^%&',;=?$\\x22]+"],
     "description": ["含有^%&',;=?$\\\"等字符"]
   },
-
   "含有~的字符": {
     "prefix": ["zzbds"],
     "body": ["//含有~的字符", "[^~\\x22]+"],
     "description": ["含有~的字符"]
   },
-
-  "Email地址": {
-    "prefix": ["zzbds"],
-    "body": [
-      "//匹配Email地址",
-      "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$"
-    ],
-    "description": ["匹配Email地址", "表单验证时很实用"]
-  },
-
-  "域名": {
-    "prefix": ["zzbds"],
-    "body": [
-      "//域名",
-      "[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(/.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+/.?"
-    ],
-    "description": ["域名"]
-  },
-
-  "InternetURL": {
-    "prefix": ["zzbds"],
-    "body": ["//InternetURL", "[a-zA-z]+://[^s]*"],
-    "description": [
-      "InternetURL",
-      "网上流传的版本功能很有限，上面这个基本可以满足需求"
-    ]
-  },
-
-  "匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)": {
-    "prefix": ["zzbds"],
-    "body": [
-      "//字母开头，允许5-16字节，允许字母数字下划线",
-      "^[a-zA-Z][a-zA-Z0-9_]{4,15}$"
-    ],
-    "description": [
-      "匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)",
-      "表单验证时很实用"
-    ]
-  },
-
-  "手机号码": {
-    "prefix": ["zzbds"],
-    "body": [
-      "//手机号码",
-      "^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$, //标准",
-      "^1[356789]\\d{9}$ //1开头,第二位为356789"
-    ],
-    "description": ["手机号码"]
-  },
-
-  "电话号码": {
-    "prefix": ["zzbds"],
-    "body": ["//电话号码", "^(\\(\\d{3,4}-)|\\d{3.4}-)?\\d{7,8}$"],
-    "description": [
-      "电话号码",
-      "XXX-XXXXXXX、XXXX-XXXXXXXX、XXX-XXXXXXX、XXX-XXXXXXXX、XXXXXXX 和 XXXXXXXX"
-    ]
-  },
-
-  "电话号码(支持手机号,3-4位区号,7-8位直播号,1-4位分机)": {
-    "prefix": ["zzbds"],
-    "body": [
-      "//电话号码(支持手机号,3-4位区号,7-8位直播号,1-4位分机)",
-      "((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)"
-    ],
-    "description": ["电话号码(支持手机号,3-4位区号,7-8位直播号,1-4位分机)"]
-  },
-
-  "匹配国内电话号码": {
-    "prefix": ["zzbds"],
-    "body": ["//匹配国内电话号码", "\\d{3}-\\d{8}|\\d{4}-\\d{7}"],
-    "description": [
-      "匹配国内电话号码",
-      "匹配形式如 0511-4405222 或 021-87888822"
-    ]
-  },
-
-  "密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)": {
-    "prefix": ["zzbds"],
-    "body": [
-      "//密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)",
-      "^[a-zA-Z]\\w{5,17}$"
-    ],
-    "description": [
-      "密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)"
-    ]
-  },
-
-  "强密码(必须包含大小写字母和数字的组合，不能使用特殊字符，长度在 8-10 之间)": {
-    "prefix": ["zzbds"],
-    "body": [
-      "//强密码(必须包含大小写字母和数字的组合，不能使用特殊字符，长度在 8-10 之间)",
-      "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,10}$"
-    ],
-    "description": [
-      "强密码(必须包含大小写字母和数字的组合，不能使用特殊字符，长度在 8-10 之间)"
-    ]
-  },
-
-  "强密码(必须包含大小写字母和数字的组合，可以使用特殊字符，长度在8-10之间)": {
-    "prefix": ["zzbds"],
-    "body": [
-      "//强密码(必须包含大小写字母和数字的组合，可以使用特殊字符，长度在8-10之间)",
-      "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$"
-    ],
-    "description": [
-      "强密码(必须包含大小写字母和数字的组合，可以使用特殊字符，长度在8-10之间)"
-    ]
-  },
-
-  "日期格式": {
-    "prefix": ["zzbds"],
-    "body": [
-      "//日期",
-      "^19\\d{2}|20[01]\\d-(0?[1-9]|1[012])-(1\\d|2\\d|3[01]|0?[1-9]) //1900年开始到2020年",
-      "^\\d{4}-\\d{1,2}-\\d{1,2} //0000-(0)00-(0)00"
-    ],
-    "description": ["日期格式"]
-  },
-
   "一年的12个月(01～09和1～12)": {
     "prefix": ["zzbds"],
     "body": ["//一年的12个月(01～09和1～12)", "^(0?[1-9]|1[0-2])$"],
     "description": ["一年的12个月(01～09和1～12)"]
   },
-
   "一个月的31天(01～09和1～31)": {
     "prefix": ["zzbds"],
     "body": [
@@ -751,94 +1234,56 @@
     ],
     "description": ["一个月的31天(01～09和1～31)"]
   },
-
-  "匹配腾讯QQ号": {
-    "prefix": ["zzbds"],
-    "body": ["//QQ号", "^[1-9][0-9]{4,10}"],
-    "description": ["匹配腾讯QQ号", "腾讯QQ号从10000开始"]
-  },
-
-  "匹配中国邮政编码": {
-    "prefix": ["zzbds"],
-    "body": ["//匹配中国邮政编码", "[1-9]\\d{5}(?!\\d)"],
-    "description": ["匹配中国邮政编码", "中国邮政编码为6位数字"]
-  },
-
-  "匹配身份证": {
-    "prefix": ["zzbds"],
-    "body": ["//匹配身份证", "^\\d{15}$|^\\d{18}$|^\\d{17}[0-9xX]$"],
-    "description": ["匹配身份证", "中国的身份证为15位或18位"]
-  },
-
-  "匹配ip地址": {
-    "prefix": ["zzbds"],
-    "body": [
-      "//匹配ip地址",
-      "((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d))"
-    ],
-    "description": ["匹配ip地址"]
-  },
-
   "xml文件": {
     "prefix": ["zzbds"],
     "body": ["//xml文件", "^([a-zA-Z]+-?)+[a-zA-Z0-9]+\\.[x|X][m|M][l|L]$"],
     "description": ["xml文件"]
   },
-
   "空白行": {
     "prefix": ["zzbds"],
     "body": ["//空白行", "\\n\\s*\\r"],
     "description": ["空白行", "可以用来删除空白行"]
   },
-
   "正整数": {
     "prefix": ["zzbds", "zznum"],
     "body": ["//正整数", "^[1-9]\\d*$"],
     "description": ["匹配特定数字(正整数)"]
   },
-
   "负整数": {
     "prefix": ["zzbds", "zznum"],
     "body": ["//负整数", "^-[1-9]\\d*$"],
     "description": ["匹配特定数字(负整数)"]
   },
-
   "整数": {
     "prefix": ["zzbds", "zznum"],
     "body": ["//整数", "^-?[1-9]\\d*$"],
     "description": ["匹配特定数字(整数)"]
   },
-
   "非负整数[正整数 + 0]": {
     "prefix": ["zzbds", "zznum"],
     "body": ["//非负整数[正整数 + 0]", "[1-9]\\d*|0$"],
     "description": ["匹配特定数字(非负整数[正整数 + 0])"]
   },
-
   "非正整数[负整数 + 0]": {
     "prefix": ["zzbds", "zznum"],
     "body": ["//非正整数[负整数 + 0]", "^-[1-9]\\d*|0$"],
     "description": ["匹配特定数字(非正整数[负整数 + 0])"]
   },
-
   "正浮点数": {
     "prefix": ["zzbds", "zznum"],
     "body": ["//正浮点数", "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*$"],
     "description": ["匹配特定数字(正浮点数)"]
   },
-
   "负浮点数": {
     "prefix": ["zzbds", "zznum"],
     "body": ["//负浮点数", "^-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*)$"],
     "description": ["匹配特定数字(负浮点数)"]
   },
-
   "浮点数": {
     "prefix": ["zzbds", "zznum"],
     "body": ["//浮点数", "^-?([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0)$"],
     "description": ["匹配特定数字(浮点数)"]
   },
-
   "非负浮点数[正浮点数 + 0]": {
     "prefix": ["zzbds", "zznum"],
     "body": [
@@ -847,7 +1292,6 @@
     ],
     "description": ["匹配特定数字(非负浮点数[正浮点数 + 0]))"]
   },
-
   "非正浮点数[负浮点数 + 0]": {
     "prefix": ["zzbds", "zznum"],
     "body": [
@@ -855,36 +1299,6 @@
       "^(-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*))|0?.0+|0$"
     ],
     "description": ["匹配特定数字(非正浮点数[负浮点数 + 0])"]
-  },
-
-  "由26个英文字母组成": {
-    "prefix": ["zzbds", "zzstr"],
-    "body": ["//由26个英文字母组成", "^[A-Za-z]+$"],
-    "description": ["匹配特定字符串(由26个英文字母组成)"]
-  },
-
-  "26个英文字母的大写组成": {
-    "prefix": ["zzbds", "zzstr"],
-    "body": ["//26个英文字母的大写组成", "^[A-Z]+$"],
-    "description": ["匹配特定字符串(26个英文字母的大写组成)"]
-  },
-
-  "26个英文字母的小写组成": {
-    "prefix": ["zzbds", "zzstr"],
-    "body": ["//26个英文字母的小写组成", "^[a-z]+$"],
-    "description": ["匹配特定字符串(26个英文字母的小写组成)"]
-  },
-
-  "数字和26个英文字母组成": {
-    "prefix": ["zzbds", "zzstr"],
-    "body": ["//数字和26个英文字母组成", "^[A-Za-z0-9]+$"],
-    "description": ["匹配特定字符串(数字和26个英文字母组成)"]
-  },
-
-  "由数字、26个英文字母或者下划线组成": {
-    "prefix": ["zzbds", "zzstr"],
-    "body": ["//由数字、26个英文字母或者下划线组成", "^w+$"],
-    "description": ["匹配特定字符串(由数字、26个英文字母或者下划线组成)"]
   },
   "sessionStorage本地存储": {
     "prefix": ["dc", "storage", "js"],
@@ -2938,11 +3352,7 @@
   },
   "(es6)findIndex查找索引": {
     "prefix": ["for-findIndex"],
-    "body": [
-      "${1:arr}.findIndex((${2:item})=>{",
-      "\nif($0) return true",
-      "})"
-    ],
+    "body": ["${1:arr}.findIndex((${2:item})=>{", "\nif($0) return true", "})"],
     "description": ["(es6)findIndex查找索引"]
   },
 

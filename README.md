@@ -1,4 +1,4 @@
-# README
+# README  [![](https://badgen.net/vs-marketplace/v/xuedao.super-comprehensive)](https://marketplace.visualstudio.com/items?itemName=xuedao.super-comprehensive) [![](https://badgen.net/vs-marketplace/i/xuedao.super-comprehensive)](https://marketplace.visualstudio.com/items?itemName=xuedao.super-comprehensive) [![](https://badgen.net/vs-marketplace/d/xuedao.super-comprehensive)](https://marketplace.visualstudio.com/items?itemName=xuedao.super-comprehensive) ![](https://img.shields.io/badge/license-MIT-F44336.svg)
 
 欢迎来到懒人世界
 

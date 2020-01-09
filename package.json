@@ -28,9 +28,10 @@
     "element-ui",
     "react",
     "git",
-    "react-native"
+    "react-native",
+    "正则"
   ],
-  "version": "1.9.2",
+  "version": "1.9.3",
   "publisher": "xuedao",
   "engines": {
     "vscode": "^1.27.0"
