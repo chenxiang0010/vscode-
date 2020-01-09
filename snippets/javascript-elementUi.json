@@ -1,4 +1,80 @@
 {
+  "el-rule": {
+    "prefix": ["el-rule"],
+    "body": [
+      "/*",
+      " * @Descripttion: element-ui form验证",
+      " * @Author: zhujiang",
+      " * @Date: 2019-11-28 22:16:55",
+      " * @LastEditors  : zhujiang",
+      " * @LastEditTime : 2020-01-09 15:09:34",
+      " */",
+      "/**",
+      " * 验证手机号",
+      " * @type {Array}",
+      " */",
+      " export const phoneNumInput = [",
+      "    { required: true, message: '请输入手机号', trigger: 'blur' },",
+      "    { pattern: /^1d{10}$/ || /^[0-9]*$/, message: '手机号格式不正确', trigger: 'blur' }",
+      "  ]",
+      "",
+      "  /**",
+      "  * 短信验证码验证",
+      "  * @type {Array}",
+      "  */",
+      "  export const verifyCodeInput = [",
+      "    { required: true, message: '请输入验证码', trigger: 'blur' },",
+      "    { len: 6, message: '验证码格式不正确', trigger: 'blur' }",
+      "  ]",
+      "",
+      "  /**",
+      "  * 密码验证",
+      "  * @type {Array}",
+      "  */",
+      "  export const passwordInput = [",
+      "    { required: true, message: '请输入密码', trigger: 'blur' },",
+      "    { min: 6, message: '密码长度不小于6位', trigger: 'blur' }",
+      "  ]",
+      "",
+      "  /**",
+      "  * 咨询原文链接",
+      "  * @type {Array}",
+      "  */",
+      "  export const infomationLinkInput = [",
+      "    { required: true, message: '请输入原文链接', trigger: 'blur' },",
+      "    { min: 1, max: 300, message: '300个字符以内', trigger: 'blur' },",
+      "    { type: 'url', message: '链接格式不正确', trigger: 'blur' }",
+      "  ]",
+      "",
+      "  /**",
+      "  * [校验是否必传]",
+      "  * @param  {[type]} message [description]",
+      "  * @return {[type]}         [description]",
+      "  */",
+      "  export const requireInput = (message, ev = 'blur') => [{ required: true, message: message, trigger: ev }]",
+      "",
+      "  /**",
+      "  *  * [校验是否必传]",
+      "  * @param  {[type]} message [description]",
+      "  * @return {[type]}         [description]",
+      "  */",
+      "  export const requireInputWithMaxLength = (message, min, max, ev = 'blur') => [",
+      "    { required: true, message: message, trigger: ev },",
+      "    { min: min, max: max, message: `${max}个字符以内`, trigger: ev }",
+      "  ]",
+      "",
+      "  /**",
+      "  *  * [验证是否纯数字, 提示内容自定义]",
+      "  * @param  {[type]} message [description]",
+      "  * @return {[type]}         [description]",
+      "  */",
+      "  export const requireNum = (message, ev = 'blur') => [",
+      "    { required: true, message: message, trigger: ev },",
+      "    { pattern: /[0-9]/, message: '请输入数字', trigger: ev }",
+      "  ]"
+    ],
+    "description": ["el-rule"]
+  },
   "el-表单二次验证": {
     "prefix": ["el-form-validate"],
     "body": [
@@ -23,51 +99,45 @@
     "description": ["el-cascader-props配置"]
   },
   "消息提示框": {
-      "prefix": ["el-message"],
+    "prefix": ["el-message"],
+    "body": [
+      "this.$message({",
+      "    message: message,",
+      "    type: 'success'",
+      "})"
+    ],
+    "description": ["el-message"]
+  },
+  "确认提示框": {
+    "prefix": ["el-confirm"],
+    "body": [
+      "this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {",
+      "  confirmButtonText: '确定',",
+      "  cancelButtonText: '取消',",
+      "  type: 'warning'",
+      "}).then(() => {",
+      "  this.$message({",
+      "    type: 'success',",
+      "    message: '删除成功!'",
+      "  })",
+      "}).catch(() => {",
+      "  this.$message({",
+      "    type: 'info',",
+      "    message: '已取消删除'",
+      "  })",
+      "})"
+    ],
+    "description": ["确认提示框"],
+    "通知框": {
+      "prefix": ["el-notify"],
       "body": [
-        "this.$message({",
-        "    message: message,",
+        "this.$notify({",
+        "    title: '成功',",
+        "    message: '这是一条成功的提示消息',",
         "    type: 'success'",
         "})"
       ],
-      "description": [
-      "el-message"
-      ]
-  },
-  "确认提示框": {
-      "prefix": ["el-confirm"],
-      "body": [
-          "this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {",
-          "  confirmButtonText: '确定',",
-          "  cancelButtonText: '取消',",
-          "  type: 'warning'",
-          "}).then(() => {",
-          "  this.$message({",
-          "    type: 'success',",
-          "    message: '删除成功!'",
-          "  })",
-          "}).catch(() => {",
-          "  this.$message({",
-          "    type: 'info',",
-          "    message: '已取消删除'",
-          "  })",
-          "})"
-      ],
-      "description": [
-      "确认提示框"
-      ],
-    "通知框": {
-        "prefix": ["el-notify"],
-        "body": [
-            "this.$notify({",
-            "    title: '成功',",
-            "    message: '这是一条成功的提示消息',",
-            "    type: 'success'",
-            "})"
-        ],
-        "description": [
-        "通知框"
-        ]
+      "description": ["通知框"]
     }
   }
 }
