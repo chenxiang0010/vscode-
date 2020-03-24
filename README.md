@@ -431,7 +431,70 @@ npm 常用资源包 键入`npm`
 </details>
 
 <details>
-  <summary style="font-size:30px;font-weight: bold;">React/React-native指南(jsx)</summary>
+  <summary style="font-size:30px;font-weight: bold;">React </summary>
+
+| 内容                               |           快捷键 |
+| :--------------------------------- | ---------------: |
+| 一键创建模板                       |          !-react |
+| 一键创建高阶组件模板               |      !-react-HOC |
+| 一键创建高阶组件demo(获取鼠标位置) | !-react-HOC-demo |
+| 状态修改(回调函数)                 |    this.setState |
+| 表单快速双向绑定                   |     handleChange |
+| 表单快速双向绑定(一对多)           |     handleChange |
+| 非受控组件(直接操作DOM)            |              ref |
+| Fragment占位符(无结构DIV)          |         Fragment |
+| reducer模板                        |          reducer |
+
+> 通信 前缀 `tx`
+
+| 内容                             |                   快捷键 |
+| :------------------------------- | -----------------------: |
+| 自定义事件通信,新建events.js     | tx-event-newEventEmitter |
+| EventEmitter自定义事件触发(调用) |            tx-event-emit |
+| EventEmitter自定义通信监听       |     tx-event-addListener |
+| createContext(跨级组件通信)      |         tx-createContext |
+| Provider(跨级通信传递)           |              tx-Provider |
+| Consumer(跨级通信接收)           |              tx-Consumer |
+
+> 生命周期 前缀 `sm`
+
+| 内容                                    |                   快捷键 |
+| :-------------------------------------- | -----------------------: |
+| constructor(挂载阶段生命周期)           |           sm-constructor |
+| render(挂载阶段/更新阶段生命周期)       |                sm-render |
+| componentDidMount(挂载阶段生命周期)     |     sm-componentDidMount |
+| componentDidUpdata(更新阶段生命周期)    |    sm-componentDidUpdate |
+| componentWillUnmount(卸载阶段生命周期)  |  sm-componentWillUnmount |
+| shouldComponentUpdate(更新阶段生命周期) | sm-shouldComponentUpdate |
+
+> 路由相关 前缀 `route`
+
+| 内容                             |         快捷键 |
+| :------------------------------- | -------------: |
+| 引入 react-router                |          route |
+| react-router容器(跳转的内容)     |          route |
+| 路由容器                         |          route |
+| 嵌套路由容器                     |          route |
+| 接收路由参数                     |   route-params |
+| 跳转导航链接                     |     route-link |
+| 编程式导航                       |     route-push |
+| Switch组件(只匹配第一个路由规则) |   route-Switch |
+| Redirect重定向                   | route-redirect |
+
+> Hook 前缀 `hook`
+
+| 内容                                                 |          快捷键 |
+| :--------------------------------------------------- | --------------: |
+| StateHook(类似constructor)                           |   hook-useState |
+| EffectHook(类似componentDidMount+componentDidUpdata) |     hook-effect |
+| ContextHook                                          | hook-useContext |
+| MemoHook                                             |    hook-useMemo |
+| ReducerHook                                          | hook-useReducer |
+
+</details>
+
+<details>
+  <summary style="font-size:30px;font-weight: bold;">React-native指南(jsx)</summary>
 
 > 组件
 

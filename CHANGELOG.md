@@ -4,6 +4,11 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+## [1.9.6] 2020-03-24
+
+- 新增 react 常用代码段 识别 文件后缀 `.jsx`
+- 文档更新详细内容
+
 ## [1.9.5] 2020-01-09
 
 - 新增 echarts 详细配置  键入`echarts`
