@@ -491,6 +491,9 @@ npm 常用资源包 键入`npm`
 | MemoHook                                             |    hook-useMemo |
 | ReducerHook                                          | hook-useReducer |
 
+> UmiJs配置  umirc相关 前缀  `umirc`
+> dva 前缀 `dva`
+
 </details>
 
 <details>

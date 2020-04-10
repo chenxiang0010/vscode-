@@ -5,6 +5,7 @@
   "keywords": [
     "vscode",
     "snippets",
+    "umijs",
     "comprehensive",
     "efficient",
     "xuedao",
@@ -31,7 +32,7 @@
     "react-native",
     "正则"
   ],
-  "version": "1.9.6",
+  "version": "1.9.7",
   "publisher": "xuedao",
   "engines": {
     "vscode": "^1.27.0"
@@ -191,6 +192,10 @@
       },
       {
         "language": "javascriptreact",
+        "path": "./snippets/react.json"
+      },
+      {
+        "language": "javascript",
         "path": "./snippets/react.json"
       },
       {
