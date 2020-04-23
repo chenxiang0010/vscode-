@@ -32,7 +32,7 @@
     "react-native",
     "正则"
   ],
-  "version": "1.9.7",
+  "version": "1.9.8",
   "publisher": "xuedao",
   "engines": {
     "vscode": "^1.27.0"
@@ -195,7 +195,15 @@
         "path": "./snippets/react.json"
       },
       {
+        "language": "typescriptreact",
+        "path": "./snippets/react.json"
+      },
+      {
         "language": "javascript",
+        "path": "./snippets/react.json"
+      },
+      {
+        "language": "typescript",
         "path": "./snippets/react.json"
       },
       {
@@ -203,11 +211,47 @@
         "path": "./snippets/react-native.json"
       },
       {
-        "language": "javascriptreact",
+        "language": "typescriptreact",
+        "path": "./snippets/react-native.json"
+      },
+      {
+        "language": "javascript",
+        "path": "./snippets/react-native.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./snippets/react-native.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./snippets/javascript.json"
+      },
+      {
+        "language": "javascript",
+        "path": "./snippets/javascript.json"
+      },
+      {
+        "language": "typescriptreact",
         "path": "./snippets/javascript.json"
       },
       {
         "language": "javascriptreact",
+        "path": "./snippets/javascript.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./snippets/react-native-api.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./snippets/react-native-api.json"
+      },
+      {
+        "language": "javascript",
+        "path": "./snippets/react-native-api.json"
+      },
+      {
+        "language": "typescript",
         "path": "./snippets/react-native-api.json"
       }
     ],

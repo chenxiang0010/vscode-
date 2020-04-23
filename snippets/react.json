@@ -686,5 +686,32 @@
       "}"
     ],
     "description": ["dva纯净模板"]
+  },
+    "public": {
+    "prefix": ["public"],
+    "body": [
+      "public"
+    ],
+    "description": [
+    "公开的(外部可访问)"
+    ]
+  },
+    "protected": {
+    "prefix": ["protected"],
+    "body": [
+      "protected"
+    ],
+    "description": [
+    "受保护的(自己和子类可访问)"
+    ]
+  },
+   "private": {
+    "prefix": ["private"],
+    "body": [
+      "private"
+    ],
+    "description": [
+    "私有的(只能内部访问)"
+    ]
   }
 }

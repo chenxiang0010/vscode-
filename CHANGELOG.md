@@ -4,6 +4,10 @@ Check [Github](https://github.com/qq34347476/web/) 浏览更多。
 
 Check [留言](https://github.com/qq34347476/web/issues)语法用法等 BUG 提交，更多建议。
 
+## [1.9.8] 2020-04-23
+
+- react及react-native 代码端同步更新至可在 js,jsx,ts,tsx中使用
+
 ## [1.9.7] 2020-04-10
 
 - 新增 umijs 相关代码段
